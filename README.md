@@ -28,7 +28,7 @@ current contributing authors are:
 - Dawid Kajus Lachowicz
 - Ivan Konakotin
 - Jone Sheng Lau
-- Kishan Kumaran Thanikas
+- Kishan Kumaran Thanikasalam
 - Nicholas Lai
 
 
