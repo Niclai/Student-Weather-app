@@ -17,7 +17,7 @@ export interface UserPreferences {
   /**
    * units: degrees celcius
    */
-  maxWindSpeed: 5;
+  maxWindSpeed: number;
   /**
    * default=5 (km/h)
    */
