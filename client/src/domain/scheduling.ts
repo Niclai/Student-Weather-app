@@ -5,7 +5,7 @@ import { UserPreferences } from "../types/userPreferences";
 /**
  * Basic weekly study session scheduling algorithm. Finds the candidate study
  * sessions for each day of the week based on the forecasts and user
- * preferences. From the candidate sessions, schedules sessions will be chosen
+ * preferences. From the candidate sessions, scheduled sessions will be chosen
  * at random to satisfy the number of times per week the user wants to study.
  *
  * A possible future improvement to this algorithm would be to try to uniformly
