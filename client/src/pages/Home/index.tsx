@@ -3,6 +3,9 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
+// Components
+import Navbar from '../../components/Navbar';
+
 // Types
 import { MainStackParamList } from '../../types/navigationParams';
 
@@ -10,12 +13,8 @@ const Home = () => {
   const navigation = useNavigation<StackNavigationProp<MainStackParamList>>();
   return (
     <View style={styles.wrapper}>
+      <Navbar />
       <Text>Home</Text>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('Settings')}
-        style={{ marginTop: '10%', backgroundColor: 'gray' }}>
-        <Text style={{ fontSize: 20 }}>Settings</Text>
-      </TouchableOpacity>
     </View>
   );
 };
