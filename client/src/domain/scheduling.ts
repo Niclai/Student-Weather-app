@@ -2,6 +2,7 @@ import { DaylightHours } from "../types/daylightHours";
 import { Forecast } from "../types/forecast";
 import { UserPreferences } from "../types/userPreferences";
 import { combinePredicates } from "../utils/higherOrderFunctions";
+import { randomUniqueNumbers } from "../utils/randomNumberGenerators";
 
 /**
  * Basic weekly study session scheduling algorithm. Finds the candidate study
@@ -18,8 +19,23 @@ const scheduleWeek = (
   weekForecasts: { daylightHours: DaylightHours; forecasts: Forecast[] }[],
   userPreferences: UserPreferences
 ): Date[] => {
-  // TODO
-  return [];
+  if (weekForecasts.length != 7) {
+    throw new Error(
+      `expected 7 entries in weekForecasts array, but got ${weekForecasts.length}`
+    );
+  }
+
+  const candidates = weekForecasts.flatMap(day =>
+    scheduleDay(day.daylightHours, day.forecasts, userPreferences)
+  );
+
+  const randomIndices = randomUniqueNumbers(
+    userPreferences.timesPerWeek,
+    0,
+    candidates.length - 1
+  );
+
+  return candidates.filter((_, i) => randomIndices.includes(i));
 };
 
 /**
@@ -35,11 +51,14 @@ const scheduleDay = (
   dayForecasts: Forecast[],
   userPreferences: UserPreferences
 ): Date[] => {
+  // precondition check
   if (dayForecasts.length != 24) {
     throw new Error(
       `expected 24 entries in forecast array, but got ${dayForecasts.length}`
     );
   }
+
+  // filter predicate definitions
 
   const daylightFilter = (forecast: Forecast): boolean => {
     const sessionOffset = new Date(forecast.time);
@@ -68,6 +87,8 @@ const scheduleDay = (
     windFilter,
     precipitationFilter,
   ]);
+
+  // scheduling logic
 
   const candidates = dayForecasts.filter(weatherFilters);
 
