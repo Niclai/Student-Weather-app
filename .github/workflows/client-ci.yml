@@ -1,4 +1,4 @@
-name: Type check, test and build
+name: Type check and test
 
 on:
   push:
@@ -15,7 +15,7 @@ on:
       - ".github/workflows/**"
 
 jobs:
-  typecheck_test_and_build:
+  typecheck_and_test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
