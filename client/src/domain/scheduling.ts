@@ -2,10 +2,7 @@ import { DaylightHours } from "../types/daylightHours";
 import { Forecast } from "../types/forecast";
 import { UserPreferences } from "../types/userPreferences";
 import { combinePredicates } from "../utils/higherOrderFunctions";
-import {
-  chooseRandom,
-  randomUniqueInts,
-} from "../utils/randomNumberGenerators";
+import { chooseRandom } from "../utils/randomNumberGenerators";
 
 /**
  * Basic weekly study session scheduling algorithm. Finds the candidate study
