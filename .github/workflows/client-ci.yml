@@ -22,9 +22,15 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
+
       - name: Install npm dependencies
         working-directory: client
         run: npm install
+
       - name: TypeScript type check
         working-directory: client
         run: npx tsc --noEmit
+
+      - name: Run tests
+        working-directory: client
+        run: npm test
