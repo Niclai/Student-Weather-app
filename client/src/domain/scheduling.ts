@@ -18,7 +18,7 @@ const scheduleWeek = (
   userPreferences: UserPreferences
 ): Date[] => {
   // TODO
-  return [];
+  // return [];
 };
 
 /**

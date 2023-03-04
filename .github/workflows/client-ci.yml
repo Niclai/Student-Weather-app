@@ -15,9 +15,13 @@ on:
       - ".github/workflows/**"
 
 jobs:
-  push:
+  typecheck_test_and_build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
       - name: TypeScript type check
-        uses: andoshin11/typescript-error-reporter-action@v1.0.2
+        working-directory: client
+        run: npx tsc --noEmit
