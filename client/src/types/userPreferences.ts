@@ -13,7 +13,7 @@ export interface UserPreferences {
    */
   studyDuration: number;
   /**
-   * units: degrees celcius
+   * units: degrees celsius
    */
   preferredMinTemp: number;
   preferredMaxTemp: number;
