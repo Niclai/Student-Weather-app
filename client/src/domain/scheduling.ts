@@ -2,7 +2,10 @@ import { DaylightHours } from "../types/daylightHours";
 import { Forecast } from "../types/forecast";
 import { UserPreferences } from "../types/userPreferences";
 import { combinePredicates } from "../utils/higherOrderFunctions";
-import { randomUniqueInts } from "../utils/randomNumberGenerators";
+import {
+  chooseRandom,
+  randomUniqueInts,
+} from "../utils/randomNumberGenerators";
 
 /**
  * Basic weekly study session scheduling algorithm. Finds the candidate study
@@ -29,13 +32,7 @@ const scheduleWeek = (
     scheduleDay(day.daylightHours, day.forecasts, userPreferences)
   );
 
-  const randomIndices = randomUniqueInts(
-    userPreferences.timesPerWeek,
-    0,
-    candidates.length - 1
-  );
-
-  return candidates.filter((_, i) => randomIndices.includes(i));
+  return chooseRandom(candidates, userPreferences.timesPerWeek);
 };
 
 /**
