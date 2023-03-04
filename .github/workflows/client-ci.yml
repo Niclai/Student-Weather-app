@@ -1,0 +1,23 @@
+name: Type check, test and build
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "client/**"
+      - ".github/workflows/**"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "client"
+      - ".github/workflows/**"
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: TypeScript type check
+        uses: andoshin11/typescript-error-reporter-action@v1.0.2
