@@ -17,6 +17,7 @@ on:
 jobs:
   typecheck_and_test:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -33,11 +34,11 @@ jobs:
 
       - name: Lint
         working-directory: client
-        run: npm lint
+        run: npm run lint
 
       - name: Check formatting
         working-directory: client
-        run: npm format:check
+        run: npm run format:check
 
       - name: Run tests
         working-directory: client
