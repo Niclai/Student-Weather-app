@@ -31,6 +31,10 @@ jobs:
         working-directory: client
         run: npx tsc --noEmit
 
+      - name: Lint
+        working-directory: client
+        run: npm lint
+
       - name: Run tests
         working-directory: client
         run: npx jest --passWithNoTests
