@@ -11,20 +11,20 @@ export interface UserPreferences {
   /**
    * units: hours
    */
-  studyDuration: number;
+  sessionDuration: number;
   /**
    * units: degrees celsius
    */
   preferredMinTemp: number;
   preferredMaxTemp: number;
   /**
-   * default=5 (km/h)
+   * units: km/h
    */
   maxWindSpeed: number;
   /**
    * units: pollen count (grains per volume of air)
    * only needed if hayFever=True
    */
-  pollenLevels: number;
+  maxPollenLevels: number;
   }
   
