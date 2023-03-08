@@ -4,6 +4,13 @@ import { getCoordinates } from "../../api/location";
 import { baseUrl } from "../../env/variables";
 import { Location } from "../../types/location";
 
+/**
+ * Component for selecting a location using Google Maps autocomplete and Geocoding APIs
+ *
+ * Does not check if Maps API is reachable and will silently fail.
+ * Caller should check if Maps API is reachable before rendering this component
+ * to detect any errors and display them to the user.
+ */
 const LocationSelect = () => {
   const [selectedLocation, setSelectedLocation] = useState<Location>();
 
