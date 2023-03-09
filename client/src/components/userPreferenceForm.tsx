@@ -4,6 +4,8 @@ import { Text, View, TextInput, Button, Switch} from 'react-native';
 
 
 export default function userPreferenceForm() {
+  const [submitted, setSubmitted] = useState('');
+
   const [hayfever, sethayfever] = useState(false);
   const toggleSwitch = () => sethayfever(previousState=>!previousState)
 
@@ -33,10 +35,7 @@ const handleSubmit = () => {
       var timesPerWeekValid = false;    /*Error checking for amount of timesPerWeek*/
       if(timesPerWeek.length == 0){
         settimesPerWeekERROR("required");
-      }
-      else if(parseInt(timesPerWeek) > 7 || parseInt(timesPerWeek) < 1){   
-        settimesPerWeekERROR("Must be between 1-7 ");
-      }                                 
+      }                              
       else{
         settimesPerWeekERROR("")
         timesPerWeekValid = true
@@ -79,10 +78,10 @@ const handleSubmit = () => {
       if(preferredMaxTemp.length == 0){
         setpreferredMaxTempERROR("required");
       }
-      else if(parseInt(preferredMaxTemp) > 30){   
-        setpreferredMaxTempERROR("Must be Less than 30");    
+      else if(parseInt(preferredMaxTemp) > 50){   
+        setpreferredMaxTempERROR("Must be Less than 50");    
       }   
-      else if(parseInt(preferredMaxTemp) < parseInt(preferredMinTemp)){   
+      else if(parseInt(preferredMaxTemp) <= parseInt(preferredMinTemp)){   
         setpreferredMaxTempERROR("Max must be greater then the minimum Preferred temperature");  
       }                                
       else{
@@ -92,7 +91,8 @@ const handleSubmit = () => {
 
       var maxWindSpeedValid = false;   /*Error checking for maxWindSpeed*/
       if(maxWindSpeed.length == 0){
-        setmaxWindSpeedERROR("required");
+        setmaxWindSpeed("5")
+        maxWindSpeedValid = true
       }                              
       else{
         setmaxWindSpeedERROR("")
@@ -103,6 +103,9 @@ const handleSubmit = () => {
       if(hayfever == true){                              /*if hayfever was selected then check input should be valid*/ 
         if (maxPollenLevels.length == 0){
           setmaxPollenLevelsERROR("required");
+        }
+        else if(parseInt(maxPollenLevels) <= 0 || parseInt(maxPollenLevels) > 100){
+          setmaxPollenLevelsERROR("levels must be between 0 and 100");
         }
         else{
           setmaxPollenLevelsERROR("")
@@ -119,15 +122,15 @@ const handleSubmit = () => {
         }
       }                              
     
-      if(timesPerWeekValid && timeBeforeNotifValid && sessionDurationValid && preferredMinTempValid && preferredMaxTempValid && maxWindSpeedValid && maxPollenLevelsValid ){            
-        settimesPerWeek("");
-        settimeBeforeNotif("");
-        setsessionDuration("");
-        setpreferredMinTemp("");
-        setpreferredMaxTemp("");
-        setmaxWindSpeed("");
-        setmaxPollenLevels("");
-      }        
+      if(timesPerWeekValid && timeBeforeNotifValid && sessionDurationValid && preferredMinTempValid && preferredMaxTempValid && maxWindSpeedValid && maxPollenLevelsValid ){ 
+
+        /*todo save it somehow to external JSON file*/
+
+        setSubmitted("Preferences Changed")
+      }
+      else{
+        setSubmitted("")
+      }       
   
     }
   return (
@@ -135,14 +138,14 @@ const handleSubmit = () => {
           <View>
             <Text>Edit Preferences:</Text>
               <View>
-                <Text>Hayfever?</Text>
+                <Text>Do you have hay fever?</Text>
                 <Switch 
                 onValueChange={toggleSwitch}
                 value={hayfever}
                 />
               </View>
               <View>
-                <Text>How Many times per week would you like to be notified?</Text>
+                <Text>How Many times per week would you like to study outdoors?</Text>
                 <TextInput keyboardType='numeric' onChangeText={val => settimesPerWeek(val)} value={timesPerWeek} />
               </View>
               {timesPerWeekERROR.length > 0 &&
@@ -151,7 +154,7 @@ const handleSubmit = () => {
               }
 
               <View>
-                <Text>How long before study space to be notified in hrs </Text>
+                <Text>How long before your scheduled study session would you like to be notified (hours)? </Text>
                 <TextInput keyboardType='numeric' onChangeText={val => settimeBeforeNotif(val)} value={timeBeforeNotif} />
               </View>
               {timeBeforeNotifERROR.length > 0 &&
@@ -160,7 +163,7 @@ const handleSubmit = () => {
               }
 
               <View>
-                <Text>Preferred study session duration? </Text>
+                <Text>Preferred study session duration? (hours) </Text>
                 <TextInput keyboardType='numeric' onChangeText={val => setsessionDuration(val)} value={sessionDuration} />
               </View>
               {sessionDurationERROR.length > 0 &&
@@ -169,7 +172,7 @@ const handleSubmit = () => {
               }
 
               <View>
-                <Text>Prefered Minimum Temperature? degrees celcius</Text>
+                <Text>Prefered minimum Temperature for outdoor study sessions (°c)</Text>
                 <TextInput keyboardType='numeric' onChangeText={val => setpreferredMinTemp(val)} value={preferredMinTemp} />
               </View>
               {preferredMinTempERROR.length > 0 &&
@@ -178,7 +181,7 @@ const handleSubmit = () => {
               }
 
               <View>
-                <Text>Prefered Maximum Temperature? degrees celcius</Text>
+                <Text>Prefered maximum Temperature for outdoor study sessions (°c)</Text>
                 <TextInput keyboardType='numeric' onChangeText={val => setpreferredMaxTemp(val)} value={preferredMaxTemp} />
               </View>
               {preferredMaxTempERROR.length > 0 &&
@@ -196,7 +199,7 @@ const handleSubmit = () => {
               }
 
               <View>
-                <Text>Pollen levels if hayfever is yes</Text>
+                <Text>Maximum pollen levels for outdoor study session (%)</Text>
                 <TextInput keyboardType='numeric' onChangeText={val => setmaxPollenLevels(val)} value={maxPollenLevels} />
               </View>
               {maxPollenLevelsERROR.length > 0 &&
@@ -204,13 +207,9 @@ const handleSubmit = () => {
                 <Text>{maxPollenLevelsERROR}</Text>
               }
 
-              <Button onPress={handleSubmit} title='submit' />
+              <Button onPress={handleSubmit} title='Save changes' />
+              <Text>{submitted}</Text>
 </View>
-          <View>
-              <Text>
-              {hayfever} {timesPerWeek} {timeBeforeNotif} {sessionDuration} {preferredMinTemp} {preferredMaxTemp} {maxWindSpeed} {maxPollenLevels}
-              </Text>   
-          </View>
       </View>
   )
 }
