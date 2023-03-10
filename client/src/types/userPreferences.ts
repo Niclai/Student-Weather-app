@@ -5,10 +5,11 @@ user preferences options
 
 export interface UserPreferences {
   hayFever: boolean;
+  sessionDuration: number;
   timesPerWeek: number; // how many times a week to be notified (1-7)
   timeBeforeNotif: number; // how long before study space to be notified (hrs)
   preferredMinTemp: number;
   preferredMaxTemp: number;
-  maxWindSpeed: 5; // default=5 (km/h)
+  maxWindSpeed: number; // default=5 (km/h)
   pollenLevels: number; // units=pollen count (grains per volume of air); only needed if hayFever=True
 }

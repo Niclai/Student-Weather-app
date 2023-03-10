@@ -1,6 +1,8 @@
 import { DaylightHours } from "../types/daylightHours";
 import { Forecast } from "../types/forecast";
 import { UserPreferences } from "../types/userPreferences";
+import { combinePredicates } from "../utils/higherOrderFunctions";
+import { chooseRandom } from "../utils/randomNumberGenerators";
 
 /**
  * Basic weekly study session scheduling algorithm. Finds the candidate study
@@ -17,8 +19,17 @@ const scheduleWeek = (
   weekForecasts: { daylightHours: DaylightHours; forecasts: Forecast[] }[],
   userPreferences: UserPreferences
 ): Date[] => {
-  // TODO
-  return [];
+  if (weekForecasts.length != 7) {
+    throw new Error(
+      `expected 7 entries in weekForecasts array, but got ${weekForecasts.length}`
+    );
+  }
+
+  const candidates = weekForecasts.flatMap(day =>
+    scheduleDay(day.daylightHours, day.forecasts, userPreferences)
+  );
+
+  return chooseRandom(candidates, userPreferences.timesPerWeek);
 };
 
 /**
@@ -31,11 +42,67 @@ const scheduleWeek = (
  */
 const scheduleDay = (
   daylightHours: DaylightHours,
-  forecasts: Forecast[],
+  dayForecasts: Forecast[],
   userPreferences: UserPreferences
 ): Date[] => {
-  // TODO
-  return [];
+  // precondition check
+  if (dayForecasts.length != 24) {
+    throw new Error(
+      `expected 24 entries in forecast array, but got ${dayForecasts.length}`
+    );
+  }
+
+  // filter predicate definitions
+
+  const daylightFilter = (forecast: Forecast): boolean => {
+    const sessionOffset = new Date(forecast.time);
+    sessionOffset.setHours(
+      sessionOffset.getHours() + userPreferences.sessionDuration
+    );
+
+    return (
+      forecast.time >= daylightHours.sunrise &&
+      sessionOffset <= daylightHours.sunset
+    );
+  };
+
+  const temperatureFilter = (forecast: Forecast): boolean =>
+    forecast.temperature >= userPreferences.preferredMinTemp &&
+    forecast.temperature <= userPreferences.preferredMaxTemp;
+
+  const windFilter = (forecast: Forecast): boolean =>
+    forecast.windSpeed <= userPreferences.maxWindSpeed;
+
+  const precipitationFilter = (forecast: Forecast): boolean =>
+    forecast.precipitationProbability === 0;
+
+  const weatherFilters = combinePredicates([
+    temperatureFilter,
+    windFilter,
+    precipitationFilter,
+  ]);
+
+  // scheduling logic
+
+  const candidates = dayForecasts.filter(weatherFilters);
+
+  const candidateIndices: number[] = dayForecasts.reduce(
+    (indices, forecast, i) =>
+      candidates.includes(forecast) ? indices.concat([i]) : indices,
+    new Array<number>()
+  );
+
+  const candidateStartIndices = candidateIndices.filter(index => {
+    for (let i = index + 1; i <= index + userPreferences.sessionDuration; i++) {
+      if (!candidateIndices.includes(i)) return false;
+    }
+    return true;
+  });
+
+  return dayForecasts
+    .filter((_, i) => candidateStartIndices.includes(i))
+    .filter(daylightFilter)
+    .map(forecast => forecast.time);
 };
 
-export { scheduleWeek };
+export { scheduleWeek, scheduleDay };
