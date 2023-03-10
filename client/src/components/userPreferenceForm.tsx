@@ -7,7 +7,6 @@ export default function userPreferenceForm() {
   const [submitted, setSubmitted] = useState('');
 
   const [hayfever, sethayfever] = useState(false);
-  const toggleSwitch = () => sethayfever(previousState=>!previousState)
 
   const [timesPerWeek, settimesPerWeek] = useState('');
   const [timesPerWeekERROR, settimesPerWeekERROR] = useState('');
@@ -30,16 +29,13 @@ export default function userPreferenceForm() {
   const [maxPollenLevels, setmaxPollenLevels] = useState('');
   const [maxPollenLevelsERROR, setmaxPollenLevelsERROR] = useState('');
 
+const showMaxPollenLevels = () => {
+  sethayfever(previousState=>!previousState);
+}
+
 
 const handleSubmit = () => {
-      var timesPerWeekValid = false;    /*Error checking for amount of timesPerWeek*/
-      if(timesPerWeek.length == 0){
-        settimesPerWeekERROR("required");
-      }                              
-      else{
-        settimesPerWeekERROR("")
-        timesPerWeekValid = true
-      }
+      var timesPerWeekValid = isPerWeekValid();    /*Error checking for amount of timesPerWeek*/
 
       var timeBeforeNotifValid = false;    /*Error checking for timeBeforeNotication*/
       if(timeBeforeNotif.length == 0){
@@ -133,6 +129,20 @@ const handleSubmit = () => {
       }       
   
     }
+
+    const isPerWeekValid = () => {
+      if (timesPerWeek.length == 0) {
+        settimesPerWeekERROR("required");
+        return true;
+      }
+      else {
+        settimesPerWeekERROR("");
+        return false;
+      }
+     
+    }
+
+
   return (
       <View>
           <View>
@@ -140,10 +150,20 @@ const handleSubmit = () => {
               <View>
                 <Text>Do you have hay fever?</Text>
                 <Switch 
-                onValueChange={toggleSwitch}
+                onValueChange={showMaxPollenLevels}
                 value={hayfever}
                 />
               </View>
+              {hayfever == true &&                        /*show max pollen levels input box when hayfever is switched on (conditional rendering)*/
+                <View>
+                  <Text>Maximum pollen levels for outdoor study session (%)</Text>
+                  <TextInput keyboardType='numeric' autoFocus = {false} onChangeText={val => setmaxPollenLevels(val)} value={maxPollenLevels} />
+                  {maxPollenLevelsERROR.length > 0 &&
+                  <Text>{maxPollenLevelsERROR}</Text>
+                  }
+                </View>
+              }
+
               <View>
                 <Text>How Many times per week would you like to study outdoors?</Text>
                 <TextInput keyboardType='numeric' onChangeText={val => settimesPerWeek(val)} value={timesPerWeek} />
@@ -198,20 +218,14 @@ const handleSubmit = () => {
                 <Text>{maxWindSpeedERROR}</Text>
               }
 
-              <View>
-                <Text>Maximum pollen levels for outdoor study session (%)</Text>
-                <TextInput keyboardType='numeric' onChangeText={val => setmaxPollenLevels(val)} value={maxPollenLevels} />
-              </View>
-              {maxPollenLevelsERROR.length > 0 &&
-          
-                <Text>{maxPollenLevelsERROR}</Text>
-              }
-
               <Button onPress={handleSubmit} title='Save changes' />
               <Text>{submitted}</Text>
+
 </View>
       </View>
   )
 }
+
+
 
 
