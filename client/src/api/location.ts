@@ -13,6 +13,10 @@ interface GoogleMapsGeocodingResponse {
   }[];
 }
 
+/**
+ * Get the coordinates corresponding to the location with the given Google
+ * placeId received from the Places API
+ */
 async function getCoordinates(placeId: string): Promise<Coordinates> {
   const response = await fetch(
     `${baseUrl}/maps/api/geocode/json?place_id=${placeId}`
@@ -22,6 +26,9 @@ async function getCoordinates(placeId: string): Promise<Coordinates> {
   return { lat, long: lng };
 }
 
+/**
+ * Get the user's current coordinates by making a call to the native GPS API
+ */
 async function getCurrentCoordinates(): Promise<Coordinates> {
   const { status } = await GPSLocation.requestForegroundPermissionsAsync();
   if (status !== "granted") {
@@ -38,6 +45,12 @@ interface GoogleMapsReverseGeocodingResponse {
   }[];
 }
 
+/**
+ * Get the "political" name corresponding to the given coordinates according to
+ * the Google Geocoding API. Rather then returning the exact address found under
+ * the given coordinates, it returns the full name of the area/district the
+ * location resides in. E.g. "South Williamsburg, Brooklyn, NY, USA".
+ */
 async function getLocationName(coords: Coordinates): Promise<string> {
   const response = await fetch(
     `${baseUrl}/maps/api/geocode/json?latlng=${coords.lat},${coords.long}&result_type=political`
@@ -46,6 +59,10 @@ async function getLocationName(coords: Coordinates): Promise<string> {
   return json.results[0].formatted_address;
 }
 
+/**
+ * Get the current location of the user, using the device's GPS API and Google
+ * Geocoding API to map the GPS coordinates to a location name.
+ */
 async function getCurrentLocation(): Promise<Location> {
   const coordinates = await getCurrentCoordinates();
   const locationName = await getLocationName(coordinates);
