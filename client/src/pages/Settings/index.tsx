@@ -6,7 +6,6 @@ const Settings = () => {
   return (
     <View style={styles.wrapper}>
       <Text>Settings</Text>
-      <UserPreferenceForm/>
     </View>
   );
 };
