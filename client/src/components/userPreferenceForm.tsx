@@ -35,88 +35,19 @@ const showMaxPollenLevels = () => {
 
 
 const handleSubmit = () => {
-      var timesPerWeekValid = isPerWeekValid();    /*Error checking for amount of timesPerWeek*/
+      var timesPerWeekValid = isPerWeekValid();    
 
-      var timeBeforeNotifValid = false;    /*Error checking for timeBeforeNotication*/
-      if(timeBeforeNotif.length == 0){
-        settimeBeforeNotifERROR("required");
-      }
-      else if(parseInt(timeBeforeNotif) > 24){   
-        settimeBeforeNotifERROR("Must be Less than 24");
-      }                                 
-      else{
-        settimeBeforeNotifERROR("")
-        timeBeforeNotifValid = true
-      }
+      var timeBeforeNotifValid = isTimeBeforeNotifValid();   
 
-      var sessionDurationValid = false;    /*Error checking for session Duration*/
-      if(sessionDuration.length == 0){
-        settimeBeforeNotifERROR("required");
-      }
-      else if(parseInt(sessionDuration) > 24){   
-        setsessionDurationERROR("Must be Less than 24");
-      }                                 
-      else{
-        setsessionDurationERROR("")
-        sessionDurationValid = true
-      }
+      var sessionDurationValid = isSessionDurationValid();  
 
-      var preferredMinTempValid = false;   /*Error checking for min temp*/
-      if(preferredMinTemp.length == 0){
-        setpreferredMinTempERROR("required");
-      }                             
-      else{
-        setpreferredMinTempERROR("")
-        preferredMinTempValid = true
-      }
+      var preferredMinTempValid = isPreferredMinTempValid();   
     
-      var preferredMaxTempValid = false;   /*Error checking for max temp*/
-      if(preferredMaxTemp.length == 0){
-        setpreferredMaxTempERROR("required");
-      }
-      else if(parseInt(preferredMaxTemp) > 50){   
-        setpreferredMaxTempERROR("Must be Less than 50");    
-      }   
-      else if(parseInt(preferredMaxTemp) <= parseInt(preferredMinTemp)){   
-        setpreferredMaxTempERROR("Max must be greater then the minimum Preferred temperature");  
-      }                                
-      else{
-        setpreferredMaxTempERROR("")
-        preferredMaxTempValid = true
-      }
+      var preferredMaxTempValid = isPreferredMaxTempValid();  
 
-      var maxWindSpeedValid = false;   /*Error checking for maxWindSpeed*/
-      if(maxWindSpeed.length == 0){
-        setmaxWindSpeed("5")
-        maxWindSpeedValid = true
-      }                              
-      else{
-        setmaxWindSpeedERROR("")
-        maxWindSpeedValid = true
-      }
+      var maxWindSpeedValid = isMaxWindSpeedValid(); 
 
-      var maxPollenLevelsValid = false;   /*Error checking for maxPollenLevels*/
-      if(hayfever == true){                              /*if hayfever was selected then check input should be valid*/ 
-        if (maxPollenLevels.length == 0){
-          setmaxPollenLevelsERROR("required");
-        }
-        else if(parseInt(maxPollenLevels) <= 0 || parseInt(maxPollenLevels) > 100){
-          setmaxPollenLevelsERROR("levels must be between 0 and 100");
-        }
-        else{
-          setmaxPollenLevelsERROR("")
-          maxPollenLevelsValid = true
-        }
-      } 
-      else{                                     /*if hayfever wasn't selected check to see that input is empty*/
-        if (maxPollenLevels.length != 0){
-          setmaxPollenLevelsERROR("can not enter here as hayfever hasn't been selected");
-        }
-        else{
-          setmaxPollenLevelsERROR("")
-          maxPollenLevelsValid = true
-        }
-      }                              
+      var maxPollenLevelsValid = isMaxPollenLevelsValid();                              
     
       if(timesPerWeekValid && timeBeforeNotifValid && sessionDurationValid && preferredMinTempValid && preferredMaxTempValid && maxWindSpeedValid && maxPollenLevelsValid ){ 
 
@@ -130,18 +61,111 @@ const handleSubmit = () => {
   
     }
 
-    const isPerWeekValid = () => {
+    const isPerWeekValid = () => {             /*Error checking for amount of timesPerWeek*/
       if (timesPerWeek.length == 0) {
         settimesPerWeekERROR("required");
-        return true;
+        return false;
       }
       else {
         settimesPerWeekERROR("");
-        return false;
+        return true;
       }
-     
     }
 
+    const isTimeBeforeNotifValid = () => {      /*Error checking for timeBeforeNotication*/
+      if (timeBeforeNotif.length == 0) {
+        settimeBeforeNotifERROR("required");
+        return false;
+      }
+      else if (parseInt(timeBeforeNotif) > 24) {
+        settimeBeforeNotifERROR("Must be Less than 24");
+        return false;
+      }
+      else {
+        settimeBeforeNotifERROR("");
+        return true;
+      }
+    }
+
+    const isSessionDurationValid = () => {            /*Error checking for session Duration*/
+      if (sessionDuration.length == 0) {
+        settimeBeforeNotifERROR("required");
+        return false;
+      }
+      else if (parseInt(sessionDuration) > 24) {
+        setsessionDurationERROR("Must be Less than 24");
+        return false;
+      }
+      else {
+        setsessionDurationERROR("");
+        return true;
+      }
+    }
+
+    const isPreferredMinTempValid = () => {        /*Error checking for min temp*/
+      if (preferredMinTemp.length == 0) {
+        setpreferredMinTempERROR("required");
+        return false;
+      }
+      else {
+        setpreferredMinTempERROR("");
+        return true;
+      }
+    }
+
+    const isPreferredMaxTempValid = () => {      /*Error checking for max temp*/
+      if (preferredMaxTemp.length == 0) {
+        setpreferredMaxTempERROR("required");
+      }
+      else if (parseInt(preferredMaxTemp) > 50) {
+        setpreferredMaxTempERROR("Must be Less than 50");
+      }
+      else if (parseInt(preferredMaxTemp) <= parseInt(preferredMinTemp)) {
+        setpreferredMaxTempERROR("Max must be greater then the minimum Preferred temperature");
+      }
+      else {
+        setpreferredMaxTempERROR("");
+        return true;
+      }
+    }
+
+    const isMaxWindSpeedValid = () => {        /*Error checking for maxWindSpeed*/
+      if (maxWindSpeed.length == 0) {
+        setmaxWindSpeed("5");
+        return true;
+      }
+      else {
+        setmaxWindSpeedERROR("");
+        return true;
+      }
+    }
+
+    const isMaxPollenLevelsValid = () => {             /*Error checking for maxPollenLevels*/ 
+      if (hayfever == true) { /*if hayfever was selected then check input should be valid*/
+        if (maxPollenLevels.length == 0) {
+          setmaxPollenLevelsERROR("required");
+          return false;
+        }
+        else if (parseInt(maxPollenLevels) <= 0 || parseInt(maxPollenLevels) > 100) {
+          setmaxPollenLevelsERROR("levels must be between 0 and 100");
+          return false;
+        }
+        else {
+          setmaxPollenLevelsERROR("");
+          return true;
+        }
+      }
+      else { /*if hayfever wasn't selected check to see that input is empty*/
+        if (maxPollenLevels.length != 0) {
+          setmaxPollenLevelsERROR("can not enter here as hayfever hasn't been selected");
+          return false;
+        }
+        else {
+          setmaxPollenLevelsERROR("");
+          return true;
+        }
+      }
+    }
 
   return (
       <View>
