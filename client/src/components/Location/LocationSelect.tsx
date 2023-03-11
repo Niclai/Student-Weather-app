@@ -15,6 +15,12 @@ interface LocationSelectProps {
   setLocation: (location: Location) => void;
 }
 
+/**
+ * Component for selecting a location using either Google Maps autocomplete
+ * for searching for a location manually, or using the user's current GPS
+ * coordinates. Displays the currently selected location and calls the
+ * setLocation function upon update.
+ */
 const LocationSelect: FC<LocationSelectProps> = ({ location, setLocation }) => {
   const [clearId, setClearId] = useState(0);
   const [isLoadingGPS, setLoadingGPS] = useState(false);
@@ -44,7 +50,7 @@ const LocationSelect: FC<LocationSelectProps> = ({ location, setLocation }) => {
         clearId={clearId}
       />
       {location ? (
-        <Text>Location set to: {location?.name}</Text>
+        <Text>Location set to: {location.name}</Text>
       ) : (
         <Text>Location not yet set</Text>
       )}
