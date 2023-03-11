@@ -1,4 +1,4 @@
 export type MainStackParamList = {
-  Home: any;
-  Settings: any;
+  Home: undefined;
+  Settings: undefined;
 };
