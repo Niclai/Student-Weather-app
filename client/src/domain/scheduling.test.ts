@@ -11,7 +11,7 @@ const dummyPreferences: UserPreferences = {
   preferredMinTemp: 0,
   preferredMaxTemp: 0,
   maxWindSpeed: 0,
-  pollenLevels: 0,
+  maxPollenLevels: 0,
 };
 
 const dummyDaylightHours = {

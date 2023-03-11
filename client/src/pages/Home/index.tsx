@@ -1,20 +1,28 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import React, { useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 
 // Components
-import Navbar from '../../components/Navbar';
+import Navbar from "../../components/Navbar";
+import LocationSelect from "../../components/Location/LocationSelect";
 
 // Types
-import { MainStackParamList } from '../../types/navigationParams';
+import { MainStackParamList } from "../../types/navigationParams";
+import { Location } from "../../types/location";
 
 const Home = () => {
   const navigation = useNavigation<StackNavigationProp<MainStackParamList>>();
+  const [location, setLocation] = useState<Location>();
+
   return (
     <View style={styles.wrapper}>
       <Navbar />
       <Text>Home</Text>
+      <LocationSelect
+        location={location}
+        setLocation={location => setLocation(location)}
+      />
     </View>
   );
 };

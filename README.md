@@ -14,6 +14,39 @@ this app should provide students with more confidence to do so.
 ### How to download the app: 
 ....
 
+### Running the application locally
+
+#### Prerequisites
+
+<!-- TODO #28 describe here what software must be installed, e.g. node, npm etc. -->
+
+#### Installing frontend dependencies
+
+Inside the `client` directory, run the following command:
+
+```bash
+npm install
+```
+
+#### Running application using Expo CLI
+
+First, ensure the backend proxy server is running by following the steps in the
+[server README](server/README.md).
+
+Once you know the IP address and port of the backend server, you can start the
+application using:
+
+```
+BASE_PROXY_URL=http://<server-ip>:<server-port> npm start
+```
+
+where `<server-ip>` and `<server-port>` should be replaced with the ones your
+backend proxy server is running on.
+
+#### Launching application on a mobile device
+
+<!-- TODO #28 add steps to actually use app using Expo Mobile app -->
+
 
 ### How to use the app:
 When first using the app you are prompted to enter your desired weather conditions for outdoor studying. This can be altered later on if needed.
