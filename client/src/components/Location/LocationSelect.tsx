@@ -1,5 +1,11 @@
 import { FC, useState } from "react";
-import { Button, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Button,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { getCurrentLocation } from "../../api/location";
 import { Location } from "../../types/location";
 import LocationAutocomplete from "./LocationAutocomplete";
@@ -10,17 +16,29 @@ interface LocationSelectProps {
 }
 
 const LocationSelect: FC<LocationSelectProps> = ({ location, setLocation }) => {
-  const setGPSLocation = () => {
-    getCurrentLocation().then(currentLocation => {
-      setLocation(currentLocation);
-      setClearId(prevClearId => prevClearId + 1);
-    });
-  };
   const [clearId, setClearId] = useState(0);
+  const [isLoadingGPS, setLoadingGPS] = useState(false);
+
+  const setGPSLocation = () => {
+    setLoadingGPS(true);
+    getCurrentLocation()
+      .then(currentLocation => {
+        setLocation(currentLocation);
+
+        // hack used to rerender LocationAutocomplete with a new Id, causing its
+        // input field to be cleared
+        setClearId(prevClearId => prevClearId + 1);
+      })
+      .finally(() => setLoadingGPS(false));
+  };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       <Button title="Use current GPS location" onPress={setGPSLocation} />
+      {isLoadingGPS && (
+        <ActivityIndicator size="large" style={styles.activityIndicator} />
+      )}
+
       <LocationAutocomplete
         handleLocationSelect={setLocation}
         clearId={clearId}
@@ -33,5 +51,10 @@ const LocationSelect: FC<LocationSelectProps> = ({ location, setLocation }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: { flex: 1, justifyContent: "center" },
+  activityIndicator: { position: "absolute", alignSelf: "center" },
+});
 
 export default LocationSelect;
