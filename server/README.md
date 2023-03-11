@@ -12,7 +12,27 @@ application, which is exactly what this backend service intends to achieve.
 
 ### Google Maps
 
-<!-- TODO pair to test this setup on another developer -->
+1. Navigate to the [Google Maps Platform](https://mapsplatform.google.com/)
+   in your browser.
+   ![](docs/screenshots/gmaps-api-step1.png)
+2. Click the `Get started` button and log in with your Google account (or create
+   one if you don't already have one)
+3. Fill out your billing information. You will need to provide your credit card
+   details. Google, as of time of writing, provides $200 monthly credit at no
+   charge for Google Maps APIs, so you should not be charged anything as long
+   as you don't exceed the free quota.
+   ![](docs/screenshots/gmaps-api-step2.png)
+4. Go back to the [Google Maps Platform Cloud Console](https://console.cloud.google.com/google/maps-apis/)
+   and create a new Project.
+   ![](docs/screenshots/gmaps-api-step3.png)
+5. You should now see an API key modal, copy the API key to a safe place, and
+   click the `Go to Google Maps Platform` button.
+   ![](docs/screenshots/gmaps-api-step5.png)
+6. Select the `API restriction` and limit usage to the `Geocoding API` and
+   `Places API` and click the `Restrict Key` button.
+   ![](docs/screenshots/gmaps-api-step6.png)
+
+Your Google Maps API key should now be ready to use.
 
 ## Running the server locally
 
