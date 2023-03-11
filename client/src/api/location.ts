@@ -1,4 +1,5 @@
 import * as GPSLocation from "expo-location";
+import { baseUrl } from "../env/variables";
 import { Coordinates, Location } from "../types/location";
 
 async function getCurrentCoordinates(): Promise<Coordinates> {
