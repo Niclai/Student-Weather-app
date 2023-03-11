@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Button, Text, View } from "react-native";
 import { getCurrentLocation } from "../../api/location";
 import { Location } from "../../types/location";
@@ -11,13 +11,20 @@ interface LocationSelectProps {
 
 const LocationSelect: FC<LocationSelectProps> = ({ location, setLocation }) => {
   const setGPSLocation = () => {
-    getCurrentLocation().then(currentLocation => setLocation(currentLocation));
+    getCurrentLocation().then(currentLocation => {
+      setLocation(currentLocation);
+      setClearId(prevClearId => prevClearId + 1);
+    });
   };
+  const [clearId, setClearId] = useState(0);
 
   return (
     <View style={{ flex: 1 }}>
       <Button title="Use current GPS location" onPress={setGPSLocation} />
-      <LocationAutocomplete handleLocationSelect={setLocation} />
+      <LocationAutocomplete
+        handleLocationSelect={setLocation}
+        clearId={clearId}
+      />
       {location ? (
         <Text>Location set to: {location?.name}</Text>
       ) : (

@@ -1,11 +1,15 @@
-import React, { FC } from "react";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import React, { FC, useEffect, useRef } from "react";
+import {
+  GooglePlacesAutocomplete,
+  GooglePlacesAutocompleteRef,
+} from "react-native-google-places-autocomplete";
 import { getCoordinates } from "../../api/location";
 import { baseUrl } from "../../env/variables";
 import { Location } from "../../types/location";
 
 interface LocationAutocompleteProps {
   handleLocationSelect: (location: Location) => void;
+  clearId: number;
 }
 
 /**
@@ -18,9 +22,15 @@ interface LocationAutocompleteProps {
  */
 const LocationAutocomplete: FC<LocationAutocompleteProps> = ({
   handleLocationSelect: setSelectedLocation,
+  clearId,
 }) => {
+  const ref = useRef<GooglePlacesAutocompleteRef>(null);
+
+  useEffect(() => ref.current?.clear(), [clearId]);
+
   return (
     <GooglePlacesAutocomplete
+      ref={ref}
       placeholder="Search"
       onPress={async data => {
         setSelectedLocation({
