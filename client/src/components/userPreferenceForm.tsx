@@ -191,57 +191,57 @@ const handleSubmit = () => {
               <View>
                 <Text>How Many times per week would you like to study outdoors?</Text>
                 <TextInput keyboardType='numeric' onChangeText={val => settimesPerWeek(val)} value={timesPerWeek} />
+                {timesPerWeekERROR.length > 0 &&
+                
+                  <Text>{timesPerWeekERROR}</Text>
+                }
               </View>
-              {timesPerWeekERROR.length > 0 &&
-          
-                <Text>{timesPerWeekERROR}</Text>
-              }
-
+              
               <View>
                 <Text>How long before your scheduled study session would you like to be notified (hours)? </Text>
                 <TextInput keyboardType='numeric' onChangeText={val => settimeBeforeNotif(val)} value={timeBeforeNotif} />
-              </View>
-              {timeBeforeNotifERROR.length > 0 &&
+                {timeBeforeNotifERROR.length > 0 &&
           
-                <Text>{timeBeforeNotifERROR}</Text>
-              }
-
+                  <Text>{timeBeforeNotifERROR}</Text>
+                }
+              </View>
+              
               <View>
                 <Text>Preferred study session duration? (hours) </Text>
                 <TextInput keyboardType='numeric' onChangeText={val => setsessionDuration(val)} value={sessionDuration} />
-              </View>
-              {sessionDurationERROR.length > 0 &&
+                {sessionDurationERROR.length > 0 &&
           
-                <Text>{sessionDurationERROR}</Text>
-              }
-
+                  <Text>{sessionDurationERROR}</Text>
+                }
+              </View>
+              
               <View>
                 <Text>Prefered minimum Temperature for outdoor study sessions (°c)</Text>
                 <TextInput keyboardType='numeric' onChangeText={val => setpreferredMinTemp(val)} value={preferredMinTemp} />
-              </View>
-              {preferredMinTempERROR.length > 0 &&
+                {preferredMinTempERROR.length > 0 &&
           
-                <Text>{preferredMinTempERROR}</Text>
-              }
-
+                  <Text>{preferredMinTempERROR}</Text>
+                }
+              </View>
+              
               <View>
                 <Text>Prefered maximum Temperature for outdoor study sessions (°c)</Text>
                 <TextInput keyboardType='numeric' onChangeText={val => setpreferredMaxTemp(val)} value={preferredMaxTemp} />
-              </View>
-              {preferredMaxTempERROR.length > 0 &&
+                {preferredMaxTempERROR.length > 0 &&
           
-                <Text>{preferredMaxTempERROR}</Text>
-              }
-
+                  <Text>{preferredMaxTempERROR}</Text>
+                }
+              </View>
+              
               <View>
                 <Text>Max wind speed? km/h</Text>
                 <TextInput keyboardType='numeric' onChangeText={val => setmaxWindSpeed(val)} value={maxWindSpeed} />
-              </View>
-              {maxWindSpeedERROR.length > 0 &&
+                {maxWindSpeedERROR.length > 0 &&
           
-                <Text>{maxWindSpeedERROR}</Text>
-              }
-
+                  <Text>{maxWindSpeedERROR}</Text>
+                }
+              </View>
+              
               <Button onPress={handleSubmit} title='Save changes' />
               <Text>{submitted}</Text>
 
