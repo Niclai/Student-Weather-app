@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
  * Redirect to mainpage if user opts to skip setting up their config
  */
 
-export default function initialConfig() {
+export function initialConfig() {
     const [isFirstVisit, setIsFirstVisit] = useState(false);
     const [optOut, setOptOut] = useState(false);
 
