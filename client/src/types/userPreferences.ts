@@ -26,5 +26,4 @@ export interface UserPreferences {
    * only needed if hayFever=True
    */
   maxPollenLevels: number;
-  }
-  
+}
