@@ -15,9 +15,11 @@ const hourInMilliseconds = 60 * 60 * 1000;
  * location.
  */
 const CurrentWeatherStats: FC<CurrentWeatherStatsProps> = ({ coordinates }) => {
-  const [weather, setWeather] = useState<Weather>(
-    getCurrentWeather(coordinates)
-  );
+  const [weather, setWeather] = useState<Weather>();
+
+  useEffect(() => {
+    setWeather(getCurrentWeather(coordinates));
+  }, [coordinates]);
 
   // update current weather every hour
   useEffect(() => {
