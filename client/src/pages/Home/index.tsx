@@ -7,9 +7,6 @@ import LocationSelect from "../../components/Location/LocationSelect";
 
 // Types
 import { Location } from "../../types/location";
-import WeatherStats from "../../components/Weather/WeatherStats";
-import { WeatherConditions } from "../../types/weather";
-import { getCurrentWeather } from "../../api/weather";
 import CurrentWeatherStats from "../../components/Weather/CurrentWeatherStats";
 
 const Home = () => {
