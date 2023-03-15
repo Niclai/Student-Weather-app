@@ -21,8 +21,8 @@ const dummyDaylightHours = {
 
 const generateDate = (
   hours: number,
-  minutes: number = 0,
-  isoDate: string = "2023-03-04"
+  minutes = 0,
+  isoDate = "2023-03-04"
 ): Date =>
   new Date(
     `${isoDate}T${String(hours).padStart(2, "0")}:${String(minutes).padStart(
@@ -31,7 +31,7 @@ const generateDate = (
     )}`
   );
 
-const generateDaylightHours = (isoDate: string = "2023-03-04") => ({
+const generateDaylightHours = (isoDate = "2023-03-04") => ({
   sunrise: generateDate(7, 0, isoDate),
   sunset: generateDate(20, 0, isoDate),
 });
@@ -48,9 +48,9 @@ interface ForecastOverrideTable {
 
 const generateDummyForecasts = (
   overrides: ForecastOverrideTable = {},
-  isoDate: string = "2023-03-04"
+  isoDate = "2023-03-04"
 ): Forecast[] =>
-  Array.apply(null, Array(24)).map((_, i) => {
+  [...Array(24)].map((_, i) => {
     const time = generateDate(i, 0, isoDate);
     return overrides[i] != null
       ? {
