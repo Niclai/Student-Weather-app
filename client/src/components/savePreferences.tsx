@@ -20,7 +20,7 @@ interface Props {
   children: ReactNode;
 }
 
-const UserPreferencesContext = React.createContext<UserPreferencesContextType | undefined>(undefined); // undefined for now
+const UserPreferencesContext = React.createContext<UserPreferencesContextType>({userPreferences:undefined, updateUserPreferences:()=>{}}); // undefined for now
 
 interface UserPreferencesContextType {
   userPreferences: UserPreferences | undefined;
