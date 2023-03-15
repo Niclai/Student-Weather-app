@@ -22,6 +22,8 @@ export enum WeatherConditions {
   SlightRain,
   ModerateRain,
   HeavyRain,
+  LightFreezingRain,
+  HeavyFreezingRain,
   SlightSnow,
   ModerateSnow,
   HeavySnow,
@@ -35,5 +37,3 @@ export enum WeatherConditions {
   ThunderstormWithSlightHail,
   ThunderstormWithHeavyHail,
 }
-
-WeatherConditions.ClearSky.toString();

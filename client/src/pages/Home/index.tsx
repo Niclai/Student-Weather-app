@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState } from "react";  
 import { StyleSheet, Text, View } from "react-native";
 
 // Components
 import Navbar from "../../components/Navbar";
 import LocationSelect from "../../components/Location/LocationSelect";
 
+
 // Types
 import { Location } from "../../types/location";
 import CurrentWeatherStats from "../../components/Weather/CurrentWeatherStats";
+
 
 const Home = () => {
   const [location, setLocation] = useState<Location>();
