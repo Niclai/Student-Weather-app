@@ -10,6 +10,8 @@ import LocationSelect from "../../components/Location/LocationSelect";
 // Types
 import { MainStackParamList } from "../../types/navigationParams";
 import { Location } from "../../types/location";
+import WeatherStats from "../../components/Weather/WeatherStats";
+import { WeatherConditions } from "../../types/weather";
 
 const Home = () => {
   const navigation = useNavigation<StackNavigationProp<MainStackParamList>>();
@@ -22,6 +24,14 @@ const Home = () => {
       <LocationSelect
         location={location}
         setLocation={location => setLocation(location)}
+      />
+      <WeatherStats
+        isDay={true}
+        weather={{
+          temperature: 13.2,
+          windSpeed: 5,
+          conditions: WeatherConditions.Fog,
+        }}
       />
     </View>
   );

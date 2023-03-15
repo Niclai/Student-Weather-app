@@ -26,7 +26,7 @@ export enum WeatherConditions {
   ModerateSnow,
   HeavySnow,
   SnowGrains,
-  SlightRainShow,
+  SlightRainShower,
   ModerateRainShower,
   ViolentRainShower,
   SlightSnowShower,
