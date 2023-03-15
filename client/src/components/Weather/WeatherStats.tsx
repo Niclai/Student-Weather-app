@@ -93,6 +93,10 @@ const getWeatherIcon = (
   return isDay ? baseIcon.day : baseIcon.night;
 };
 
+/**
+ * Component for displaying basic weather stats as well as an icon to show
+ * current weather conditions based on the given weather and time of day.
+ */
 const WeatherStats: FC<WeatherStatsProps> = ({ weather, isDay }) => {
   const WeatherIcon = getWeatherIcon(weather.conditions, isDay);
 

@@ -12,6 +12,7 @@ import { MainStackParamList } from "../../types/navigationParams";
 import { Location } from "../../types/location";
 import WeatherStats from "../../components/Weather/WeatherStats";
 import { WeatherConditions } from "../../types/weather";
+import { getCurrentWeather } from "../../api/weather";
 
 const Home = () => {
   const navigation = useNavigation<StackNavigationProp<MainStackParamList>>();
@@ -25,14 +26,12 @@ const Home = () => {
         location={location}
         setLocation={location => setLocation(location)}
       />
-      <WeatherStats
-        isDay={true}
-        weather={{
-          temperature: 13.2,
-          windSpeed: 5,
-          conditions: WeatherConditions.Fog,
-        }}
-      />
+      {location && (
+        <WeatherStats
+          isDay={true}
+          weather={getCurrentWeather(location.coords)}
+        />
+      )}
     </View>
   );
 };
