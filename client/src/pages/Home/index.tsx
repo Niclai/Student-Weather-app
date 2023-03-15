@@ -10,6 +10,7 @@ import { Location } from "../../types/location";
 import WeatherStats from "../../components/Weather/WeatherStats";
 import { WeatherConditions } from "../../types/weather";
 import { getCurrentWeather } from "../../api/weather";
+import CurrentWeatherStats from "../../components/Weather/CurrentWeatherStats";
 
 const Home = () => {
   const [location, setLocation] = useState<Location>();
@@ -22,12 +23,7 @@ const Home = () => {
         location={location}
         setLocation={location => setLocation(location)}
       />
-      {location && (
-        <WeatherStats
-          isDay={true}
-          weather={getCurrentWeather(location.coords)}
-        />
-      )}
+      {location && <CurrentWeatherStats coordinates={location.coords} />}
     </View>
   );
 };
