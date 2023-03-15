@@ -17,6 +17,7 @@ on:
 jobs:
   typecheck_and_test:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -30,6 +31,14 @@ jobs:
       - name: TypeScript type check
         working-directory: client
         run: npx tsc --noEmit
+
+      - name: Lint
+        working-directory: client
+        run: npm run lint
+
+      - name: Check formatting
+        working-directory: client
+        run: npm run format:check
 
       - name: Run tests
         working-directory: client
