@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Button, Linking, Text, View } from "react-native";
+import { Linking, Text, View, StyleSheet } from "react-native";
 import { SvgProps } from "react-native-svg";
 import { Weather, WeatherConditions } from "../../types/weather";
 import * as Icons from "./WeatherIcons";
@@ -102,24 +102,35 @@ const WeatherStats: FC<WeatherStatsProps> = ({ weather, isDay }) => {
       <Text>{weather.windSpeed}km/h</Text>
       <WeatherIcon width={100} height={100} />
       <Text>
-        <Button
+        <Text
           onPress={() =>
             Linking.openURL(
               "https://www.figma.com/community/file/1102960831369614781"
             )
           }
-          title="Weather Icons created by Roman Davydko"
-        />
-        , licensed under
-        <Button
+          style={styles.link}
+        >
+          Weather Icons created by Roman Davydko
+        </Text>
+        , licensed under&nbsp;
+        <Text
           onPress={() => {
             Linking.openURL("https://creativecommons.org/licenses/by/4.0/");
           }}
-          title="CC BY 4.0"
-        />
+          style={styles.link}
+        >
+          CC BY 4.0
+        </Text>
       </Text>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  link: {
+    color: "#1a0dab",
+    textDecorationLine: "underline",
+  },
+});
 
 export default WeatherStats;
