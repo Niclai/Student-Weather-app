@@ -434,5 +434,4 @@ test("scheduleWeek filters out hours that happened in the past", () => {
   schedule.forEach(session =>
     expect(session.getDate()).toEqual(midnightTomorrow.getDate())
   );
-  // TODO test all are in future
 });
