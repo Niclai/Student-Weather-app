@@ -392,3 +392,5 @@ test("scheduleWeek returns empty list given no candidate sessions", () => {
 
   expect(scheduleWeek(weekForecasts, temperaturePreferences)).toHaveLength(0);
 });
+
+xtest("scheduleWeek filters out hours that happened in the past", () => {});

@@ -25,9 +25,12 @@ const scheduleWeek = (
     );
   }
 
-  const candidates = weekForecasts.flatMap(day =>
-    scheduleDay(day.daylightHours, day.forecasts, userPreferences)
-  );
+  const currentTime = new Date();
+  const candidates = weekForecasts
+    .flatMap(day =>
+      scheduleDay(day.daylightHours, day.forecasts, userPreferences)
+    )
+    .filter(session => session >= currentTime);
 
   return chooseRandom(candidates, userPreferences.timesPerWeek);
 };
