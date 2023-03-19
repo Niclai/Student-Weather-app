@@ -1,8 +1,6 @@
 import React, { useContext } from "react";
 import { useState } from "react";
 import { Text, View, TextInput, Button, Switch, FlatList } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { UserPreferencesContext } from "../../providers/UserPreferences";
 import { Location } from "../../types/location";
 import LocationSelect from "../Location/LocationSelect";
@@ -212,14 +210,15 @@ export default function UserPreferenceForm() {
   };
 
   const components = [
-    <Text>Edit Preferences:</Text>,
+    <Text key={0}>Edit Preferences:</Text>,
 
     <LocationSelect
+      key={1}
       location={location}
       setLocation={location => setLocation(location)}
     />,
 
-    <View>
+    <View key={2}>
       <View>
         <Text>Do you have hay fever?</Text>
         <Switch onValueChange={showMaxPollenLevels} value={hayfever} />

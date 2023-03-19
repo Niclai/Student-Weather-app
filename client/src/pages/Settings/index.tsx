@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import UserPreferenceForm from "../../components/Preferences/UserPreferenceForm";
-import { ScrollView } from "react-native-gesture-handler";
 
 const Settings = () => {
   return (
