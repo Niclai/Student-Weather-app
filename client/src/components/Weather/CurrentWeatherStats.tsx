@@ -18,13 +18,13 @@ const CurrentWeatherStats: FC<CurrentWeatherStatsProps> = ({ coordinates }) => {
   const [weather, setWeather] = useState<Weather>();
 
   useEffect(() => {
-    setWeather(getCurrentWeather(coordinates));
+    getCurrentWeather(coordinates).then(w => setWeather(w));
   }, [coordinates]);
 
   // update current weather every hour
   useEffect(() => {
     const interval = setInterval(
-      () => setWeather(getCurrentWeather(coordinates)),
+      () => getCurrentWeather(coordinates).then(w => setWeather(w)),
       hourInMilliseconds
     );
     return () => {

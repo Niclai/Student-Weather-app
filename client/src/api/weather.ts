@@ -4,16 +4,16 @@ import { Coordinates } from "../types/location";
 const baseUrl = "https://api.open-meteo.com";
 
 interface OpenMeteoCurrentWeatherRespones {
-  current_weather:{
+  current_weather: {
     temperature: number;
     windspeed: number;
     weathercode: number;
-  }
-};
+  };
+}
 
 const getWeatherCode = (weatherCode: number) => {
-  let weatherCodeMap = new Map();
-  
+  const weatherCodeMap = new Map();
+
   weatherCodeMap.set(0, WeatherConditions.ClearSky);
   weatherCodeMap.set(1, WeatherConditions.MainlyClear);
   weatherCodeMap.set(2, WeatherConditions.PartlyCloudy);
@@ -44,17 +44,18 @@ const getWeatherCode = (weatherCode: number) => {
   weatherCodeMap.set(99, WeatherConditions.ThunderstormWithHeavyHail);
 
   return weatherCodeMap.get(weatherCode);
-}
+};
 
-
-const getCurrentWeather = async (coordinates: Coordinates): Promise<Weather> => {
+const getCurrentWeather = async (
+  coordinates: Coordinates
+): Promise<Weather> => {
   const response = await fetch(
     `${baseUrl}/v1/forecast?latitude=${coordinates.lat}&longitude=${coordinates.long}` +
       `&current_weather=true`
   );
 
   const json: OpenMeteoCurrentWeatherRespones = await response.json();
-  const { current_weather } = json
+  const { current_weather } = json;
 
   return {
     temperature: current_weather.temperature,
