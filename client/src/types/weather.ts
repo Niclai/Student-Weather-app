@@ -1,5 +1,5 @@
 /**
- * TODO implement in #38
+ * Weather condition statistics and information
  */
 export interface Weather {
   temperature: number;
@@ -7,6 +7,9 @@ export interface Weather {
   conditions: WeatherConditions;
 }
 
+/**
+ * Type of high-level weather condition
+ */
 export enum WeatherConditions {
   ClearSky,
   MainlyClear,
