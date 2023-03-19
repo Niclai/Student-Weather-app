@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 // Components
@@ -9,14 +9,19 @@ import LocationSelect from "../../components/Location/LocationSelect";
 import { Location } from "../../types/location";
 import NextStudySession from "../../components/Scheduling/NextStudySession";
 import CurrentWeatherStats from "../../components/Weather/CurrentWeatherStats";
+import { UserPreferencesContext } from "../../providers/UserPreferences";
 
 const Home = () => {
   const [location, setLocation] = useState<Location>();
+  const { userPreferences } = useContext(UserPreferencesContext);
 
   return (
     <View style={styles.wrapper}>
       <Navbar />
       <Text>Home</Text>
+      {userPreferences && (
+        <Text>Max wind speed preference: {userPreferences?.maxWindSpeed}</Text>
+      )}
       <LocationSelect
         location={location}
         setLocation={location => setLocation(location)}
