@@ -11,6 +11,10 @@ interface OpenMeteoCurrentWeatherRespones {
   };
 }
 
+/**
+ * Map the weather code returned from Open-Meteo into a WeatherConditions enum
+ * member for easier handling in other parts of the application.
+ */
 const getWeatherCode = (weatherCode: number) => {
   const weatherCodeMap = new Map();
 
@@ -46,6 +50,11 @@ const getWeatherCode = (weatherCode: number) => {
   return weatherCodeMap.get(weatherCode);
 };
 
+/**
+ * Get the current weather from the Open-Meteo API.
+ * @param coordinates of the location to fetch the current weather for.
+ * @returns the current Weather stats
+ */
 const getCurrentWeather = async (
   coordinates: Coordinates
 ): Promise<Weather> => {
