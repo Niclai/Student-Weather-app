@@ -14,17 +14,20 @@ const UserPreferencesContext = React.createContext<UserPreferencesContextType>({
 });
 
 interface UserPreferencesContextType {
-  userPreferences: UserPreferences | undefined;
+  /**
+   * undefined is used when preferences are still being loaded. null is used
+   * when no user preferences have been set
+   */
+  userPreferences: UserPreferences | null | undefined;
   updateUserPreferences: (userPreferences: UserPreferences) => void;
 }
 
 const UserPreferenceProvider: FC<Props> = ({ children }) => {
-  const [userPreferences, setUserPreferences] = useState<UserPreferences>();
+  const [userPreferences, setUserPreferences] =
+    useState<UserPreferences | null>();
 
   useEffect(() => {
-    getData<UserPreferences>(storageKey).then(
-      data => data && setUserPreferences(data)
-    );
+    getData<UserPreferences>(storageKey).then(data => setUserPreferences(data));
   }, []);
 
   const updateUserPreferences = (userPreferences: UserPreferences) => {
