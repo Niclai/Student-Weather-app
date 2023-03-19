@@ -16,11 +16,13 @@ const NextStudySession: FC<NextStudySessionProps> = ({
   coordinates,
   userPreferences,
 }) => {
-  const [forecast, setForecast] = useState<Forecast[][]>();
-  const scheduling =
-    forecast != null
-      ? scheduleWeek(
-          forecast.map(f => ({
+  const [scheduling, setScheduling] = useState<Date[]>();
+
+  const updateSchedule = () => {
+    getWeekForecast(coordinates).then(forecasts =>
+      setScheduling(
+        scheduleWeek(
+          forecasts.map(f => ({
             forecasts: f,
             daylightHours: {
               // TODO use actual sunrise and sunset hours one #48 is done
@@ -30,11 +32,13 @@ const NextStudySession: FC<NextStudySessionProps> = ({
           })),
           userPreferences
         )
-      : null;
+      )
+    );
+  };
 
   useEffect(() => {
-    getWeekForecast(coordinates).then(f => setForecast(f));
-  }, [coordinates]);
+    updateSchedule();
+  }, [coordinates, userPreferences]);
 
   return scheduling == null ? (
     <Text>Scheduling study sessions...</Text>
