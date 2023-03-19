@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { Text } from "react-native";
-import { getDaylightHours, getWeeklyDaylightHours } from "../../api/daylight";
+import { getWeeklyDaylightHours } from "../../api/daylight";
 
 import { getWeekForecast } from "../../api/forecast";
 import { isSessionValid, scheduleWeek } from "../../domain/scheduling";
