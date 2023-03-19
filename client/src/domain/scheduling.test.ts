@@ -4,6 +4,7 @@ import { UserPreferences } from "../types/userPreferences";
 import { scheduleDay, scheduleWeek } from "./scheduling";
 
 const dummyPreferences: UserPreferences = {
+  location: undefined,
   hayFever: false,
   sessionDuration: 1,
   timesPerWeek: 2,
