@@ -8,21 +8,19 @@ import LocationSelect from "../../components/Location/LocationSelect";
 // Types
 import { Location } from "../../types/location";
 import CurrentWeatherStats from "../../components/Weather/CurrentWeatherStats";
-import { UserPreferencesContext } from "../../components/savePreferences";
+import { UserPreferencesContext } from "../../providers/UserPreferences";
 
 const Home = () => {
   const [location, setLocation] = useState<Location>();
-  const { userPreferences } = useContext(
-    UserPreferencesContext
-  );
+  const { userPreferences } = useContext(UserPreferencesContext);
 
   return (
     <View style={styles.wrapper}>
       <Navbar />
       <Text>Home</Text>
-      {userPreferences && <Text>
-        Max wind speed preference: { userPreferences?.maxWindSpeed }
-      </Text>}
+      {userPreferences && (
+        <Text>Max wind speed preference: {userPreferences?.maxWindSpeed}</Text>
+      )}
       <LocationSelect
         location={location}
         setLocation={location => setLocation(location)}
