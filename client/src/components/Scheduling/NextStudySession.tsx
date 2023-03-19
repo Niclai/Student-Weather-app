@@ -1,8 +1,10 @@
 import { FC, useEffect, useState } from "react";
 import { Text } from "react-native";
+import { getDaylightHours, getWeeklyDaylightHours } from "../../api/daylight";
 
 import { getWeekForecast } from "../../api/forecast";
 import { isSessionValid, scheduleWeek } from "../../domain/scheduling";
+import { DaylightHours } from "../../types/daylightHours";
 import { Forecast } from "../../types/forecast";
 import { Coordinates } from "../../types/location";
 import { UserPreferences } from "../../types/userPreferences";
@@ -24,16 +26,15 @@ const NextStudySession: FC<NextStudySessionProps> = ({
 }) => {
   const [scheduling, setScheduling] = useState<Date[]>();
 
-  const updateSchedule = (forecasts: Forecast[][]) => {
+  const updateSchedule = (
+    forecasts: Forecast[][],
+    daylightHours: DaylightHours[]
+  ) => {
     setScheduling(
       scheduleWeek(
-        forecasts.map(f => ({
+        forecasts.map((f, i) => ({
           forecasts: f,
-          daylightHours: {
-            // TODO use actual sunrise and sunset hours one #48 is done
-            sunrise: new Date(f[0].time),
-            sunset: new Date(f[23].time),
-          },
+          daylightHours: daylightHours[i],
         })),
         userPreferences
       )
@@ -42,21 +43,27 @@ const NextStudySession: FC<NextStudySessionProps> = ({
 
   // Update schedule whenever coordinates or preferences change
   useEffect(() => {
-    getWeekForecast(coordinates).then(updateSchedule);
+    Promise.all([
+      getWeekForecast(coordinates),
+      getWeeklyDaylightHours(coordinates),
+    ]).then(promise => updateSchedule(...promise));
   }, [coordinates, userPreferences]);
 
   // Verify schedule every hour and update entire schedule if any session
   // becomes invalid
   useEffect(() => {
     const interval = setInterval(() => {
-      getWeekForecast(coordinates).then(forecasts => {
+      Promise.all([
+        getWeekForecast(coordinates),
+        getWeeklyDaylightHours(coordinates),
+      ]).then(([forecasts, daylightHours]) => {
         const flatForecasts = forecasts.flat();
         if (
           scheduling?.some(
             session => !isSessionValid(session, flatForecasts, userPreferences)
           )
         ) {
-          updateSchedule(forecasts);
+          updateSchedule(forecasts, daylightHours);
         }
       });
     }, hourInMilliseconds);
