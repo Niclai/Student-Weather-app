@@ -1,7 +1,9 @@
 import React, { useContext } from "react";
 import { useState } from "react";
-import { Text, View, TextInput, Button, Switch } from "react-native";
+import { Text, View, TextInput, Button, Switch, FlatList } from "react-native";
 import { UserPreferencesContext } from "../../providers/UserPreferences";
+import { Location } from "../../types/location";
+import LocationSelect from "../Location/LocationSelect";
 
 export default function UserPreferenceForm() {
   const { userPreferences, updateUserPreferences } = useContext(
@@ -9,6 +11,10 @@ export default function UserPreferenceForm() {
   );
 
   const [submitted, setSubmitted] = useState("");
+
+  const [location, setLocation] = useState<Location | undefined>(
+    userPreferences?.location
+  );
 
   const [hayfever, sethayfever] = useState<boolean>(
     userPreferences?.hayFever ?? false
@@ -86,6 +92,7 @@ export default function UserPreferenceForm() {
         preferredMaxTemp: parseFloat(preferredMaxTemp),
         maxWindSpeed: parseFloat(maxWindSpeed),
         maxPollenLevels: parseFloat(maxPollenLevels || "100"),
+        location,
       });
 
       setSubmitted("Preferences Changed");
@@ -202,108 +209,117 @@ export default function UserPreferenceForm() {
     }
   };
 
-  return (
-    <View>
+  const components = [
+    <Text key={0}>Edit Preferences:</Text>,
+
+    <LocationSelect
+      key={1}
+      location={location}
+      setLocation={location => setLocation(location)}
+    />,
+
+    <View key={2}>
       <View>
-        <Text>Edit Preferences:</Text>
-        <View>
-          <Text>Do you have hay fever?</Text>
-          <Switch onValueChange={showMaxPollenLevels} value={hayfever} />
-        </View>
-        {hayfever ==
-          true /*show max pollen levels input box when hayfever is switched on (conditional rendering)*/ && (
-          <View>
-            <Text>Maximum pollen levels for outdoor study session (%)</Text>
-            <TextInput
-              keyboardType="numeric"
-              autoFocus={false}
-              onChangeText={val => setmaxPollenLevels(val)}
-              value={maxPollenLevels}
-            />
-            {maxPollenLevelsERROR.length > 0 && (
-              <Text>{maxPollenLevelsERROR}</Text>
-            )}
-          </View>
-        )}
-
-        <View>
-          <Text>How Many times per week would you like to study outdoors?</Text>
-          <TextInput
-            keyboardType="numeric"
-            onChangeText={val => settimesPerWeek(val)}
-            value={timesPerWeek}
-          />
-          {timesPerWeekERROR.length > 0 && <Text>{timesPerWeekERROR}</Text>}
-        </View>
-
-        <View>
-          <Text>
-            How long before your scheduled study session would you like to be
-            notified (hours)?{" "}
-          </Text>
-          <TextInput
-            keyboardType="numeric"
-            onChangeText={val => settimeBeforeNotif(val)}
-            value={timeBeforeNotif}
-          />
-          {timeBeforeNotifERROR.length > 0 && (
-            <Text>{timeBeforeNotifERROR}</Text>
-          )}
-        </View>
-
-        <View>
-          <Text>Preferred study session duration? (hours) </Text>
-          <TextInput
-            keyboardType="numeric"
-            onChangeText={val => setsessionDuration(val)}
-            value={sessionDuration}
-          />
-          {sessionDurationERROR.length > 0 && (
-            <Text>{sessionDurationERROR}</Text>
-          )}
-        </View>
-
-        <View>
-          <Text>
-            Prefered minimum Temperature for outdoor study sessions (°c)
-          </Text>
-          <TextInput
-            keyboardType="numeric"
-            onChangeText={val => setpreferredMinTemp(val)}
-            value={preferredMinTemp}
-          />
-          {preferredMinTempERROR.length > 0 && (
-            <Text>{preferredMinTempERROR}</Text>
-          )}
-        </View>
-
-        <View>
-          <Text>
-            Prefered maximum Temperature for outdoor study sessions (°c)
-          </Text>
-          <TextInput
-            keyboardType="numeric"
-            onChangeText={val => setpreferredMaxTemp(val)}
-            value={preferredMaxTemp}
-          />
-          {preferredMaxTempERROR.length > 0 && (
-            <Text>{preferredMaxTempERROR}</Text>
-          )}
-        </View>
-
-        <View>
-          <Text>Max wind speed? km/h</Text>
-          <TextInput
-            keyboardType="numeric"
-            onChangeText={val => setmaxWindSpeed(val)}
-            value={maxWindSpeed}
-          />
-          {maxWindSpeedERROR.length > 0 && <Text>{maxWindSpeedERROR}</Text>}
-        </View>
-
-        <Button onPress={handleSubmit} title="Save changes" />
-        <Text>{submitted}</Text>
+        <Text>Do you have hay fever?</Text>
+        <Switch onValueChange={showMaxPollenLevels} value={hayfever} />
       </View>
-    </View>
+      {hayfever ==
+        true /*show max pollen levels input box when hayfever is switched on (conditional rendering)*/ && (
+        <View>
+          <Text>Maximum pollen levels for outdoor study session (%)</Text>
+          <TextInput
+            keyboardType="numeric"
+            autoFocus={false}
+            onChangeText={val => setmaxPollenLevels(val)}
+            value={maxPollenLevels}
+          />
+          {maxPollenLevelsERROR.length > 0 && (
+            <Text>{maxPollenLevelsERROR}</Text>
+          )}
+        </View>
+      )}
+
+      <View>
+        <Text>How Many times per week would you like to study outdoors?</Text>
+        <TextInput
+          keyboardType="numeric"
+          onChangeText={val => settimesPerWeek(val)}
+          value={timesPerWeek}
+        />
+        {timesPerWeekERROR.length > 0 && <Text>{timesPerWeekERROR}</Text>}
+      </View>
+
+      <View>
+        <Text>
+          How long before your scheduled study session would you like to be
+          notified (hours)?{" "}
+        </Text>
+        <TextInput
+          keyboardType="numeric"
+          onChangeText={val => settimeBeforeNotif(val)}
+          value={timeBeforeNotif}
+        />
+        {timeBeforeNotifERROR.length > 0 && <Text>{timeBeforeNotifERROR}</Text>}
+      </View>
+
+      <View>
+        <Text>Preferred study session duration? (hours) </Text>
+        <TextInput
+          keyboardType="numeric"
+          onChangeText={val => setsessionDuration(val)}
+          value={sessionDuration}
+        />
+        {sessionDurationERROR.length > 0 && <Text>{sessionDurationERROR}</Text>}
+      </View>
+
+      <View>
+        <Text>
+          Prefered minimum Temperature for outdoor study sessions (°c)
+        </Text>
+        <TextInput
+          keyboardType="numeric"
+          onChangeText={val => setpreferredMinTemp(val)}
+          value={preferredMinTemp}
+        />
+        {preferredMinTempERROR.length > 0 && (
+          <Text>{preferredMinTempERROR}</Text>
+        )}
+      </View>
+
+      <View>
+        <Text>
+          Prefered maximum Temperature for outdoor study sessions (°c)
+        </Text>
+        <TextInput
+          keyboardType="numeric"
+          onChangeText={val => setpreferredMaxTemp(val)}
+          value={preferredMaxTemp}
+        />
+        {preferredMaxTempERROR.length > 0 && (
+          <Text>{preferredMaxTempERROR}</Text>
+        )}
+      </View>
+
+      <View>
+        <Text>Max wind speed? km/h</Text>
+        <TextInput
+          keyboardType="numeric"
+          onChangeText={val => setmaxWindSpeed(val)}
+          value={maxWindSpeed}
+        />
+        {maxWindSpeedERROR.length > 0 && <Text>{maxWindSpeedERROR}</Text>}
+      </View>
+
+      <Button onPress={handleSubmit} title="Save changes" />
+      <Text>{submitted}</Text>
+    </View>,
+  ];
+
+  return (
+    <FlatList
+      data={components}
+      keyboardShouldPersistTaps="handled"
+      renderItem={item => item.item}
+    />
   );
 }

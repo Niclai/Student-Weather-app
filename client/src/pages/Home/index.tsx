@@ -1,47 +1,33 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 // Components
 import Navbar from "../../components/Navbar";
-import LocationSelect from "../../components/Location/LocationSelect";
 
 // Types
-import { Location } from "../../types/location";
 import NextStudySession from "../../components/Scheduling/NextStudySession";
 import CurrentWeatherStats from "../../components/Weather/CurrentWeatherStats";
+
+// Context
 import { UserPreferencesContext } from "../../providers/UserPreferences";
 
 const Home = () => {
-  const [location, setLocation] = useState<Location>();
   const { userPreferences } = useContext(UserPreferencesContext);
+  const location = userPreferences?.location;
 
   return (
     <View style={styles.wrapper}>
       <Navbar />
       <Text>Home</Text>
-      {userPreferences && (
-        <Text>Max wind speed preference: {userPreferences?.maxWindSpeed}</Text>
-      )}
-      <LocationSelect
-        location={location}
-        setLocation={location => setLocation(location)}
-      />
       {location && (
-        <NextStudySession
-          coordinates={location.coords}
-          userPreferences={{
-            hayFever: false,
-            timesPerWeek: 1,
-            maxWindSpeed: 20,
-            preferredMinTemp: 0,
-            preferredMaxTemp: 50,
-            timeBeforeNotif: 1,
-            maxPollenLevels: 100,
-            sessionDuration: 1,
-          }}
-        />
+        <>
+          <CurrentWeatherStats coordinates={location.coords} />
+          <NextStudySession
+            coordinates={location.coords}
+            userPreferences={userPreferences}
+          />
+        </>
       )}
-      {location && <CurrentWeatherStats coordinates={location.coords} />}
     </View>
   );
 };
