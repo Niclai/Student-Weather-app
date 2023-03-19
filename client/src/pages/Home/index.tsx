@@ -3,7 +3,6 @@ import { StyleSheet, Text, View } from "react-native";
 
 // Components
 import Navbar from "../../components/Navbar";
-import LocationSelect from "../../components/Location/LocationSelect";
 
 // Types
 import { Location } from "../../types/location";
@@ -11,8 +10,8 @@ import CurrentWeatherStats from "../../components/Weather/CurrentWeatherStats";
 import { UserPreferencesContext } from "../../providers/UserPreferences";
 
 const Home = () => {
-  const [location, setLocation] = useState<Location>();
   const { userPreferences } = useContext(UserPreferencesContext);
+  const location = userPreferences?.location;
 
   return (
     <View style={styles.wrapper}>
@@ -21,10 +20,6 @@ const Home = () => {
       {userPreferences && (
         <Text>Max wind speed preference: {userPreferences?.maxWindSpeed}</Text>
       )}
-      <LocationSelect
-        location={location}
-        setLocation={location => setLocation(location)}
-      />
       {location && <CurrentWeatherStats coordinates={location.coords} />}
     </View>
   );
