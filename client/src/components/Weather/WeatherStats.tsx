@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Linking, Text, View, StyleSheet } from "react-native";
+import { Text, View } from "react-native";
 import { SvgProps } from "react-native-svg";
 import { Weather, WeatherConditions } from "../../types/weather";
 import A from "../Util/Link";
