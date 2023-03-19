@@ -1,33 +1,21 @@
 import React, { useContext } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Text } from "react-native";
+import FirstTimeSetup from "../../components/Home/FirstTimeSetup";
+import MainScreen from "../../components/Home/MainScreen";
 
-// Components
-import Navbar from "../../components/Navbar";
-
-// Types
-import CurrentWeatherStats from "../../components/Weather/CurrentWeatherStats";
+// Context
 import { UserPreferencesContext } from "../../providers/UserPreferences";
 
 const Home = () => {
   const { userPreferences } = useContext(UserPreferencesContext);
-  const location = userPreferences?.location;
 
-  return (
-    <View style={styles.wrapper}>
-      <Navbar />
-      <Text>Home</Text>
-      {userPreferences && (
-        <Text>Max wind speed preference: {userPreferences?.maxWindSpeed}</Text>
-      )}
-      {location && <CurrentWeatherStats coordinates={location.coords} />}
-    </View>
+  return userPreferences === undefined ? (
+    <Text>Loading application...</Text>
+  ) : userPreferences === null ? (
+    <FirstTimeSetup />
+  ) : (
+    <MainScreen />
   );
 };
 
 export default Home;
-
-const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-  },
-});
