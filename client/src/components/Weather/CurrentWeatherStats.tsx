@@ -1,5 +1,8 @@
 import { FC, useEffect, useState } from "react";
+import { getDaylightHours } from "../../api/daylight";
 import { getCurrentWeather } from "../../api/weather";
+import { isDaytime } from "../../domain/time";
+import { DaylightHours } from "../../types/daylightHours";
 import { Coordinates } from "../../types/location";
 import { Weather } from "../../types/weather";
 import WeatherStats from "./WeatherStats";
@@ -16,25 +19,35 @@ const hourInMilliseconds = 60 * 60 * 1000;
  */
 const CurrentWeatherStats: FC<CurrentWeatherStatsProps> = ({ coordinates }) => {
   const [weather, setWeather] = useState<Weather>();
+  const [daylightHours, setDaylightHours] = useState<DaylightHours>();
 
   useEffect(() => {
     getCurrentWeather(coordinates).then(w => setWeather(w));
+    getDaylightHours(coordinates).then(d => setDaylightHours(d));
   }, [coordinates]);
 
   // update current weather every hour
   useEffect(() => {
-    const interval = setInterval(
-      () => getCurrentWeather(coordinates).then(w => setWeather(w)),
-      hourInMilliseconds
-    );
+    const interval = setInterval(() => {
+      getCurrentWeather(coordinates).then(w => setWeather(w));
+
+      // if the day changed, fetch new sunrise/sunset times
+      if (new Date().getDate() != daylightHours?.sunrise?.getDate()) {
+        getDaylightHours(coordinates).then(d => setDaylightHours(d));
+      }
+    }, hourInMilliseconds);
     return () => {
       clearInterval(interval);
     };
   }, [coordinates]);
 
-  // TODO call getDaylightInfo function and check if it's daytime once #48 is
-  // implemented
-  return <>{weather && <WeatherStats isDay={true} weather={weather} />}</>;
+  return (
+    <>
+      {weather && daylightHours && (
+        <WeatherStats isDay={isDaytime(daylightHours)} weather={weather} />
+      )}
+    </>
+  );
 };
 
 export default CurrentWeatherStats;
