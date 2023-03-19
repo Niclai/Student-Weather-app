@@ -10,7 +10,7 @@ interface Props {
 
 const UserPreferencesContext = React.createContext<UserPreferencesContextType>({
   userPreferences: undefined,
-  updateUserPreferences: () => {},
+  updateUserPreferences: () => undefined,
 });
 
 interface UserPreferencesContextType {
@@ -22,7 +22,9 @@ const UserPreferenceProvider: FC<Props> = ({ children }) => {
   const [userPreferences, setUserPreferences] = useState<UserPreferences>();
 
   useEffect(() => {
-    getData(storageKey).then(data => setUserPreferences(data));
+    getData<UserPreferences>(storageKey).then(
+      data => data && setUserPreferences(data)
+    );
   }, []);
 
   const updateUserPreferences = (userPreferences: UserPreferences) => {
