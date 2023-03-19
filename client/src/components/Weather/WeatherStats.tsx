@@ -54,6 +54,7 @@ const getWeatherIcon = (
       break;
 
     case WeatherConditions.SlightRain:
+    case WeatherConditions.LightFreezingRain:
       baseIcon = Icons.SlightRain;
       break;
 
@@ -62,6 +63,7 @@ const getWeatherIcon = (
       break;
 
     case WeatherConditions.HeavyRain:
+    case WeatherConditions.HeavyFreezingRain:
       baseIcon = Icons.HeavyRain;
       break;
 
