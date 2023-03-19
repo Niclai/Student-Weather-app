@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import UserPreferenceForm from "../../components/Preferences/UserPreferenceForm";
 
 const Settings = () => {
   return (
     <View style={styles.wrapper}>
       <Text>Settings</Text>
+      <UserPreferenceForm />
     </View>
   );
 };
