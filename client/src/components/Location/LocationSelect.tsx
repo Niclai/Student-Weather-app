@@ -40,17 +40,18 @@ const LocationSelect: FC<LocationSelectProps> = ({ location, setLocation }) => {
 
   return (
     <View style={styles.container}>
-      <Button title="Use current GPS location" onPress={setGPSLocation} />
-      {isLoadingGPS && (
-        <ActivityIndicator size="large" style={styles.activityIndicator} />
-      )}
-
       <LocationAutocomplete
         handleLocationSelect={setLocation}
         clearId={clearId}
       />
+      <Button title="Use current GPS location" onPress={setGPSLocation} />
+      {isLoadingGPS && (
+        <ActivityIndicator size="large" style={styles.activityIndicator} />
+      )}
       {location ? (
-        <Text>Location set to: {location.name}</Text>
+        <Text style={styles.currentLocation}>
+          Location set to: {location.name}
+        </Text>
       ) : (
         <Text>Location not yet set</Text>
       )}
@@ -59,8 +60,18 @@ const LocationSelect: FC<LocationSelectProps> = ({ location, setLocation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center" },
-  activityIndicator: { position: "absolute", alignSelf: "center" },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+  },
+  activityIndicator: {
+    position: "absolute",
+    alignSelf: "center",
+  },
+  currentLocation: {
+    marginTop: 12,
+    fontSize: 16,
+  },
 });
 
 export default LocationSelect;

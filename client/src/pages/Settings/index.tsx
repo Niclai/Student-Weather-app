@@ -7,7 +7,6 @@ const Settings = () => {
   return (
     <View style={styles.wrapper}>
       <Navbar type={2} />
-      <Text>Settings</Text>
       <UserPreferenceForm />
     </View>
   );

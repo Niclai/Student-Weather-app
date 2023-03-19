@@ -11,7 +11,7 @@ import { UserPreferencesContext } from "../../providers/UserPreferences";
 const Home = () => {
   const { userPreferences } = useContext(UserPreferencesContext);
   const location = userPreferences?.location;
-
+  console.log(userPreferences);
   return (
     <View style={styles.wrapper}>
       <Navbar type={1} />

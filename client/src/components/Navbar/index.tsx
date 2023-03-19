@@ -50,6 +50,7 @@ const Navbar: FC<NavbarProps> = ({ type }) => {
               source={require("../../../assets/icons/arrback.png")}
             />
           </TouchableOpacity>
+          <Text style={styles.label}>Settings</Text>
         </View>
       )}
     </View>
@@ -64,6 +65,7 @@ const styles = StyleSheet.create({
     height: 90,
     paddingTop: 10,
     paddingHorizontal: 16,
+    marginBottom: 12,
   },
   mainContent: {
     height: "100%",
@@ -75,7 +77,12 @@ const styles = StyleSheet.create({
     height: "100%",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
+  },
+  label: {
+    fontSize: 20,
+    color: "#fff",
+    marginLeft: 12,
   },
   img: {
     height: 24,

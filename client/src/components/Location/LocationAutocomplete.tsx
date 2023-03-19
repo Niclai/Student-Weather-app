@@ -1,4 +1,5 @@
 import React, { FC, useEffect, useRef } from "react";
+import { StyleSheet, View } from "react-native";
 import {
   GooglePlacesAutocomplete,
   GooglePlacesAutocompleteRef,
@@ -29,24 +30,33 @@ const LocationAutocomplete: FC<LocationAutocompleteProps> = ({
   useEffect(() => ref.current?.clear(), [clearId]);
 
   return (
-    <GooglePlacesAutocomplete
-      ref={ref}
-      placeholder="Search"
-      onPress={async data => {
-        setSelectedLocation({
-          name: data.description,
-          coords: await getCoordinates(data.place_id),
-        });
-      }}
-      query={{
-        language: "en",
-      }}
-      requestUrl={{
-        url: `${baseUrl}/maps/api`,
-        useOnPlatform: "all",
-      }}
-    />
+    <View style={styles.wrapper}>
+      <GooglePlacesAutocomplete
+        ref={ref}
+        placeholder="Search"
+        onPress={async data => {
+          setSelectedLocation({
+            name: data.description,
+            coords: await getCoordinates(data.place_id),
+          });
+        }}
+        query={{
+          language: "en",
+        }}
+        requestUrl={{
+          url: `${baseUrl}/maps/api`,
+          useOnPlatform: "all",
+        }}
+      />
+    </View>
   );
 };
+
+const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    marginVertical: 12,
+  },
+});
 
 export default LocationAutocomplete;
