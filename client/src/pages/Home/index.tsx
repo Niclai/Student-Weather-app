@@ -14,7 +14,7 @@ const Home = () => {
 
   return (
     <View style={styles.wrapper}>
-      <Navbar />
+      <Navbar type={1} />
       <Text>Home</Text>
       {userPreferences && (
         <Text>Max wind speed preference: {userPreferences?.maxWindSpeed}</Text>
