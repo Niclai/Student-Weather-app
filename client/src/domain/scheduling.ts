@@ -120,4 +120,4 @@ const scheduleDay = (
     .map(forecast => forecast.time);
 };
 
-export { scheduleWeek, scheduleDay };
+export { scheduleWeek, scheduleDay, isSessionValid };

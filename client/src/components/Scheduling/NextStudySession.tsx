@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { Text } from "react-native";
 
 import { getWeekForecast } from "../../api/forecast";
-import { scheduleWeek } from "../../domain/scheduling";
+import { isSessionValid, scheduleWeek } from "../../domain/scheduling";
 import { Forecast } from "../../types/forecast";
 import { Coordinates } from "../../types/location";
 import { UserPreferences } from "../../types/userPreferences";
@@ -12,32 +12,50 @@ interface NextStudySessionProps {
   userPreferences: UserPreferences;
 }
 
+const hourInMilliseconds = 60 * 60 * 1000;
+
 const NextStudySession: FC<NextStudySessionProps> = ({
   coordinates,
   userPreferences,
 }) => {
   const [scheduling, setScheduling] = useState<Date[]>();
 
-  const updateSchedule = () => {
-    getWeekForecast(coordinates).then(forecasts =>
-      setScheduling(
-        scheduleWeek(
-          forecasts.map(f => ({
-            forecasts: f,
-            daylightHours: {
-              // TODO use actual sunrise and sunset hours one #48 is done
-              sunrise: new Date(f[0].time),
-              sunset: new Date(f[23].time),
-            },
-          })),
-          userPreferences
-        )
+  const updateSchedule = (forecasts: Forecast[][]) => {
+    setScheduling(
+      scheduleWeek(
+        forecasts.map(f => ({
+          forecasts: f,
+          daylightHours: {
+            // TODO use actual sunrise and sunset hours one #48 is done
+            sunrise: new Date(f[0].time),
+            sunset: new Date(f[23].time),
+          },
+        })),
+        userPreferences
       )
     );
   };
 
   useEffect(() => {
-    updateSchedule();
+    getWeekForecast(coordinates).then(updateSchedule);
+  }, [coordinates, userPreferences]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      getWeekForecast(coordinates).then(forecasts => {
+        const flatForecasts = forecasts.flat();
+        if (
+          scheduling?.some(
+            session => !isSessionValid(flatForecasts, session, userPreferences)
+          )
+        ) {
+          updateSchedule(forecasts);
+        }
+      });
+    }, hourInMilliseconds);
+    return () => {
+      clearInterval(interval);
+    };
   }, [coordinates, userPreferences]);
 
   return scheduling == null ? (
