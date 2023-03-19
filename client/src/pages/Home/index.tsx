@@ -1,38 +1,33 @@
-import React, { useContext, useEffect } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
+import React, { useContext, useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
 
 // Components
 import Navbar from "../../components/Navbar";
+import LocationSelect from "../../components/Location/LocationSelect";
 
 // Types
-import { MainStackParamList } from "../../types/navigationParams";
+import { Location } from "../../types/location";
+import CurrentWeatherStats from "../../components/Weather/CurrentWeatherStats";
 import { UserPreferencesContext } from "../../components/savePreferences";
 
 const Home = () => {
-  const navigation = useNavigation<StackNavigationProp<MainStackParamList>>();
-  const { userPreferences, updateUserPreferences } = useContext(
+  const [location, setLocation] = useState<Location>();
+  const { userPreferences } = useContext(
     UserPreferencesContext
   );
-  useEffect(
-    () =>
-      updateUserPreferences({
-        hayFever: false,
-        timesPerWeek: 1,
-        maxWindSpeed: 5,
-        preferredMinTemp: 0,
-        preferredMaxTemp: 50,
-        timeBeforeNotif: 1,
-        pollenLevels: 100,
-      }),
-    []
-  );
+
   return (
     <View style={styles.wrapper}>
       <Navbar />
       <Text>Home</Text>
-      <Text>{userPreferences?.maxWindSpeed}</Text>
+      {userPreferences && <Text>
+        Max wind speed preference: { userPreferences?.maxWindSpeed }
+      </Text>}
+      <LocationSelect
+        location={location}
+        setLocation={location => setLocation(location)}
+      />
+      {location && <CurrentWeatherStats coordinates={location.coords} />}
     </View>
   );
 };

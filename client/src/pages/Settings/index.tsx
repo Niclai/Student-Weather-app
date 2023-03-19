@@ -1,6 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
-import { UserPreferences } from '../../types/userPreferences';
+import { StyleSheet, Text, View } from "react-native";
+import React from "react";
 
 const Settings = () => {
   return (
@@ -18,5 +17,4 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
   },
-  
 });
