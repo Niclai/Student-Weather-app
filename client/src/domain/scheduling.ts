@@ -32,6 +32,35 @@ const scheduleWeek = (
   return chooseRandom(candidates, userPreferences.timesPerWeek);
 };
 
+const getWeatherFilters = (
+  userPreferences: UserPreferences
+): ((forecast: Forecast) => boolean) => {
+  const temperatureFilter = (forecast: Forecast): boolean =>
+    forecast.temperature >= userPreferences.preferredMinTemp &&
+    forecast.temperature <= userPreferences.preferredMaxTemp;
+
+  const windFilter = (forecast: Forecast): boolean =>
+    forecast.windSpeed <= userPreferences.maxWindSpeed;
+
+  const precipitationFilter = (forecast: Forecast): boolean =>
+    forecast.precipitationProbability === 0;
+
+  return combinePredicates([
+    temperatureFilter,
+    windFilter,
+    precipitationFilter,
+  ]);
+};
+
+const isSessionValid = (
+  forecasts: Forecast[],
+  session: Date,
+  userPreferences: UserPreferences
+) => {
+  const forecast = forecasts.find(f => f.time === session);
+  return forecast != null && getWeatherFilters(userPreferences)(forecast);
+};
+
 /**
  * Basic scheduling algorithm to find candidate study sessions for a given day.
  * Only takes into consideration daylight hours and keeps those hours which are
@@ -66,21 +95,7 @@ const scheduleDay = (
     );
   };
 
-  const temperatureFilter = (forecast: Forecast): boolean =>
-    forecast.temperature >= userPreferences.preferredMinTemp &&
-    forecast.temperature <= userPreferences.preferredMaxTemp;
-
-  const windFilter = (forecast: Forecast): boolean =>
-    forecast.windSpeed <= userPreferences.maxWindSpeed;
-
-  const precipitationFilter = (forecast: Forecast): boolean =>
-    forecast.precipitationProbability === 0;
-
-  const weatherFilters = combinePredicates([
-    temperatureFilter,
-    windFilter,
-    precipitationFilter,
-  ]);
+  const weatherFilters = getWeatherFilters(userPreferences);
 
   // scheduling logic
 
