@@ -1,31 +1,52 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
 import { Text, View, TextInput, Button, Switch } from "react-native";
+import { UserPreferencesContext } from "../../providers/UserPreferences";
 
-export default function userPreferenceForm() {
+export default function UserPreferenceForm() {
+  const { userPreferences, updateUserPreferences } = useContext(
+    UserPreferencesContext
+  );
+
   const [submitted, setSubmitted] = useState("");
 
-  const [hayfever, sethayfever] = useState(false);
+  const [hayfever, sethayfever] = useState<boolean>(
+    userPreferences?.hayFever ?? false
+  );
 
-  const [timesPerWeek, settimesPerWeek] = useState("");
+  const [timesPerWeek, settimesPerWeek] = useState<string>(
+    userPreferences?.timesPerWeek?.toString() ?? ""
+  );
   const [timesPerWeekERROR, settimesPerWeekERROR] = useState("");
 
-  const [timeBeforeNotif, settimeBeforeNotif] = useState("");
+  const [timeBeforeNotif, settimeBeforeNotif] = useState<string>(
+    userPreferences?.timeBeforeNotif?.toString() ?? ""
+  );
   const [timeBeforeNotifERROR, settimeBeforeNotifERROR] = useState("");
 
-  const [sessionDuration, setsessionDuration] = useState("");
+  const [sessionDuration, setsessionDuration] = useState<string>(
+    userPreferences?.sessionDuration?.toString() ?? ""
+  );
   const [sessionDurationERROR, setsessionDurationERROR] = useState("");
 
-  const [preferredMinTemp, setpreferredMinTemp] = useState("");
+  const [preferredMinTemp, setpreferredMinTemp] = useState<string>(
+    userPreferences?.preferredMinTemp?.toString() ?? ""
+  );
   const [preferredMinTempERROR, setpreferredMinTempERROR] = useState("");
 
-  const [preferredMaxTemp, setpreferredMaxTemp] = useState("");
+  const [preferredMaxTemp, setpreferredMaxTemp] = useState<string>(
+    userPreferences?.preferredMaxTemp?.toString() ?? ""
+  );
   const [preferredMaxTempERROR, setpreferredMaxTempERROR] = useState("");
 
-  const [maxWindSpeed, setmaxWindSpeed] = useState("");
+  const [maxWindSpeed, setmaxWindSpeed] = useState<string>(
+    userPreferences?.maxWindSpeed?.toString() ?? ""
+  );
   const [maxWindSpeedERROR, setmaxWindSpeedERROR] = useState("");
 
-  const [maxPollenLevels, setmaxPollenLevels] = useState("");
+  const [maxPollenLevels, setmaxPollenLevels] = useState<string>(
+    userPreferences?.maxPollenLevels?.toString() ?? ""
+  );
   const [maxPollenLevelsERROR, setmaxPollenLevelsERROR] = useState("");
 
   const showMaxPollenLevels = () => {
@@ -56,7 +77,16 @@ export default function userPreferenceForm() {
       maxWindSpeedValid &&
       maxPollenLevelsValid
     ) {
-      /*todo save it somehow to external JSON file*/
+      updateUserPreferences({
+        hayFever: hayfever,
+        timesPerWeek: parseInt(timesPerWeek),
+        timeBeforeNotif: parseInt(timeBeforeNotif),
+        sessionDuration: parseInt(sessionDuration),
+        preferredMinTemp: parseFloat(preferredMinTemp),
+        preferredMaxTemp: parseFloat(preferredMaxTemp),
+        maxWindSpeed: parseFloat(maxWindSpeed),
+        maxPollenLevels: parseFloat(maxPollenLevels || "100"),
+      });
 
       setSubmitted("Preferences Changed");
     } else {
