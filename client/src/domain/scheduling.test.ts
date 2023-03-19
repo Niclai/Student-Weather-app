@@ -416,4 +416,23 @@ test("scheduleWeek returns empty list given no candidate sessions", () => {
   expect(scheduleWeek(weekForecasts, temperaturePreferences)).toHaveLength(0);
 });
 
-xtest("scheduleWeek filters out hours that happened in the past", () => {});
+test("scheduleWeek filters out hours that happened in the past", () => {
+  const weekForecasts: {
+    daylightHours: DaylightHours;
+    forecasts: Forecast[];
+  }[] = [-6, -5, -4, -3, -2, -1, 1].map(i => {
+    const day = new Date();
+    day.setDate(day.getDate() + i);
+    return {
+      daylightHours: generateDaylightHours(day),
+      forecasts: generateDummyForecasts({}, day),
+    };
+  });
+
+  const schedule = scheduleWeek(weekForecasts, dummyPreferences);
+  expect(schedule).toHaveLength(dummyPreferences.timesPerWeek);
+  schedule.forEach(session =>
+    expect(session.getDate()).toEqual(midnightTomorrow.getDate())
+  );
+  // TODO test all are in future
+});
