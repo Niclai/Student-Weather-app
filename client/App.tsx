@@ -4,15 +4,15 @@ import { StyleSheet, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 
 import MainRouter from "./src/navigation/MainRouter";
-import { UserPreferenceProvider } from "./src/providers/UserPreferences";
+import { UserPreferencesProvider } from "./src/providers/UserPreferences";
 
 export default function App() {
   return (
     <View style={styles.container}>
       <NavigationContainer>
-        <UserPreferenceProvider>
+        <UserPreferencesProvider>
           <MainRouter />
-        </UserPreferenceProvider>
+        </UserPreferencesProvider>
         <StatusBar style="auto" />
       </NavigationContainer>
     </View>
