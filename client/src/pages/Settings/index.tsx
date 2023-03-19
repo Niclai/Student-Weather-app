@@ -5,8 +5,6 @@ const Settings = () => {
   return (
     <View style={styles.wrapper}>
       <Text>Settings</Text>
-      <Text>Your current preferences:</Text>
-      <Text>Hay </Text>
     </View>
   );
 };
