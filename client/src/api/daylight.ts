@@ -38,7 +38,7 @@ const getNDaysDaylightHours = async (
   for (let i = 0; i < nDays; i++) {
     daylightHours[i] = {
       sunrise: new Date(daily.sunrise[i]),
-      sunset: new Date(daily.sunrise[i]),
+      sunset: new Date(daily.sunset[i]),
     };
   }
 
