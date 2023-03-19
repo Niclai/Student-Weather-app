@@ -52,13 +52,28 @@ const getWeatherFilters = (
   ]);
 };
 
+/**
+ * Check if the session is valid, i.e. is it in set in the present/future
+ * and does it satisfy the userPreferences for the given forecast duration.
+ */
 const isSessionValid = (
-  forecasts: Forecast[],
   session: Date,
+  forecasts: Forecast[],
   userPreferences: UserPreferences
 ) => {
-  const forecast = forecasts.find(f => f.time === session);
-  return forecast != null && getWeatherFilters(userPreferences)(forecast);
+  if (session < new Date()) {
+    return false;
+  }
+  const sessionEnd = new Date(session);
+  sessionEnd.setHours(sessionEnd.getHours() + userPreferences.sessionDuration);
+
+  const sessionForecasts = forecasts.filter(
+    f => f.time >= session && f.time <= sessionEnd
+  );
+  return (
+    sessionForecasts.length > 0 &&
+    sessionForecasts.every(getWeatherFilters(userPreferences))
+  );
 };
 
 /**
