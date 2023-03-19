@@ -10,6 +10,10 @@ interface WeatherStatsProps {
   isDay: boolean;
 }
 
+/**
+ * Get the weather icon corresponding to the given weather conditions and time
+ * of day
+ */
 const getWeatherIcon = (
   conditions: WeatherConditions,
   isDay: boolean
