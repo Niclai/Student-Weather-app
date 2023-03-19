@@ -7,6 +7,7 @@ import LocationSelect from "../../components/Location/LocationSelect";
 
 // Types
 import { Location } from "../../types/location";
+import CurrentWeatherStats from "../../components/Weather/CurrentWeatherStats";
 
 const Home = () => {
   const [location, setLocation] = useState<Location>();
@@ -19,6 +20,7 @@ const Home = () => {
         location={location}
         setLocation={location => setLocation(location)}
       />
+      {location && <CurrentWeatherStats coordinates={location.coords} />}
     </View>
   );
 };
