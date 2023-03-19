@@ -6,6 +6,10 @@ interface LinkProps {
   href: string;
 }
 
+/**
+ * A basic link imitating that found on web pages. Opens the browser with the
+ * given href url upon pressing.
+ */
 const Link: FC<LinkProps> = ({ children, href }) => {
   return (
     <Text
