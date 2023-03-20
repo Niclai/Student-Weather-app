@@ -7,6 +7,7 @@ import LocationSelect from "../../components/Location/LocationSelect";
 
 // Types
 import { Location } from "../../types/location";
+import NextStudySession from "../../components/Scheduling/NextStudySession";
 import CurrentWeatherStats from "../../components/Weather/CurrentWeatherStats";
 
 const Home = () => {
@@ -20,6 +21,21 @@ const Home = () => {
         location={location}
         setLocation={location => setLocation(location)}
       />
+      {location && (
+        <NextStudySession
+          coordinates={location.coords}
+          userPreferences={{
+            hayFever: false,
+            timesPerWeek: 1,
+            maxWindSpeed: 20,
+            preferredMinTemp: 0,
+            preferredMaxTemp: 50,
+            timeBeforeNotif: 1,
+            maxPollenLevels: 100,
+            sessionDuration: 1,
+          }}
+        />
+      )}
       {location && <CurrentWeatherStats coordinates={location.coords} />}
     </View>
   );
