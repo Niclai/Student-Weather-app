@@ -69,25 +69,17 @@ where `<your-google-maps-api-key>` is the Google Maps API key you obtained in th
 
 Setting the host to `0.0.0.0` will expose your server on IPv4 addresses assigned to your machine, meaning you can connect to the server from other devices on the same network. The port will default to 5000, but if that is already taken by another program, change the port number to something else with the `-p <port-number>` flag appended to the end of the above command.
 
-## Getting host IP address for React Native app connectivity on local network
+You should see output similar to the following:
 
-In order to connect to the server from your React application, you need to find
-out the IP address of the machine you are running the server on. A private IP
-address will suffice when the React application is running on the same network
-(e.g. home network, school network etc.) as this server. There are many ways of
-getting the private IP address of your machine, and this will depend on your
-system. If in doubt Google is your friend.
-
-On linux you can run the following command:
-
-```bash
-hostname -I
+```
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.57:5000
 ```
 
-On macOS you can use the following command:
+The output includes the IP address and port the application is exposed on.
+You will need this to connect the frontend application to the server.
 
-```bash
-ipconfig getifaddr en0
-```
-
-**Note**: These commands may not work on your system, depending on your configuration.
+In the example, the server can be accessed under: `http://192.168.1.57:5000`
+within the same network (e.g. home network).
