@@ -2,6 +2,7 @@ import { FC, useContext } from "react";
 import { View, StyleSheet, Text } from "react-native";
 
 import { UserPreferencesContext } from "../../providers/UserPreferences";
+import CurrentDayForecast from "../Forecasts/ShowForecastCurrentDay";
 import Navbar from "../Navbar";
 import NextStudySession from "../Scheduling/NextStudySession";
 import CurrentWeatherStats from "../Weather/CurrentWeatherStats";
@@ -26,6 +27,7 @@ const MainScreen: FC = () => {
             coordinates={location.coords}
             userPreferences={userPreferences}
           />
+          <CurrentDayForecast coordinates={location.coords} />
         </>
       )}
     </View>
