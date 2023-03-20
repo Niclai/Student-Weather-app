@@ -4,15 +4,17 @@ import { Coordinates } from "../../types/location";
 import { Forecast } from "../../types/forecast";
 import { FC, useEffect, useState } from "react";
 
-interface ShowCurrentDayForecastProps {
+interface CurrentDayForecastProps {
   coordinates: Coordinates;
 }
 
 const hoursInMilliseconds = 60 * 60 * 1000;
 
-const CurrentDayForecast: FC<ShowCurrentDayForecastProps> = ({
-  coordinates,
-}) => {
+/**
+ * Component for displaying an hour by hour breakdown of the weather forecast
+ * for the current day
+ */
+const CurrentDayForecast: FC<CurrentDayForecastProps> = ({ coordinates }) => {
   const [currentForecast, setCurrentForecast] = useState<Forecast[]>();
 
   useEffect(() => {

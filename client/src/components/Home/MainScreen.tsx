@@ -2,7 +2,7 @@ import { FC, useContext } from "react";
 import { View, StyleSheet, Text } from "react-native";
 
 import { UserPreferencesContext } from "../../providers/UserPreferences";
-import CurrentDayForecast from "../Forecasts/ShowForecastCurrentDay";
+import CurrentDayForecast from "../Forecasts/CurrentDayForecast";
 import Navbar from "../Navbar";
 import NextStudySession from "../Scheduling/NextStudySession";
 import CurrentWeatherStats from "../Weather/CurrentWeatherStats";
