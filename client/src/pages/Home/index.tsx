@@ -11,16 +11,24 @@ import { UserPreferencesContext } from "../../providers/UserPreferences";
 const Home = () => {
   const { userPreferences } = useContext(UserPreferencesContext);
   const location = userPreferences?.location;
-  console.log(userPreferences);
+
   return (
-    <View style={styles.wrapper}>
+    <>
       <Navbar type={1} />
-      <Text>Home</Text>
-      {userPreferences && (
-        <Text>Max wind speed preference: {userPreferences?.maxWindSpeed}</Text>
-      )}
-      {location && <CurrentWeatherStats coordinates={location.coords} />}
-    </View>
+      <View style={styles.wrapper}>
+        {/* {userPreferences && (
+          <Text>
+            Max wind speed preference: {userPreferences?.maxWindSpeed}
+          </Text>
+        )} */}
+        {location && (
+          <CurrentWeatherStats
+            locationName={location.name}
+            coordinates={location.coords}
+          />
+        )}
+      </View>
+    </>
   );
 };
 
@@ -29,5 +37,6 @@ export default Home;
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
+    alignItems: "center",
   },
 });
