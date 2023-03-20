@@ -19,11 +19,17 @@ import SlightSnowIcon from "../../../assets/weather-icons/slight-snow.svg";
 import ThunderstormIcon from "../../../assets/weather-icons/thunderstorm.svg";
 import ThunderstormHailIcon from "../../../assets/weather-icons/thunderstorm-hail.svg";
 
+// Load all icons in day and night variants
+
 interface WeatherIcon {
   day: FC<SvgProps>;
   night: FC<SvgProps>;
 }
 
+/**
+ * Some icons are the same in their day and night variants, hence this helper
+ * factory function can be used to simplify the WeatherIcon object creation.
+ */
 const singleIcon = (icon: FC<SvgProps>): WeatherIcon => ({
   day: icon,
   night: icon,

@@ -25,11 +25,58 @@ const scheduleWeek = (
     );
   }
 
-  const candidates = weekForecasts.flatMap(day =>
-    scheduleDay(day.daylightHours, day.forecasts, userPreferences)
-  );
+  const currentTime = new Date();
+  const candidates = weekForecasts
+    .flatMap(day =>
+      scheduleDay(day.daylightHours, day.forecasts, userPreferences)
+    )
+    .filter(session => session >= currentTime);
 
   return chooseRandom(candidates, userPreferences.timesPerWeek);
+};
+
+const getWeatherFilters = (
+  userPreferences: UserPreferences
+): ((forecast: Forecast) => boolean) => {
+  const temperatureFilter = (forecast: Forecast): boolean =>
+    forecast.temperature >= userPreferences.preferredMinTemp &&
+    forecast.temperature <= userPreferences.preferredMaxTemp;
+
+  const windFilter = (forecast: Forecast): boolean =>
+    forecast.windSpeed <= userPreferences.maxWindSpeed;
+
+  const precipitationFilter = (forecast: Forecast): boolean =>
+    forecast.precipitationProbability === 0;
+
+  return combinePredicates([
+    temperatureFilter,
+    windFilter,
+    precipitationFilter,
+  ]);
+};
+
+/**
+ * Check if the session is valid, i.e. is it in set in the present/future
+ * and does it satisfy the userPreferences for the given forecast duration.
+ */
+const isSessionValid = (
+  session: Date,
+  forecasts: Forecast[],
+  userPreferences: UserPreferences
+) => {
+  if (session < new Date()) {
+    return false;
+  }
+  const sessionEnd = new Date(session);
+  sessionEnd.setHours(sessionEnd.getHours() + userPreferences.sessionDuration);
+
+  const sessionForecasts = forecasts.filter(
+    f => f.time >= session && f.time <= sessionEnd
+  );
+  return (
+    sessionForecasts.length > 0 &&
+    sessionForecasts.every(getWeatherFilters(userPreferences))
+  );
 };
 
 /**
@@ -66,21 +113,7 @@ const scheduleDay = (
     );
   };
 
-  const temperatureFilter = (forecast: Forecast): boolean =>
-    forecast.temperature >= userPreferences.preferredMinTemp &&
-    forecast.temperature <= userPreferences.preferredMaxTemp;
-
-  const windFilter = (forecast: Forecast): boolean =>
-    forecast.windSpeed <= userPreferences.maxWindSpeed;
-
-  const precipitationFilter = (forecast: Forecast): boolean =>
-    forecast.precipitationProbability === 0;
-
-  const weatherFilters = combinePredicates([
-    temperatureFilter,
-    windFilter,
-    precipitationFilter,
-  ]);
+  const weatherFilters = getWeatherFilters(userPreferences);
 
   // scheduling logic
 
@@ -105,4 +138,4 @@ const scheduleDay = (
     .map(forecast => forecast.time);
 };
 
-export { scheduleWeek, scheduleDay };
+export { scheduleWeek, scheduleDay, isSessionValid };

@@ -1,9 +1,10 @@
-import { FC, useState, useEffect } from "react";
-import { Linking, Text, View, StyleSheet } from "react-native";
+import { FC } from "react";
+import { Text, View, StyleSheet } from "react-native";
 import { SvgProps } from "react-native-svg";
 import { getWeekForecast } from "../../api/forecast";
 import { Weather, WeatherConditions } from "../../types/weather";
 import { getCurrentDateInFormat } from "../../utils/getCurrentDateInFormat";
+import A from "../Util/Link";
 import * as Icons from "./WeatherIcons";
 
 interface WeatherStatsProps {
@@ -12,6 +13,10 @@ interface WeatherStatsProps {
   isDay: boolean;
 }
 
+/**
+ * Get the weather icon corresponding to the given weather conditions and time
+ * of day
+ */
 const getWeatherIcon = (
   conditions: WeatherConditions,
   isDay: boolean
@@ -111,11 +116,12 @@ const WeatherStats: FC<WeatherStatsProps> = ({
 
   return (
     <View style={styles.wrapper}>
-      {locationName.split(" ").map((txt: string, index: number) => (
-        <Text key={index} style={styles.location}>
-          {txt}
-        </Text>
-      ))}
+      {locationName &&
+        locationName.split(" ").map((txt: string, index: number) => (
+          <Text key={index} style={styles.location}>
+            {txt}
+          </Text>
+        ))}
 
       <Text style={styles.date}>{getCurrentDateInFormat()}</Text>
 
@@ -152,6 +158,22 @@ const WeatherStats: FC<WeatherStatsProps> = ({
           </Text>
         </Text>
       </View> */}
+      {/* <View>
+      <Text>{weather.temperature}°C</Text>
+      <Text>{weather.windSpeed}km/h</Text>
+      <WeatherIcon width={100} height={100} />
+      <Text>
+        <A href="https://www.figma.com/community/file/1102960831369614781">
+          Weather Icons created by Roman Davydko
+        </A>
+        , licensed under&nbsp;
+        <A href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</A>
+      </Text>
+      <Text>
+        <A href="https://open-meteo.com/">Weather data by Open-Meteo.com</A>,
+        licensed under&nbsp;
+        <A href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</A>
+      </Text> */}
     </View>
   );
 };

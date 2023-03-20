@@ -1,6 +1,8 @@
 import { FC, useEffect, useState } from "react";
-import { getWeekForecast } from "../../api/forecast";
+import { getDaylightHours } from "../../api/daylight";
 import { getCurrentWeather } from "../../api/weather";
+import { isDaytime } from "../../domain/time";
+import { DaylightHours } from "../../types/daylightHours";
 import { Coordinates } from "../../types/location";
 import { Weather } from "../../types/weather";
 import WeatherStats from "./WeatherStats";
@@ -21,19 +23,23 @@ const CurrentWeatherStats: FC<CurrentWeatherStatsProps> = ({
   coordinates,
 }) => {
   const [weather, setWeather] = useState<Weather>();
-  const [forecast, setForecast] = useState<any>();
+  const [daylightHours, setDaylightHours] = useState<DaylightHours>();
 
   useEffect(() => {
     getCurrentWeather(coordinates).then(w => setWeather(w));
-    getWeekForecast(coordinates).then(res => console.log(res[0]));
+    getDaylightHours(coordinates).then(d => setDaylightHours(d));
   }, [coordinates]);
 
   // update current weather every hour
   useEffect(() => {
-    const interval = setInterval(
-      () => getCurrentWeather(coordinates).then(w => setWeather(w)),
-      hourInMilliseconds
-    );
+    const interval = setInterval(() => {
+      getCurrentWeather(coordinates).then(w => setWeather(w));
+
+      // if the day changed, fetch new sunrise/sunset times
+      if (new Date().getDate() != daylightHours?.sunrise?.getDate()) {
+        getDaylightHours(coordinates).then(d => setDaylightHours(d));
+      }
+    }, hourInMilliseconds);
     return () => {
       clearInterval(interval);
     };
@@ -41,12 +47,13 @@ const CurrentWeatherStats: FC<CurrentWeatherStatsProps> = ({
 
   // TODO call getDaylightInfo function and check if it's daytime once #48 is
   // implemented
+
   return (
     <>
-      {weather && (
+      {weather && daylightHours && (
         <WeatherStats
           locationName={locationName}
-          isDay={true}
+          isDay={isDaytime(daylightHours)}
           weather={weather}
         />
       )}

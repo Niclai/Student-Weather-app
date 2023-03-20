@@ -15,26 +15,35 @@ const dummyPreferences: UserPreferences = {
   maxPollenLevels: 0,
 };
 
+const currentTime = new Date();
+
+const midnightToday = new Date(currentTime);
+midnightToday.setHours(0);
+midnightToday.setMinutes(0);
+midnightToday.setSeconds(0);
+
+const midnightTomorrow = new Date(midnightToday);
+midnightTomorrow.setDate(midnightToday.getDate() + 1);
+
 const dummyDaylightHours = {
-  sunrise: new Date("2023-03-04T00:00"),
-  sunset: new Date("2023-03-05T00:00"),
+  sunrise: midnightToday,
+  sunset: midnightTomorrow,
 };
 
 const generateDate = (
   hours: number,
   minutes = 0,
-  isoDate = "2023-03-04"
-): Date =>
-  new Date(
-    `${isoDate}T${String(hours).padStart(2, "0")}:${String(minutes).padStart(
-      2,
-      "0"
-    )}`
-  );
-
-const generateDaylightHours = (isoDate = "2023-03-04") => ({
-  sunrise: generateDate(7, 0, isoDate),
-  sunset: generateDate(20, 0, isoDate),
+  day: Date = currentTime
+): Date => {
+  const date = new Date(day);
+  date.setHours(hours);
+  date.setMinutes(minutes);
+  date.setSeconds(0);
+  return date;
+};
+const generateDaylightHours = (day?: Date) => ({
+  sunrise: generateDate(7, 0, day),
+  sunset: generateDate(20, 0, day),
 });
 
 interface ForecastOverride {
@@ -49,10 +58,10 @@ interface ForecastOverrideTable {
 
 const generateDummyForecasts = (
   overrides: ForecastOverrideTable = {},
-  isoDate = "2023-03-04"
+  day?: Date
 ): Forecast[] =>
   [...Array(24)].map((_, i) => {
-    const time = generateDate(i, 0, isoDate);
+    const time = generateDate(i, 0, day);
     return overrides[i] != null
       ? {
           time,
@@ -258,17 +267,14 @@ test("scheduleWeek given less than 7 days forecasts throws Error", () => {
   const weekForecasts: {
     daylightHours: DaylightHours;
     forecasts: Forecast[];
-  }[] = [
-    "2023-03-04",
-    "2023-03-05",
-    "2023-03-06",
-    "2023-03-07",
-    "2023-03-08",
-    "2023-03-09",
-  ].map(isoDate => ({
-    daylightHours: generateDaylightHours(isoDate),
-    forecasts: generateDummyForecasts({}, isoDate),
-  }));
+  }[] = [...Array(6)].map((_, i) => {
+    const day = new Date();
+    day.setDate(day.getDate() + i);
+    return {
+      daylightHours: generateDaylightHours(day),
+      forecasts: generateDummyForecasts({}, day),
+    };
+  });
 
   expect(() => {
     scheduleWeek(weekForecasts, dummyPreferences);
@@ -279,18 +285,14 @@ test("scheduleWeek picks the number of sessions specified by user given there ar
   const weekForecasts: {
     daylightHours: DaylightHours;
     forecasts: Forecast[];
-  }[] = [
-    "2023-03-04",
-    "2023-03-05",
-    "2023-03-06",
-    "2023-03-07",
-    "2023-03-08",
-    "2023-03-09",
-    "2023-03-10",
-  ].map(isoDate => ({
-    daylightHours: generateDaylightHours(isoDate),
-    forecasts: generateDummyForecasts({}, isoDate),
-  }));
+  }[] = [...Array(7)].map((_, i) => {
+    const day = new Date();
+    day.setDate(day.getDate() + i);
+    return {
+      daylightHours: generateDaylightHours(day),
+      forecasts: generateDummyForecasts({}, day),
+    };
+  });
 
   expect(scheduleWeek(weekForecasts, dummyPreferences)).toHaveLength(
     dummyPreferences.timesPerWeek
@@ -307,22 +309,38 @@ test("scheduleWeek picks the number of sessions specified by user given there ar
   const weekForecasts: {
     daylightHours: DaylightHours;
     forecasts: Forecast[];
-  }[] = ["2023-03-04", "2023-03-05", "2023-03-07", "2023-03-08", "2023-03-10"]
-    .map(isoDate => ({
-      daylightHours: generateDaylightHours(isoDate),
-      forecasts: generateDummyForecasts({}, isoDate),
-    }))
+  }[] = [0, 1, 3, 4, 6]
+    .map(i => {
+      const day = new Date();
+      day.setDate(day.getDate() + i);
+      return {
+        daylightHours: generateDaylightHours(day),
+        forecasts: generateDummyForecasts({}, day),
+      };
+    })
     .concat(
-      ["2023-03-06", "2023-03-09"].map(isoDate => ({
-        daylightHours: generateDaylightHours(isoDate),
-        forecasts: generateDummyForecasts(
-          {
-            12: { temperature: 23, windSpeed: 0, precipitationProbability: 0 },
-            13: { temperature: 23, windSpeed: 0, precipitationProbability: 0 },
-          },
-          isoDate
-        ),
-      }))
+      [2, 5].map(i => {
+        const day = new Date();
+        day.setDate(day.getDate() + i);
+        return {
+          daylightHours: generateDaylightHours(day),
+          forecasts: generateDummyForecasts(
+            {
+              12: {
+                temperature: 23,
+                windSpeed: 0,
+                precipitationProbability: 0,
+              },
+              13: {
+                temperature: 23,
+                windSpeed: 0,
+                precipitationProbability: 0,
+              },
+            },
+            day
+          ),
+        };
+      })
     );
 
   expect(scheduleWeek(weekForecasts, temperaturePreferences)).toHaveLength(
@@ -340,29 +358,38 @@ test("scheduleWeek picks all candidate sessions given there are as less candidat
   const weekForecasts: {
     daylightHours: DaylightHours;
     forecasts: Forecast[];
-  }[] = [
-    "2023-03-04",
-    "2023-03-05",
-    "2023-03-07",
-    "2023-03-08",
-    "2023-03-09",
-    "2023-03-10",
-  ]
-    .map(isoDate => ({
-      daylightHours: generateDaylightHours(isoDate),
-      forecasts: generateDummyForecasts({}, isoDate),
-    }))
+  }[] = [0, 1, 3, 4, 5, 6]
+    .map(i => {
+      const day = new Date();
+      day.setDate(day.getDate() + i);
+      return {
+        daylightHours: generateDaylightHours(day),
+        forecasts: generateDummyForecasts({}, day),
+      };
+    })
     .concat(
-      ["2023-03-06"].map(isoDate => ({
-        daylightHours: generateDaylightHours(isoDate),
-        forecasts: generateDummyForecasts(
-          {
-            12: { temperature: 23, windSpeed: 0, precipitationProbability: 0 },
-            13: { temperature: 23, windSpeed: 0, precipitationProbability: 0 },
-          },
-          isoDate
-        ),
-      }))
+      [2].map(i => {
+        const day = new Date();
+        day.setDate(day.getDate() + i);
+        return {
+          daylightHours: generateDaylightHours(day),
+          forecasts: generateDummyForecasts(
+            {
+              12: {
+                temperature: 23,
+                windSpeed: 0,
+                precipitationProbability: 0,
+              },
+              13: {
+                temperature: 23,
+                windSpeed: 0,
+                precipitationProbability: 0,
+              },
+            },
+            day
+          ),
+        };
+      })
     );
 
   expect(scheduleWeek(weekForecasts, temperaturePreferences)).toHaveLength(1);
@@ -378,18 +405,34 @@ test("scheduleWeek returns empty list given no candidate sessions", () => {
   const weekForecasts: {
     daylightHours: DaylightHours;
     forecasts: Forecast[];
-  }[] = [
-    "2023-03-04",
-    "2023-03-05",
-    "2023-03-06",
-    "2023-03-07",
-    "2023-03-08",
-    "2023-03-09",
-    "2023-03-10",
-  ].map(isoDate => ({
-    daylightHours: generateDaylightHours(isoDate),
-    forecasts: generateDummyForecasts({}, isoDate),
-  }));
+  }[] = [...Array(7)].map((_, i) => {
+    const day = new Date();
+    day.setDate(day.getDate() + i);
+    return {
+      daylightHours: generateDaylightHours(day),
+      forecasts: generateDummyForecasts({}, day),
+    };
+  });
 
   expect(scheduleWeek(weekForecasts, temperaturePreferences)).toHaveLength(0);
+});
+
+test("scheduleWeek filters out hours that happened in the past", () => {
+  const weekForecasts: {
+    daylightHours: DaylightHours;
+    forecasts: Forecast[];
+  }[] = [-6, -5, -4, -3, -2, -1, 1].map(i => {
+    const day = new Date();
+    day.setDate(day.getDate() + i);
+    return {
+      daylightHours: generateDaylightHours(day),
+      forecasts: generateDummyForecasts({}, day),
+    };
+  });
+
+  const schedule = scheduleWeek(weekForecasts, dummyPreferences);
+  expect(schedule).toHaveLength(dummyPreferences.timesPerWeek);
+  schedule.forEach(session =>
+    expect(session.getDate()).toEqual(midnightTomorrow.getDate())
+  );
 });
