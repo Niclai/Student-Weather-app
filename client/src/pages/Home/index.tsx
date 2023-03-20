@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 // Components
 import Navbar from "../../components/Navbar";
 import LocationSelect from "../../components/Location/LocationSelect";
+import ShowCurrentDayForecast from "../../components/Forecasts/ShowForecastCurrentDay";
 
 // Types
 import { Location } from "../../types/location";
