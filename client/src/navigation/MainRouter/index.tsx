@@ -15,6 +15,9 @@ import { MainStackParamList } from "../../types/navigationParams";
 // MainStack
 const MainStack = createStackNavigator<MainStackParamList>();
 
+/**
+ * Router for navigation between the pages in the application
+ */
 const MainRouter = () => {
   return (
     <View style={{ flex: 1 }}>

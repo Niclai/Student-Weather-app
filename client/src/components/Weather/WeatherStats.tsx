@@ -1,7 +1,8 @@
 import { FC } from "react";
-import { Linking, Text, View, StyleSheet } from "react-native";
+import { Text, View } from "react-native";
 import { SvgProps } from "react-native-svg";
 import { Weather, WeatherConditions } from "../../types/weather";
+import A from "../Util/Link";
 import * as Icons from "./WeatherIcons";
 
 interface WeatherStatsProps {
@@ -9,6 +10,10 @@ interface WeatherStatsProps {
   isDay: boolean;
 }
 
+/**
+ * Get the weather icon corresponding to the given weather conditions and time
+ * of day
+ */
 const getWeatherIcon = (
   conditions: WeatherConditions,
   isDay: boolean
@@ -108,35 +113,19 @@ const WeatherStats: FC<WeatherStatsProps> = ({ weather, isDay }) => {
       <Text>{weather.windSpeed}km/h</Text>
       <WeatherIcon width={100} height={100} />
       <Text>
-        <Text
-          onPress={() =>
-            Linking.openURL(
-              "https://www.figma.com/community/file/1102960831369614781"
-            )
-          }
-          style={styles.link}
-        >
+        <A href="https://www.figma.com/community/file/1102960831369614781">
           Weather Icons created by Roman Davydko
-        </Text>
+        </A>
         , licensed under&nbsp;
-        <Text
-          onPress={() => {
-            Linking.openURL("https://creativecommons.org/licenses/by/4.0/");
-          }}
-          style={styles.link}
-        >
-          CC BY 4.0
-        </Text>
+        <A href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</A>
+      </Text>
+      <Text>
+        <A href="https://open-meteo.com/">Weather data by Open-Meteo.com</A>,
+        licensed under&nbsp;
+        <A href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</A>
       </Text>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  link: {
-    color: "#1a0dab",
-    textDecorationLine: "underline",
-  },
-});
 
 export default WeatherStats;
