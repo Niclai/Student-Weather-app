@@ -1,10 +1,7 @@
 import { FC } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { SvgProps } from "react-native-svg";
-import { getWeekForecast } from "../../api/forecast";
 import { Weather, WeatherConditions } from "../../types/weather";
-import { getCurrentDateInFormat } from "../../utils/getCurrentDateInFormat";
-import A from "../Util/Link";
 import * as Icons from "./WeatherIcons";
 
 interface WeatherStatsProps {

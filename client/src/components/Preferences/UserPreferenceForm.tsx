@@ -21,8 +21,6 @@ export default function UserPreferenceForm() {
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  const [submitted, setSubmitted] = useState("");
-
   const [location, setLocation] = useState<Location | undefined>(
     userPreferences?.location
   );
@@ -108,7 +106,6 @@ export default function UserPreferenceForm() {
 
       console.log("SAVED");
       setModalVisible(true);
-      setSubmitted("Preferences Changed");
     } else {
       console.log(
         timesPerWeekValid,
@@ -119,7 +116,6 @@ export default function UserPreferenceForm() {
         maxWindSpeedValid,
         maxPollenLevelsValid
       );
-      setSubmitted("");
       setModalVisible(false);
     }
   };

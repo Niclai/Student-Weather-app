@@ -1,12 +1,9 @@
 import React, { useContext } from "react";
 import { Text } from "react-native";
 
-import { StyleSheet } from "react-native";
-
 // Components
 import FirstTimeSetup from "../../components/Home/FirstTimeSetup";
 import MainScreen from "../../components/Home/MainScreen";
-import Navbar from "../../components/Navbar";
 
 // Context
 import { UserPreferencesContext } from "../../providers/UserPreferences";
@@ -47,10 +44,3 @@ const Home = () => {
 };
 
 export default Home;
-
-const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-    alignItems: "center",
-  },
-});

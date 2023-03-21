@@ -3,9 +3,7 @@ import { View, StyleSheet, Text, ScrollView } from "react-native";
 
 import { UserPreferencesContext } from "../../providers/UserPreferences";
 import { getCurrentDateInFormat } from "../../utils/getCurrentDateInFormat";
-import CurrentDayForecast from "../Forecasts/CurrentDayForecast";
 import Navbar from "../Navbar";
-import NextStudySession from "../Scheduling/NextStudySession";
 import Tabs from "../Tabs";
 import CurrentWeatherStats from "../Weather/CurrentWeatherStats";
 
