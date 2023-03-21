@@ -1,5 +1,4 @@
 import { FC, useContext } from "react";
-import { View, StyleSheet, Text, ScrollView } from "react-native";
 
 import { UserPreferencesContext } from "../../providers/UserPreferences";
 import { getCurrentDateInFormat } from "../../utils/getCurrentDateInFormat";
@@ -7,8 +6,7 @@ import Navbar from "../Navbar";
 import Tabs from "../Tabs";
 import CurrentWeatherStats from "../Weather/CurrentWeatherStats";
 
-import { Dimensions } from "react-native";
-const windowHeight = Dimensions.get("window").height;
+import "./MainScreen.css";
 
 /**
  * Main screen component that is to be displayed upon startup of the application
@@ -19,18 +17,18 @@ const MainScreen: FC = () => {
   const { userPreferences } = useContext(UserPreferencesContext);
   const location = userPreferences?.location;
   return (
-    <View style={styles.con}>
+    <div className="con">
       <Navbar type={1} />
-      <ScrollView style={{ flex: 1 }}>
-        <View style={styles.wrapper}>
+      <div style={{ flex: 1 }}>
+        <div className="wrapper">
           {location?.name &&
             location?.name.split(" ").map((txt: string, index: number) => (
-              <Text key={index} style={styles.location}>
+              <p key={index} className="location">
                 {txt}
-              </Text>
+              </p>
             ))}
 
-          <Text style={styles.date}>{getCurrentDateInFormat()}</Text>
+          <p className="date">{getCurrentDateInFormat()}</p>
 
           {location && (
             <>
@@ -38,34 +36,10 @@ const MainScreen: FC = () => {
               <Tabs />
             </>
           )}
-        </View>
-      </ScrollView>
-    </View>
+        </div>
+      </div>
+    </div>
   );
 };
-
-const styles = StyleSheet.create({
-  con: {
-    flex: 1,
-    backgroundColor: "#189EDE",
-  },
-  wrapper: {
-    backgroundColor: "#189EDE",
-    width: "100%",
-    paddingTop: 12,
-    paddingHorizontal: 16,
-    flex: 1,
-    minHeight: windowHeight - 90,
-  },
-  location: {
-    fontSize: 32,
-    color: "#fff",
-    fontWeight: "bold",
-  },
-  date: {
-    fontSize: 20,
-    color: "#fff",
-  },
-});
 
 export default MainScreen;

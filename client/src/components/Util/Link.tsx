@@ -1,5 +1,6 @@
 import { FC, ReactNode } from "react";
-import { Linking, StyleSheet, Text } from "react-native";
+
+import "./Link.css";
 
 interface LinkProps {
   children: ReactNode;
@@ -12,22 +13,17 @@ interface LinkProps {
  */
 const Link: FC<LinkProps> = ({ children, href }) => {
   return (
-    <Text
-      onPress={() => {
-        Linking.openURL(href);
-      }}
-      style={styles.link}
-    >
+    <a href={href} style={styles.link} target="_blank" rel="noopener">
       {children}
-    </Text>
+    </a>
   );
 };
 
-const styles = StyleSheet.create({
+const styles = {
   link: {
     color: "#1a0dab",
     textDecorationLine: "underline",
   },
-});
+};
 
 export default Link;

@@ -1,6 +1,4 @@
 import { FC, useEffect, useState } from "react";
-import { View } from "react-native";
-import { Text, StyleSheet } from "react-native";
 import { getWeeklyDaylightHours } from "../../api/daylight";
 
 import { getWeekForecast } from "../../api/forecast";
@@ -10,6 +8,8 @@ import { Forecast } from "../../types/forecast";
 import { Coordinates } from "../../types/location";
 import { UserPreferences } from "../../types/userPreferences";
 import { getDateAndTimeInFormat } from "../../utils/getCurrentDateInFormat";
+
+import "./NextStudySession.css";
 
 interface NextStudySessionProps {
   coordinates: Coordinates;
@@ -75,40 +75,19 @@ const NextStudySession: FC<NextStudySessionProps> = ({
   }, [coordinates, userPreferences]);
 
   return (
-    <View style={styles.wrapper}>
+    <div className="wrapper">
       {scheduling == null ? (
-        <Text style={styles.txt}>Scheduling study sessions...</Text>
+        <p className="txt">Scheduling study sessions...</p>
       ) : scheduling.length == 0 ? (
-        <Text style={styles.txt}>
-          No study sessions scheduled for the upcoming week
-        </Text>
+        <p className="txt">No study sessions scheduled for the upcoming week</p>
       ) : (
         <>
-          <Text style={styles.txt}>Next study session scheduled for</Text>
-          <Text style={styles.time}>
-            {getDateAndTimeInFormat(scheduling[0])}
-          </Text>
+          <p className="txt">Next study session scheduled for</p>
+          <p className="time">{getDateAndTimeInFormat(scheduling[0])}</p>
         </>
       )}
-    </View>
+    </div>
   );
 };
-
-const styles = StyleSheet.create({
-  wrapper: {
-    height: 180,
-    alignItems: "center",
-  },
-  txt: {
-    marginTop: 20,
-
-    fontSize: 18,
-    textAlign: "center",
-  },
-  time: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-});
 
 export default NextStudySession;

@@ -1,11 +1,4 @@
 import { FC, useState } from "react";
-import {
-  ActivityIndicator,
-  Button,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
 import { getCurrentLocation } from "../../api/location";
 import { Location } from "../../types/location";
 import LocationAutocomplete from "./LocationAutocomplete";
@@ -14,6 +7,8 @@ interface LocationSelectProps {
   location: Location | undefined;
   setLocation: (location: Location) => void;
 }
+
+import "./LocationSelect.css";
 
 /**
  * Component for selecting a location using either Google Maps autocomplete
@@ -39,39 +34,23 @@ const LocationSelect: FC<LocationSelectProps> = ({ location, setLocation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <div className="container">
       <LocationAutocomplete
+        location={location}
         handleLocationSelect={setLocation}
-        clearId={clearId}
       />
-      <Button title="Use current GPS location" onPress={setGPSLocation} />
-      {isLoadingGPS && (
-        <ActivityIndicator size="large" style={styles.activityIndicator} />
-      )}
+      <button onClick={setGPSLocation}>Use current GPS location</button>
+      {isLoadingGPS &&
+        // <ActivityIndicator size="large" className="activityIndicator" />
+        // TODO spinner
+        ""}
       {location ? (
-        <Text style={styles.currentLocation}>
-          Location set to: {location.name}
-        </Text>
+        <p className="currentLocation">Location set to: {location.name}</p>
       ) : (
-        <Text>Location not yet set</Text>
+        <p>Location not yet set</p>
       )}
-    </View>
+    </div>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-  },
-  activityIndicator: {
-    position: "absolute",
-    alignSelf: "center",
-  },
-  currentLocation: {
-    marginTop: 12,
-    fontSize: 16,
-  },
-});
 
 export default LocationSelect;

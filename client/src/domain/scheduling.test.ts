@@ -2,6 +2,7 @@ import { DaylightHours } from "../types/daylightHours";
 import { Forecast } from "../types/forecast";
 import { UserPreferences } from "../types/userPreferences";
 import { scheduleDay, scheduleWeek } from "./scheduling";
+import { test, expect } from "vitest";
 
 const dummyPreferences: UserPreferences = {
   location: undefined,

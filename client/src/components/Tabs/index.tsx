@@ -1,8 +1,9 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useContext } from "react";
 import NextStudySession from "../Scheduling/NextStudySession";
 import CurrentDayForecast from "../Forecasts/CurrentDayForecast";
 import { UserPreferencesContext } from "../../providers/UserPreferences";
+
+import "./tabs.css";
 
 interface TabProps {
   isActive: boolean;
@@ -12,13 +13,12 @@ interface TabProps {
 
 const Tab: React.FC<TabProps> = ({ isActive, txt, onClick }) => {
   return (
-    <TouchableOpacity
-      activeOpacity={0.7}
-      onPress={onClick}
-      style={isActive ? styles.tabActiveItem : styles.tabItem}
+    <button
+      onClick={onClick}
+      className={isActive ? "tabActiveItem" : "tabItem"}
     >
-      <Text style={isActive ? styles.tabActiveTxt : styles.tabTxt}>{txt}</Text>
-    </TouchableOpacity>
+      <p className={isActive ? "tabActiveTxt" : "tabTxt"}>{txt}</p>
+    </button>
   );
 };
 
@@ -29,9 +29,9 @@ const Tabs = () => {
   const [activeTab, setActiveTab] = React.useState(0);
 
   return (
-    <View style={styles.card}>
+    <div className="card">
       {/* Tabs */}
-      <View style={styles.tabCon}>
+      <div className="tabCon">
         {tabs.map((tab: string, index: number) => (
           <Tab
             onClick={() => setActiveTab(index)}
@@ -40,7 +40,7 @@ const Tabs = () => {
             txt={tab}
           />
         ))}
-      </View>
+      </div>
 
       {/* Body */}
       {userPreferences && userPreferences.location && (
@@ -55,52 +55,8 @@ const Tabs = () => {
           )}
         </>
       )}
-    </View>
+    </div>
   );
 };
 
 export default Tabs;
-
-const styles = StyleSheet.create({
-  card: {
-    marginTop: 12,
-    backgroundColor: "#65b6dc",
-    borderRadius: 12,
-    paddingHorizontal: 12,
-    paddingVertical: 20,
-    marginBottom: 20,
-  },
-  tabCon: {
-    width: "100%",
-    padding: 4,
-    borderColor: "#189EDE",
-    borderWidth: 3,
-    borderRadius: 12,
-    flexDirection: "row",
-  },
-  tabItem: {
-    flex: 1,
-    borderRadius: 4,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 3,
-    marginHorizontal: 2,
-  },
-  tabActiveItem: {
-    flex: 1,
-    backgroundColor: "#189EDE",
-    borderRadius: 4,
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 3,
-    marginHorizontal: 2,
-  },
-  tabActiveTxt: {
-    color: "#fff",
-    fontSize: 16,
-  },
-  tabTxt: {
-    color: "#000",
-    fontSize: 16,
-  },
-});
