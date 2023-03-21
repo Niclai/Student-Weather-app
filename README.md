@@ -16,9 +16,13 @@ this app should provide students with more confidence to do so.
 
 ### Running the application locally
 
+**Note**: The following commands have been tested on Linux and MacOS. Windows
+users may need to use different commands.
+
 #### Prerequisites
 
-<!-- TODO #28 describe here what software must be installed, e.g. node, npm etc. -->
+Make sure [node.js](https://nodejs.org/en/download) and
+[npm](https://www.npmjs.com/package/npm) is installed on your system.
 
 #### Installing frontend dependencies
 
@@ -26,6 +30,14 @@ Inside the `client` directory, run the following command:
 
 ```bash
 npm install
+```
+
+#### Running unit tests
+
+To run the unit tests, run the following command:
+
+```bash
+npm test
 ```
 
 #### Running application using Expo CLI
@@ -43,34 +55,68 @@ BASE_PROXY_URL=http://<server-ip>:<server-port> npm start
 where `<server-ip>` and `<server-port>` should be replaced with the ones your
 backend proxy server is running on.
 
+A QR code should be displayed in your terminal, e.g.:
+
+```
+root@1bb0fa9d64ed:/home/client# BASE_PROXY_URL=http:192.168.1.57:5000 npm start
+
+> weather-app@1.0.0 start
+> expo start
+
+Starting project at /home/client
+Starting Metro Bundler
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+█ ▄▄▄▄▄ █   █▄▀▀▄▀█ ▄▄▄▄▄ █
+█ █   █ █ ▀▄ █▀▄ ▄█ █   █ █
+█ █▄▄▄█ █▀██▀▀ ▀▄██ █▄▄▄█ █
+█▄▄▄▄▄▄▄█▄▀▄█ █▄█ █▄▄▄▄▄▄▄█
+█  ██▄▄▄██▀▀▄▀▀▄ ▄██ ▀▄▄ ▄█
+██ ▄ █ ▄ ██▀ ▄██ ▀▀  ▄  ▀██
+█▀ ▄  ▄▄ ▄▀▄█▄▀▄▀▄▀▄▀▀▄ ▀██
+███▀▀▀▄▄▄▀ ▀█▀██▄▄ ██▄ ▀███
+█▄▄▄▄██▄▄ ▄ ▄▀▄ ▄ ▄▄▄ ▀ ▄▄█
+█ ▄▄▄▄▄ █▀▄▀ ▄ ▄▀ █▄█ ▀▀███
+█ █   █ █▄ ▄█▄ ▀█▄▄ ▄▄▀   █
+█ █▄▄▄█ █▀███▀█▀▄▄▄ ▀█▀▀ ██
+█▄▄▄▄▄▄▄█▄█▄▄█▄▄████▄▄▄▄▄▄█
+
+› Metro waiting on exp://127.0.0.1:19000
+› Scan the QR code above with Expo Go (Android) or the Camera app (iOS)
+
+› Press a │ open Android
+› Press w │ open web
+
+› Press j │ open debugger
+› Press r │ reload app
+› Press m │ toggle menu
+
+› Press ? │ show all commands
+```
+
 #### Launching application on a mobile device
 
-<!-- TODO #28 add steps to actually use app using Expo Mobile app -->
+Install [Expo Go](https://expo.dev/client) on your mobile device. Scan the QR
+code provided by output of the `npm start` command in the previous step, using
+the method corresponding to your device as described in the output above.
 
+The application should now load on your mobile device and be ready for use.
 
 ### How to use the app:
-When first using the app you are prompted to enter your desired weather conditions for outdoor studying. This can be altered later on if needed.
-After inputing conditions, the app will notify you the time of day when you can study outside is. If there are unexpected weather changes, the app will 
-also notify you and recalculate the time of day. To navigate the app there are simple buttons and sliders that allow for self-explanatory usage of all the 
-different functions provided.
-
-
-
-### Contributing/Authors
-
-current contributing authors are:
-- Dawid Kajus Lachowicz
-- Ivan Konakotin
-- Jone Sheng Lau
-- Kishan Kumaran Thanikasalam
-- Nicholas Lai
+When first using the app you are prompted to enter your desired weather
+conditions for outdoor studying. This can be altered later on if needed. After
+inputting conditions, the app will display the time of day when you can study
+outside is. If there are unexpected weather changes, the app will recalculate
+the time of day. To navigate the app there are simple buttons and screens that
+allow for self-explanatory usage of all the different functions provided.
 
 ## Requirements
 
-- Your code MUST be properly commented – marks will be deducted if your code is not selfexplanatory.
-- You MJST include a readme file with instructions of how to run your code (including how to install
-any dependencies or additional libraries) – if this is not provided, we will be unable to run your
-code and you will therefore receive ZERO marks for the implementation and any extensions.
+- [x] Your code MUST be properly commented – marks will be deducted if your code
+  is not self-explanatory.
+- [x] You MUST include a readme file with instructions of how to run your code
+      (including how to install any dependencies or additional libraries) – if this is
+      not provided, we will be unable to run your code and you will therefore receive
+      ZERO marks for the implementation and any extensions.
 
 
 |Id|Requirement|
