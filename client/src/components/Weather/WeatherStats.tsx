@@ -1,11 +1,11 @@
 import { FC } from "react";
-import { Text, View } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import { SvgProps } from "react-native-svg";
 import { Weather, WeatherConditions } from "../../types/weather";
-import A from "../Util/Link";
 import * as Icons from "./WeatherIcons";
 
 interface WeatherStatsProps {
+  // locationName: string;
   weather: Weather;
   isDay: boolean;
 }
@@ -109,6 +109,16 @@ const WeatherStats: FC<WeatherStatsProps> = ({ weather, isDay }) => {
 
   return (
     <View>
+      <View style={styles.iconCon}>
+        <WeatherIcon width={100} height={100} />
+      </View>
+
+      <View style={styles.data}>
+        <Text style={styles.temp}>{weather.temperature}°C</Text>
+        <Text style={styles.wind}>{weather.windSpeed}km/h</Text>
+      </View>
+
+      {/* <View>
       <Text>{weather.temperature}°C</Text>
       <Text>{weather.windSpeed}km/h</Text>
       <WeatherIcon width={100} height={100} />
@@ -123,9 +133,34 @@ const WeatherStats: FC<WeatherStatsProps> = ({ weather, isDay }) => {
         <A href="https://open-meteo.com/">Weather data by Open-Meteo.com</A>,
         licensed under&nbsp;
         <A href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</A>
-      </Text>
+      </Text> */}
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  iconCon: {
+    alignItems: "center",
+    marginTop: -6,
+  },
+  data: {
+    alignItems: "center",
+  },
+  temp: {
+    color: "#fff",
+    fontSize: 64,
+    marginTop: -15,
+  },
+  wind: {
+    color: "#fff",
+    fontSize: 24,
+    marginTop: -12,
+  },
+
+  link: {
+    color: "#1a0dab",
+    textDecorationLine: "underline",
+  },
+});
 
 export default WeatherStats;

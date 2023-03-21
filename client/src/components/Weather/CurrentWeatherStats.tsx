@@ -41,6 +41,9 @@ const CurrentWeatherStats: FC<CurrentWeatherStatsProps> = ({ coordinates }) => {
     };
   }, [coordinates]);
 
+  // TODO call getDaylightInfo function and check if it's daytime once #48 is
+  // implemented
+
   return (
     <>
       {weather && daylightHours && (

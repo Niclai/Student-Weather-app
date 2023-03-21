@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
 import UserPreferenceForm from "../../components/Preferences/UserPreferenceForm";
+import Navbar from "../../components/Navbar";
 
 /**
  * Settings page for configuring user preferences
@@ -8,7 +9,7 @@ import UserPreferenceForm from "../../components/Preferences/UserPreferenceForm"
 const Settings = () => {
   return (
     <View style={styles.wrapper}>
-      <Text>Settings</Text>
+      <Navbar type={2} />
       <UserPreferenceForm />
     </View>
   );

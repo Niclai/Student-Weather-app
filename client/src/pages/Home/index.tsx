@@ -16,6 +16,24 @@ import { UserPreferencesContext } from "../../providers/UserPreferences";
 const Home = () => {
   const { userPreferences } = useContext(UserPreferencesContext);
 
+  // return (
+  //   <>
+  //     <Navbar type={1} />
+  //     <View style={styles.wrapper}>
+  //       {/* {userPreferences && (
+  //         <Text>
+  //           Max wind speed preference: {userPreferences?.maxWindSpeed}
+  //         </Text>
+  //       )} */}
+  //       {location && (
+  //         <CurrentWeatherStats
+  //           locationName={location.name}
+  //           coordinates={location.coords}
+  //         />
+  //       )}
+  //     </View>
+  //   </>)
+
   return userPreferences === undefined ? (
     <Text>Loading application...</Text>
   ) : userPreferences === null ? (
