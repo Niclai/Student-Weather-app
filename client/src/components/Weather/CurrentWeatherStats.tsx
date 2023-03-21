@@ -8,7 +8,6 @@ import { Weather } from "../../types/weather";
 import WeatherStats from "./WeatherStats";
 
 interface CurrentWeatherStatsProps {
-  locationName: string;
   coordinates: Coordinates;
 }
 
@@ -18,10 +17,7 @@ const hourInMilliseconds = 60 * 60 * 1000;
  * Component for displaying basic current weather stats based on the given
  * location.
  */
-const CurrentWeatherStats: FC<CurrentWeatherStatsProps> = ({
-  locationName,
-  coordinates,
-}) => {
+const CurrentWeatherStats: FC<CurrentWeatherStatsProps> = ({ coordinates }) => {
   const [weather, setWeather] = useState<Weather>();
   const [daylightHours, setDaylightHours] = useState<DaylightHours>();
 
@@ -51,11 +47,7 @@ const CurrentWeatherStats: FC<CurrentWeatherStatsProps> = ({
   return (
     <>
       {weather && daylightHours && (
-        <WeatherStats
-          locationName={locationName}
-          isDay={isDaytime(daylightHours)}
-          weather={weather}
-        />
+        <WeatherStats isDay={isDaytime(daylightHours)} weather={weather} />
       )}
     </>
   );

@@ -23,3 +23,28 @@ export const getCurrentDateInFormat = () => {
   const formattedDate = `${dayOfWeek}, ${monthOfYear} ${dayOfMonth}`;
   return formattedDate;
 };
+
+export const getDateAndTimeInFormat = (date: Date) => {
+  const monthsOfYear = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  const monthOfYear = monthsOfYear[date.getMonth()];
+  const dayOfMonth = date.getDate();
+
+  const time = date.toLocaleTimeString().slice(0, 5);
+
+  const result = `${time}, ${monthOfYear} ${dayOfMonth}`;
+  return result;
+};

@@ -8,7 +8,7 @@ import A from "../Util/Link";
 import * as Icons from "./WeatherIcons";
 
 interface WeatherStatsProps {
-  locationName: string;
+  // locationName: string;
   weather: Weather;
   isDay: boolean;
 }
@@ -107,57 +107,20 @@ const getWeatherIcon = (
  * Component for displaying basic weather stats as well as an icon to show
  * current weather conditions based on the given weather and time of day.
  */
-const WeatherStats: FC<WeatherStatsProps> = ({
-  locationName,
-  weather,
-  isDay,
-}) => {
+const WeatherStats: FC<WeatherStatsProps> = ({ weather, isDay }) => {
   const WeatherIcon = getWeatherIcon(weather.conditions, isDay);
 
   return (
-    <View style={styles.wrapper}>
-      {locationName &&
-        locationName.split(" ").map((txt: string, index: number) => (
-          <Text key={index} style={styles.location}>
-            {txt}
-          </Text>
-        ))}
-
-      <Text style={styles.date}>{getCurrentDateInFormat()}</Text>
-
+    <View>
       <View style={styles.iconCon}>
         <WeatherIcon width={100} height={100} />
       </View>
 
-      <View style={styles.card}>
+      <View style={styles.data}>
         <Text style={styles.temp}>{weather.temperature}°C</Text>
-        <Text>{weather.windSpeed}km/h</Text>
+        <Text style={styles.wind}>{weather.windSpeed}km/h</Text>
       </View>
 
-      {/* TODO: */}
-      {/* <View>
-        <Text>
-          <Text
-            onPress={() =>
-              Linking.openURL(
-                "https://www.figma.com/community/file/1102960831369614781"
-              )
-            }
-            style={styles.link}
-          >
-            Weather Icons created by Roman Davydko
-          </Text>
-          , licensed under&nbsp;
-          <Text
-            onPress={() => {
-              Linking.openURL("https://creativecommons.org/licenses/by/4.0/");
-            }}
-            style={styles.link}
-          >
-            CC BY 4.0
-          </Text>
-        </Text>
-      </View> */}
       {/* <View>
       <Text>{weather.temperature}°C</Text>
       <Text>{weather.windSpeed}km/h</Text>
@@ -179,35 +142,22 @@ const WeatherStats: FC<WeatherStatsProps> = ({
 };
 
 const styles = StyleSheet.create({
-  wrapper: {
-    backgroundColor: "#189EDE",
-    flex: 1,
-    width: "100%",
-    paddingTop: 12,
-    paddingHorizontal: 16,
-  },
-  location: {
-    fontSize: 32,
-    color: "#fff",
-    fontWeight: "bold",
-  },
-  date: {
-    fontSize: 20,
-    color: "#fff",
-  },
   iconCon: {
     alignItems: "center",
-    marginVertical: 12,
+    marginTop: -6,
   },
-  card: {
-    backgroundColor: "#65b6dc",
-    borderRadius: 12,
-    flex: 1,
+  data: {
     alignItems: "center",
   },
   temp: {
     color: "#fff",
     fontSize: 64,
+    marginTop: -15,
+  },
+  wind: {
+    color: "#fff",
+    fontSize: 24,
+    marginTop: -12,
   },
 
   link: {
