@@ -26,15 +26,15 @@ const LocationAutocomplete: FC<LocationAutocompleteProps> = ({
   return (
     <div>
       <GooglePlacesAutocomplete
-        selectProps={{
-          value: location?.name,
-          onChange: async data:  => {
-            setSelectedLocation({
-              name: data.description,
-              coords: await getCoordinates(data.place_id),
-            });
-          },
-        }}
+        // selectProps={{
+        //   value: location?.name,
+        //   onChange: async data:  => {
+        //     setSelectedLocation({
+        //       name: data.description,
+        //       coords: await getCoordinates(data.place_id),
+        //     });
+        //   },
+        // }}
         apiKey={
           /* TODO get from environment variable, not as secure as using backend proxy but at least will not expose key in source code */ ""
         }
