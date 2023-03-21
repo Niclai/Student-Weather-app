@@ -1,0 +1,14 @@
+.container {
+  flex: 1;
+  justify-content: center;
+}
+
+.activityIndicator {
+  position: absolute;
+  align-self: center;
+}
+
+.currentLocation {
+  margin-top: 12px;
+  font-size: 16px;
+}
