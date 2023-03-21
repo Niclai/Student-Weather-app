@@ -4,6 +4,7 @@ import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home";
 import Settings from "./pages/Settings";
+import { UserPreferencesProvider } from "./providers/UserPreferences";
 
 const router = createBrowserRouter([
   {
@@ -19,7 +20,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <div className="App">
-      <RouterProvider router={router} />
+      <UserPreferencesProvider>
+        <RouterProvider router={router} />
+      </UserPreferencesProvider>
     </div>
   );
 }

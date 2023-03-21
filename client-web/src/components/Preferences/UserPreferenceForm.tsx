@@ -222,153 +222,6 @@ export default function UserPreferenceForm() {
     }
   };
 
-  const components = [
-    // <p className="title" key={0}>
-    //   Edit Preferences:
-    // </p>,
-
-    <LocationSelect
-      key={1}
-      location={location}
-      setLocation={location => setLocation(location)}
-    />,
-
-    <div key={2}>
-      {/* Fever */}
-      <div className="row">
-        <p className="label">Do you have hay fever?</p>
-        <input
-          type="checkbox"
-          onChange={showMaxPollenLevels}
-          checked={hayfever}
-        />
-      </div>
-      {hayfever ==
-        true /*show max pollen levels input box when hayfever is switched on (conditional rendering)*/ && (
-        <div>
-          <p>Maximum pollen levels for outdoor study session (%)</p>
-          {maxPollenLevelsERROR.length > 0 && (
-            <p className="errLabel">{maxPollenLevelsERROR}</p>
-          )}
-          <input
-            className={`txtInput${
-              maxPollenLevelsERROR.length > 0 ? " redBorder" : ""
-            }`}
-            type="numeric"
-            autoFocus={false}
-            onChange={e => setmaxPollenLevels(e.target.value)}
-            value={maxPollenLevels}
-          />
-        </div>
-      )}
-
-      {/* Time to study per week */}
-      <div>
-        {/* TODO change to use labels */}
-        <p>How Many times per week would you like to study outdoors?</p>
-        {timesPerWeekERROR.length > 0 && (
-          <p className="errLabel">{timesPerWeekERROR}</p>
-        )}
-        <input
-          className={`txtInput${
-            timesPerWeekERROR.length > 0 ? " redBorder" : ""
-          }`}
-          type="numeric"
-          onChange={e => settimesPerWeek(e.target.value)}
-          value={timesPerWeek}
-        />
-      </div>
-
-      {/* time before notif */}
-      <div>
-        <p>
-          How long before your scheduled study session would you like to be
-          notified (hours)?{" "}
-        </p>
-        {timeBeforeNotifERROR.length > 0 && (
-          <p className="errLabel">{timeBeforeNotifERROR}</p>
-        )}
-        <input
-          className={`txtInput${
-            timeBeforeNotifERROR.length > 0 ? " redBorder" : ""
-          }`}
-          type="numeric"
-          onChange={e => settimeBeforeNotif(e.target.value)}
-          value={timeBeforeNotif}
-        />
-      </div>
-
-      {/* study session */}
-
-      <div>
-        <p>Preferred study session duration? (hours) </p>
-        {sessionDurationERROR.length > 0 && (
-          <p className="errLabel">{sessionDurationERROR}</p>
-        )}
-        <input
-          className={`txtInput${
-            sessionDurationERROR.length > 0 ? " redBorder" : ""
-          }`}
-          type="numeric"
-          onChange={e => setsessionDuration(e.target.value)}
-          value={sessionDuration}
-        />
-      </div>
-
-      {/* min temp */}
-      <div>
-        <p>Prefered minimum Temperature for outdoor study sessions (°c)</p>
-        {preferredMinTempERROR.length > 0 && (
-          <p className="errLabel">{preferredMinTempERROR}</p>
-        )}
-        <input
-          className={`txtInput${
-            preferredMinTempERROR.length > 0 ? " redBorder" : ""
-          }`}
-          type="numeric"
-          onChange={e => setpreferredMinTemp(e.target.value)}
-          value={preferredMinTemp}
-        />
-      </div>
-
-      {/* max temp */}
-      <div>
-        <p>Prefered maximum Temperature for outdoor study sessions (°c)</p>
-        {preferredMaxTempERROR.length > 0 && (
-          <p className="errLabel">{preferredMaxTempERROR}</p>
-        )}
-        <input
-          className={`txtInput${
-            preferredMaxTempERROR.length > 0 ? " redBorder" : ""
-          }`}
-          type="numeric"
-          onChange={e => setpreferredMaxTemp(e.target.value)}
-          value={preferredMaxTemp}
-        />
-      </div>
-
-      {/* Wind speed */}
-      <div>
-        <p>Max wind speed? km/h</p>
-        {maxWindSpeedERROR.length > 0 && (
-          <p className="errLabel">{maxWindSpeedERROR}</p>
-        )}
-        <input
-          className={`txtInput${
-            maxWindSpeedERROR.length > 0 ? " redBorder" : ""
-          }`}
-          type="numeric"
-          onChange={e => setmaxWindSpeed(e.target.value)}
-          value={maxWindSpeed}
-        />
-      </div>
-
-      <div style={{ marginBottom: 16 }}>
-        <button onClick={handleSubmit} title="Save changes" />
-      </div>
-    </div>,
-  ];
-
   return (
     <>
       <Modal
@@ -381,12 +234,154 @@ export default function UserPreferenceForm() {
           <div className="popupContent">
             <p className="savedLabel">Preferences Changed</p>
             <div style={{ width: "70%" }}>
-              <button onClick={() => setModalVisible(false)} title="Close" />
+              <button onClick={() => setModalVisible(false)}>Close</button>
             </div>
           </div>
         </div>
       </Modal>
-      <div className="wrapper" {...components} />
+      <div className="wrapper">
+        {/* <LocationSelect
+          key={1}
+          location={location}
+          setLocation={location => setLocation(location)}
+        /> */}
+        ,
+        <div key={2}>
+          {/* Fever */}
+          <div className="row">
+            <p className="label">Do you have hay fever?</p>
+            <input
+              type="checkbox"
+              onChange={showMaxPollenLevels}
+              checked={hayfever}
+            />
+          </div>
+          {hayfever ==
+            true /*show max pollen levels input box when hayfever is switched on (conditional rendering)*/ && (
+            <div>
+              <p>Maximum pollen levels for outdoor study session (%)</p>
+              {maxPollenLevelsERROR.length > 0 && (
+                <p className="errLabel">{maxPollenLevelsERROR}</p>
+              )}
+              <input
+                className={`txtInput${
+                  maxPollenLevelsERROR.length > 0 ? " redBorder" : ""
+                }`}
+                type="numeric"
+                autoFocus={false}
+                onChange={e => setmaxPollenLevels(e.target.value)}
+                value={maxPollenLevels}
+              />
+            </div>
+          )}
+
+          {/* Time to study per week */}
+          <div>
+            {/* TODO change to use labels */}
+            <p>How Many times per week would you like to study outdoors?</p>
+            {timesPerWeekERROR.length > 0 && (
+              <p className="errLabel">{timesPerWeekERROR}</p>
+            )}
+            <input
+              className={`txtInput${
+                timesPerWeekERROR.length > 0 ? " redBorder" : ""
+              }`}
+              type="numeric"
+              onChange={e => settimesPerWeek(e.target.value)}
+              value={timesPerWeek}
+            />
+          </div>
+
+          {/* time before notif */}
+          <div>
+            <p>
+              How long before your scheduled study session would you like to be
+              notified (hours)?{" "}
+            </p>
+            {timeBeforeNotifERROR.length > 0 && (
+              <p className="errLabel">{timeBeforeNotifERROR}</p>
+            )}
+            <input
+              className={`txtInput${
+                timeBeforeNotifERROR.length > 0 ? " redBorder" : ""
+              }`}
+              type="numeric"
+              onChange={e => settimeBeforeNotif(e.target.value)}
+              value={timeBeforeNotif}
+            />
+          </div>
+
+          {/* study session */}
+
+          <div>
+            <p>Preferred study session duration? (hours) </p>
+            {sessionDurationERROR.length > 0 && (
+              <p className="errLabel">{sessionDurationERROR}</p>
+            )}
+            <input
+              className={`txtInput${
+                sessionDurationERROR.length > 0 ? " redBorder" : ""
+              }`}
+              type="numeric"
+              onChange={e => setsessionDuration(e.target.value)}
+              value={sessionDuration}
+            />
+          </div>
+
+          {/* min temp */}
+          <div>
+            <p>Prefered minimum Temperature for outdoor study sessions (°c)</p>
+            {preferredMinTempERROR.length > 0 && (
+              <p className="errLabel">{preferredMinTempERROR}</p>
+            )}
+            <input
+              className={`txtInput${
+                preferredMinTempERROR.length > 0 ? " redBorder" : ""
+              }`}
+              type="numeric"
+              onChange={e => setpreferredMinTemp(e.target.value)}
+              value={preferredMinTemp}
+            />
+          </div>
+
+          {/* max temp */}
+          <div>
+            <p>Prefered maximum Temperature for outdoor study sessions (°c)</p>
+            {preferredMaxTempERROR.length > 0 && (
+              <p className="errLabel">{preferredMaxTempERROR}</p>
+            )}
+            <input
+              className={`txtInput${
+                preferredMaxTempERROR.length > 0 ? " redBorder" : ""
+              }`}
+              type="numeric"
+              onChange={e => setpreferredMaxTemp(e.target.value)}
+              value={preferredMaxTemp}
+            />
+          </div>
+
+          {/* Wind speed */}
+          <div>
+            <p>Max wind speed? km/h</p>
+            {maxWindSpeedERROR.length > 0 && (
+              <p className="errLabel">{maxWindSpeedERROR}</p>
+            )}
+            <input
+              className={`txtInput${
+                maxWindSpeedERROR.length > 0 ? " redBorder" : ""
+              }`}
+              type="numeric"
+              onChange={e => setmaxWindSpeed(e.target.value)}
+              value={maxWindSpeed}
+            />
+          </div>
+
+          <div style={{ marginBottom: 16 }}>
+            <button onClick={handleSubmit}>Save changes</button>
+          </div>
+        </div>
+        ,
+      </div>
     </>
   );
 }

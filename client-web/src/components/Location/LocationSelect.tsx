@@ -39,7 +39,7 @@ const LocationSelect: FC<LocationSelectProps> = ({ location, setLocation }) => {
         location={location}
         handleLocationSelect={setLocation}
       />
-      <button title="Use current GPS location" onClick={setGPSLocation} />
+      <button onClick={setGPSLocation}>Use current GPS location</button>
       {isLoadingGPS &&
         // <ActivityIndicator size="large" className="activityIndicator" />
         // TODO spinner
