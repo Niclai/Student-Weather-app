@@ -28,8 +28,7 @@ application, which is exactly what this backend service intends to achieve.
 5. You should now see an API key modal, copy the API key to a safe place, and
    click the `Go to Google Maps Platform` button.
    ![](docs/screenshots/gmaps-api-step5.png)
-6. Select the `API restriction` and limit usage to the `Geocoding API`, `Geolocation API` and
-   `Places API` and click the `Restrict Key` button.
+6. Select the `No API restriction` option.
    ![](docs/screenshots/gmaps-api-step6.png)
 
 Your Google Maps API key should now be ready to use.
