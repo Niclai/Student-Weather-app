@@ -3,7 +3,6 @@ import { Coordinates } from "../../types/location";
 import { Forecast } from "../../types/forecast";
 import { FC, useEffect, useState } from "react";
 
-// import "./CurrentDayForecast.scss";
 import styles from "./CurrentDayForecast.module.scss";
 import { Puff } from "react-loader-spinner";
 

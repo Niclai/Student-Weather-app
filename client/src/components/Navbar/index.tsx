@@ -15,7 +15,11 @@ interface NavbarProps {
   type: NavbarStyle;
 }
 
-/** Document */
+/**
+ * The navbar component is a reusable UI component that provides
+ * navigation functionality and can be rendered on multiple pages
+ * in a web application.
+ */
 const Navbar: FC<NavbarProps> = ({ type }) => {
   return (
     <nav className={styles.navbar}>
