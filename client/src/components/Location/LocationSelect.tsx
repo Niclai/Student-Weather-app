@@ -1,4 +1,5 @@
 import { FC, useState } from "react";
+import { Puff } from "react-loader-spinner";
 import { getCurrentLocation } from "../../api/location";
 import { Location } from "../../types/location";
 import LocationAutocomplete from "./LocationAutocomplete";
@@ -35,9 +36,20 @@ const LocationSelect: FC<LocationSelectProps> = ({ location, setLocation }) => {
       <button className={styles.btn} onClick={setGPSLocation}>
         Use current GPS location
       </button>
-      {isLoadingGPS &&
-        // TODO: spinner
-        ""}
+      {isLoadingGPS && (
+        <div className={styles.loadingWrapper}>
+          <Puff
+            height="80"
+            width="80"
+            radius={1}
+            color="#189ede"
+            ariaLabel="puff-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={true}
+          />
+        </div>
+      )}
       {location ? (
         <p className={styles.currentLocation}>
           Location set to: {location.name}

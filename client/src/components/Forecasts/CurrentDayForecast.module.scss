@@ -10,8 +10,10 @@
   }
 
   .loadingWrapper {
-    height: 200px;
-    padding-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
   }
 
   .helperWrapper {

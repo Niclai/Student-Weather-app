@@ -5,6 +5,7 @@ import { FC, useEffect, useState } from "react";
 
 // import "./CurrentDayForecast.scss";
 import styles from "./CurrentDayForecast.module.scss";
+import { Puff } from "react-loader-spinner";
 
 interface CurrentDayForecastProps {
   coordinates: Coordinates;
@@ -42,7 +43,18 @@ const CurrentDayForecast: FC<CurrentDayForecastProps> = ({ coordinates }) => {
     <div className={styles.currentDayForecast}>
       <p className={styles.title}>Todays Forecast: </p>
       {isLoading ? (
-        <div className={styles.loadingWrapper}>{/* TODO: spinner */}</div>
+        <div className={styles.loadingWrapper}>
+          <Puff
+            height="80"
+            width="80"
+            radius={1}
+            color="#189ede"
+            ariaLabel="puff-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={true}
+          />
+        </div>
       ) : (
         <>
           <div className={styles.helperWrapper}>
