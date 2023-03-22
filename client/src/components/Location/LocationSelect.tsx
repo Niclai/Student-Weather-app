@@ -24,9 +24,6 @@ const LocationSelect: FC<LocationSelectProps> = ({ location, setLocation }) => {
     getCurrentLocation()
       .then(currentLocation => {
         setLocation(currentLocation);
-
-        // hack used to rerender LocationAutocomplete with a new Id, causing its
-        // input field to be cleared
       })
       .finally(() => setLoadingGPS(false));
   };
