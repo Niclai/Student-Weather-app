@@ -17,7 +17,6 @@ import "./LocationSelect.css";
  * setLocation function upon update.
  */
 const LocationSelect: FC<LocationSelectProps> = ({ location, setLocation }) => {
-  const [clearId, setClearId] = useState(0);
   const [isLoadingGPS, setLoadingGPS] = useState(false);
 
   const setGPSLocation = () => {
@@ -28,20 +27,15 @@ const LocationSelect: FC<LocationSelectProps> = ({ location, setLocation }) => {
 
         // hack used to rerender LocationAutocomplete with a new Id, causing its
         // input field to be cleared
-        setClearId(prevClearId => prevClearId + 1);
       })
       .finally(() => setLoadingGPS(false));
   };
 
   return (
     <div className="container">
-      <LocationAutocomplete
-        location={location}
-        handleLocationSelect={setLocation}
-      />
+      <LocationAutocomplete handleLocationSelect={setLocation} />
       <button onClick={setGPSLocation}>Use current GPS location</button>
       {isLoadingGPS &&
-        // <ActivityIndicator size="large" className="activityIndicator" />
         // TODO spinner
         ""}
       {location ? (
