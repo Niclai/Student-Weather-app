@@ -19,7 +19,7 @@ const FirstTimeSetup: FC = () => {
             Welcome! Complete the startup configuration so we can tailor the
             application to your needs
           </p>
-          <button onClick={() => setState(1)} title="Continue" />
+          <button onClick={() => setState(1)}>Continue</button>
         </div>
       ) : (
         <UserPreferenceForm />
