@@ -1,18 +1,11 @@
 import React, { useContext } from "react";
 import { useState } from "react";
-import {
-  Text,
-  View,
-  TextInput,
-  Button,
-  Switch,
-  FlatList,
-  StyleSheet,
-  Modal,
-} from "react-native";
 import { UserPreferencesContext } from "../../providers/UserPreferences";
 import { Location } from "../../types/location";
 import LocationSelect from "../Location/LocationSelect";
+import Modal from "react-modal";
+
+import "./UserPreferencesForm.scss";
 
 export default function UserPreferenceForm() {
   const { userPreferences, updateUserPreferences } = useContext(
@@ -64,6 +57,8 @@ export default function UserPreferenceForm() {
   );
   const [maxPollenLevelsERROR, setmaxPollenLevelsERROR] = useState("");
 
+  const [locationError, setLocationError] = useState("");
+
   const showMaxPollenLevels = () => {
     sethayfever(previousState => !previousState);
   };
@@ -83,6 +78,8 @@ export default function UserPreferenceForm() {
 
     const maxPollenLevelsValid = isMaxPollenLevelsValid();
 
+    const locationValid = isLocationValid();
+
     if (
       timesPerWeekValid &&
       timeBeforeNotifValid &&
@@ -90,7 +87,8 @@ export default function UserPreferenceForm() {
       preferredMinTempValid &&
       preferredMaxTempValid &&
       maxWindSpeedValid &&
-      maxPollenLevelsValid
+      maxPollenLevelsValid &&
+      locationValid
     ) {
       updateUserPreferences({
         hayFever: hayfever,
@@ -107,15 +105,6 @@ export default function UserPreferenceForm() {
       console.log("SAVED");
       setModalVisible(true);
     } else {
-      console.log(
-        timesPerWeekValid,
-        timeBeforeNotifValid,
-        sessionDurationValid,
-        preferredMinTempValid,
-        preferredMaxTempValid,
-        maxWindSpeedValid,
-        maxPollenLevelsValid
-      );
       setModalVisible(false);
     }
   };
@@ -216,248 +205,179 @@ export default function UserPreferenceForm() {
       }
     } else {
       return true;
-      /*if hayfever wasn't selected check to see that input is empty*/
-      // if (maxPollenLevels.length != 0) {
-      //   setmaxPollenLevelsERROR(
-      //     "can not enter here as hayfever hasn't been selected"
-      //   );
-      //   return false;
-      // } else {
-      //   setmaxPollenLevelsERROR("");
-      //   return true;
-      // }
     }
   };
 
-  const components = [
-    // <Text style={styles.title} key={0}>
-    //   Edit Preferences:
-    // </Text>,
-
-    <LocationSelect
-      key={1}
-      location={location}
-      setLocation={location => setLocation(location)}
-    />,
-
-    <View key={2}>
-      {/* Fever */}
-      <View style={styles.row}>
-        <Text style={styles.label}>Do you have hay fever?</Text>
-        <Switch onValueChange={showMaxPollenLevels} value={hayfever} />
-      </View>
-      {hayfever ==
-        true /*show max pollen levels input box when hayfever is switched on (conditional rendering)*/ && (
-        <View>
-          <Text>Maximum pollen levels for outdoor study session (%)</Text>
-          {maxPollenLevelsERROR.length > 0 && (
-            <Text style={styles.errLabel}>{maxPollenLevelsERROR}</Text>
-          )}
-          <TextInput
-            style={[
-              styles.txtInput,
-              maxPollenLevelsERROR.length > 0 && { borderColor: "red" },
-            ]}
-            keyboardType="numeric"
-            autoFocus={false}
-            onChangeText={val => setmaxPollenLevels(val)}
-            value={maxPollenLevels}
-          />
-        </View>
-      )}
-
-      {/* Time to study per week */}
-      <View>
-        <Text>How Many times per week would you like to study outdoors?</Text>
-        {timesPerWeekERROR.length > 0 && (
-          <Text style={styles.errLabel}>{timesPerWeekERROR}</Text>
-        )}
-        <TextInput
-          style={[
-            styles.txtInput,
-            timesPerWeekERROR.length > 0 && { borderColor: "red" },
-          ]}
-          keyboardType="numeric"
-          onChangeText={val => settimesPerWeek(val)}
-          value={timesPerWeek}
-        />
-      </View>
-
-      {/* time before notif */}
-      <View>
-        <Text>
-          How long before your scheduled study session would you like to be
-          notified (hours)?{" "}
-        </Text>
-        {timeBeforeNotifERROR.length > 0 && (
-          <Text style={styles.errLabel}>{timeBeforeNotifERROR}</Text>
-        )}
-        <TextInput
-          style={[
-            styles.txtInput,
-
-            timeBeforeNotifERROR.length > 0 && { borderColor: "red" },
-          ]}
-          keyboardType="numeric"
-          onChangeText={val => settimeBeforeNotif(val)}
-          value={timeBeforeNotif}
-        />
-      </View>
-
-      {/* study session */}
-
-      <View>
-        <Text>Preferred study session duration? (hours) </Text>
-        {sessionDurationERROR.length > 0 && (
-          <Text style={styles.errLabel}>{sessionDurationERROR}</Text>
-        )}
-        <TextInput
-          style={[
-            styles.txtInput,
-            sessionDurationERROR.length > 0 && { borderColor: "red" },
-          ]}
-          keyboardType="numeric"
-          onChangeText={val => setsessionDuration(val)}
-          value={sessionDuration}
-        />
-      </View>
-
-      {/* min temp */}
-      <View>
-        <Text>
-          Prefered minimum Temperature for outdoor study sessions (°c)
-        </Text>
-        {preferredMinTempERROR.length > 0 && (
-          <Text style={styles.errLabel}>{preferredMinTempERROR}</Text>
-        )}
-        <TextInput
-          style={[
-            styles.txtInput,
-            preferredMinTempERROR.length > 0 && { borderColor: "red" },
-          ]}
-          keyboardType="numeric"
-          onChangeText={val => setpreferredMinTemp(val)}
-          value={preferredMinTemp}
-        />
-      </View>
-
-      {/* max temp */}
-      <View>
-        <Text>
-          Prefered maximum Temperature for outdoor study sessions (°c)
-        </Text>
-        {preferredMaxTempERROR.length > 0 && (
-          <Text style={styles.errLabel}>{preferredMaxTempERROR}</Text>
-        )}
-        <TextInput
-          style={[
-            styles.txtInput,
-            preferredMaxTempERROR.length > 0 && { borderColor: "red" },
-          ]}
-          keyboardType="numeric"
-          onChangeText={val => setpreferredMaxTemp(val)}
-          value={preferredMaxTemp}
-        />
-      </View>
-
-      {/* Wind speed */}
-      <View>
-        <Text>Max wind speed? km/h</Text>
-        {maxWindSpeedERROR.length > 0 && (
-          <Text style={styles.errLabel}>{maxWindSpeedERROR}</Text>
-        )}
-        <TextInput
-          style={[
-            styles.txtInput,
-            maxWindSpeedERROR.length > 0 && { borderColor: "red" },
-          ]}
-          keyboardType="numeric"
-          onChangeText={val => setmaxWindSpeed(val)}
-          value={maxWindSpeed}
-        />
-      </View>
-
-      <View style={{ marginBottom: 16 }}>
-        <Button onPress={handleSubmit} title="Save changes" />
-      </View>
-    </View>,
-  ];
+  const isLocationValid = () => {
+    if (location == null) {
+      setLocationError("Location must be selected");
+      return false;
+    } else {
+      setLocationError("");
+      return true;
+    }
+  };
 
   return (
-    <>
+    <div className="user-preferences-form">
       <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
+        isOpen={modalVisible}
         onRequestClose={() => {
           setModalVisible(!modalVisible);
         }}
       >
-        <View style={styles.popupWrapper}>
-          <View style={styles.popupContent}>
-            <Text style={styles.savedLabel}>Preferences Changed</Text>
-            <View style={{ width: "70%" }}>
-              <Button onPress={() => setModalVisible(false)} title="Close" />
-            </View>
-          </View>
-        </View>
+        <div className="popupWrapper">
+          <div className="popupContent">
+            <p className="savedLabel">Preferences Changed</p>
+            <div style={{ width: "70%" }}>
+              <button onClick={() => setModalVisible(false)}>Close</button>
+            </div>
+          </div>
+        </div>
       </Modal>
-      <FlatList
-        style={styles.wrapper}
-        data={components}
-        keyboardShouldPersistTaps="handled"
-        renderItem={item => item.item}
-      />
-    </>
+      <div>
+        <div>
+          {locationError.length > 0 && (
+            <p className="errLabel">{locationError}</p>
+          )}
+          <LocationSelect
+            location={location}
+            setLocation={location => setLocation(location)}
+          />
+        </div>
+        {/* Fever */}
+        <div className="row">
+          <p className="label">Do you have hay fever?</p>
+          <input
+            type="checkbox"
+            onChange={showMaxPollenLevels}
+            checked={hayfever}
+          />
+        </div>
+        {hayfever ==
+          true /*show max pollen levels input box when hayfever is switched on (conditional rendering)*/ && (
+          <div>
+            <p>Maximum pollen levels for outdoor study session (%)</p>
+            {maxPollenLevelsERROR.length > 0 && (
+              <p className="errLabel">{maxPollenLevelsERROR}</p>
+            )}
+            <input
+              className={`txtInput${
+                maxPollenLevelsERROR.length > 0 ? " redBorder" : ""
+              }`}
+              type="numeric"
+              autoFocus={false}
+              onChange={e => setmaxPollenLevels(e.target.value)}
+              value={maxPollenLevels}
+            />
+          </div>
+        )}
+
+        {/* Time to study per week */}
+        <div>
+          {/* TODO change to use labels */}
+          <p>How Many times per week would you like to study outdoors?</p>
+          {timesPerWeekERROR.length > 0 && (
+            <p className="errLabel">{timesPerWeekERROR}</p>
+          )}
+          <input
+            className={`txtInput${
+              timesPerWeekERROR.length > 0 ? " redBorder" : ""
+            }`}
+            type="numeric"
+            onChange={e => settimesPerWeek(e.target.value)}
+            value={timesPerWeek}
+          />
+        </div>
+
+        {/* time before notif */}
+        <div>
+          <p>
+            How long before your scheduled study session would you like to be
+            notified (hours)?{" "}
+          </p>
+          {timeBeforeNotifERROR.length > 0 && (
+            <p className="errLabel">{timeBeforeNotifERROR}</p>
+          )}
+          <input
+            className={`txtInput${
+              timeBeforeNotifERROR.length > 0 ? " redBorder" : ""
+            }`}
+            type="numeric"
+            onChange={e => settimeBeforeNotif(e.target.value)}
+            value={timeBeforeNotif}
+          />
+        </div>
+
+        {/* study session */}
+
+        <div>
+          <p>Preferred study session duration? (hours) </p>
+          {sessionDurationERROR.length > 0 && (
+            <p className="errLabel">{sessionDurationERROR}</p>
+          )}
+          <input
+            className={`txtInput${
+              sessionDurationERROR.length > 0 ? " redBorder" : ""
+            }`}
+            type="numeric"
+            onChange={e => setsessionDuration(e.target.value)}
+            value={sessionDuration}
+          />
+        </div>
+
+        {/* min temp */}
+        <div>
+          <p>Prefered minimum Temperature for outdoor study sessions (°c)</p>
+          {preferredMinTempERROR.length > 0 && (
+            <p className="errLabel">{preferredMinTempERROR}</p>
+          )}
+          <input
+            className={`txtInput${
+              preferredMinTempERROR.length > 0 ? " redBorder" : ""
+            }`}
+            type="numeric"
+            onChange={e => setpreferredMinTemp(e.target.value)}
+            value={preferredMinTemp}
+          />
+        </div>
+
+        {/* max temp */}
+        <div>
+          <p>Prefered maximum Temperature for outdoor study sessions (°c)</p>
+          {preferredMaxTempERROR.length > 0 && (
+            <p className="errLabel">{preferredMaxTempERROR}</p>
+          )}
+          <input
+            className={`txtInput${
+              preferredMaxTempERROR.length > 0 ? " redBorder" : ""
+            }`}
+            type="numeric"
+            onChange={e => setpreferredMaxTemp(e.target.value)}
+            value={preferredMaxTemp}
+          />
+        </div>
+
+        {/* Wind speed */}
+        <div>
+          <p>Max wind speed? km/h</p>
+          {maxWindSpeedERROR.length > 0 && (
+            <p className="errLabel">{maxWindSpeedERROR}</p>
+          )}
+          <input
+            className={`txtInput${
+              maxWindSpeedERROR.length > 0 ? " redBorder" : ""
+            }`}
+            type="numeric"
+            onChange={e => setmaxWindSpeed(e.target.value)}
+            value={maxWindSpeed}
+          />
+        </div>
+
+        <div style={{ marginBottom: 16 }}>
+          <button onClick={handleSubmit}>Save changes</button>
+        </div>
+      </div>
+    </div>
   );
 }
-
-const styles = StyleSheet.create({
-  wrapper: {
-    paddingHorizontal: 16,
-  },
-  title: {
-    fontSize: 18,
-    marginBottom: 6,
-  },
-  row: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 12,
-  },
-  label: {
-    fontSize: 16,
-  },
-  txtInput: {
-    borderWidth: 1,
-    borderRadius: 8,
-    borderColor: "#93cce7",
-    marginTop: 4,
-    marginBottom: 12,
-    paddingHorizontal: 6,
-    paddingVertical: 4,
-  },
-  errLabel: {
-    color: "red",
-  },
-
-  popupWrapper: {
-    backgroundColor: "#000000aa",
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  popupContent: {
-    backgroundColor: "#fff",
-    padding: 16,
-    paddingVertical: 24,
-    borderRadius: 8,
-    width: "90%",
-    alignItems: "center",
-  },
-  savedLabel: {
-    fontSize: 24,
-    marginBottom: 32,
-  },
-});

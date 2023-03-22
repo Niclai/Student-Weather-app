@@ -1,4 +1,3 @@
-import * as GPSLocation from "expo-location";
 import { baseUrl } from "../env/variables";
 import { Coordinates, Location } from "../types/location";
 
@@ -29,15 +28,20 @@ async function getCoordinates(placeId: string): Promise<Coordinates> {
 /**
  * Get the user's current coordinates by making a call to the native GPS API
  */
-async function getCurrentCoordinates(): Promise<Coordinates> {
-  const { status } = await GPSLocation.requestForegroundPermissionsAsync();
-  if (status !== "granted") {
-    throw new Error("Permission to access location was denied");
-  }
-
-  const location = await GPSLocation.getCurrentPositionAsync({});
-  return { long: location.coords.longitude, lat: location.coords.latitude };
-}
+const getCurrentCoordinates = async (): Promise<Coordinates> =>
+  new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(
+      location => {
+        resolve({
+          long: location.coords.longitude,
+          lat: location.coords.latitude,
+        });
+      },
+      error => {
+        reject(error);
+      }
+    );
+  });
 
 interface GoogleMapsReverseGeocodingResponse {
   results: {

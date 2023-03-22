@@ -1,11 +1,4 @@
 import { FC, useState } from "react";
-import {
-  ActivityIndicator,
-  Button,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
 import { getCurrentLocation } from "../../api/location";
 import { Location } from "../../types/location";
 import LocationAutocomplete from "./LocationAutocomplete";
@@ -15,6 +8,8 @@ interface LocationSelectProps {
   setLocation: (location: Location) => void;
 }
 
+import "./LocationSelect.scss";
+
 /**
  * Component for selecting a location using either Google Maps autocomplete
  * for searching for a location manually, or using the user's current GPS
@@ -22,7 +17,6 @@ interface LocationSelectProps {
  * setLocation function upon update.
  */
 const LocationSelect: FC<LocationSelectProps> = ({ location, setLocation }) => {
-  const [clearId, setClearId] = useState(0);
   const [isLoadingGPS, setLoadingGPS] = useState(false);
 
   const setGPSLocation = () => {
@@ -30,48 +24,25 @@ const LocationSelect: FC<LocationSelectProps> = ({ location, setLocation }) => {
     getCurrentLocation()
       .then(currentLocation => {
         setLocation(currentLocation);
-
-        // hack used to rerender LocationAutocomplete with a new Id, causing its
-        // input field to be cleared
-        setClearId(prevClearId => prevClearId + 1);
       })
       .finally(() => setLoadingGPS(false));
   };
 
   return (
-    <View style={styles.container}>
-      <LocationAutocomplete
-        handleLocationSelect={setLocation}
-        clearId={clearId}
-      />
-      <Button title="Use current GPS location" onPress={setGPSLocation} />
-      {isLoadingGPS && (
-        <ActivityIndicator size="large" style={styles.activityIndicator} />
-      )}
+    <div className="location-select">
+      <h2>Select your location:</h2>
+      <LocationAutocomplete handleLocationSelect={setLocation} />
+      <button onClick={setGPSLocation}>Use current GPS location</button>
+      {isLoadingGPS &&
+        // TODO spinner
+        ""}
       {location ? (
-        <Text style={styles.currentLocation}>
-          Location set to: {location.name}
-        </Text>
+        <p className="currentLocation">Location set to: {location.name}</p>
       ) : (
-        <Text>Location not yet set</Text>
+        <p>Location not yet set</p>
       )}
-    </View>
+    </div>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-  },
-  activityIndicator: {
-    position: "absolute",
-    alignSelf: "center",
-  },
-  currentLocation: {
-    marginTop: 12,
-    fontSize: 16,
-  },
-});
 
 export default LocationSelect;

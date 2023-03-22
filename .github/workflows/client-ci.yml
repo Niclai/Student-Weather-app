@@ -42,4 +42,4 @@ jobs:
 
       - name: Run tests
         working-directory: client
-        run: npx jest --passWithNoTests
+        run: npm run test

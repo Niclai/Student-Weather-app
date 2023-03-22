@@ -1,9 +1,11 @@
 import os
 import sys
 from flask import Flask, request
+from flask_cors import CORS
 from requests import get
 
 app = Flask(__name__)
+CORS(app)
 
 gmaps_api_key = os.getenv("GMAPS_API_KEY")
 

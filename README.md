@@ -45,61 +45,16 @@ npm test
 First, ensure the backend proxy server is running by following the steps in the
 [server README](server/README.md).
 
-Once you know the IP address and port of the backend server, you can start the
-application using:
+Once you know the IP address and port of the backend server and have obtained
+the google maps API key, you can start the application using:
 
 ```
-BASE_PROXY_URL=http://<server-ip>:<server-port> npm start
+VITE_GMAPS_API_KEY=<your-google-maps-api-key> VITE_BASE_PROXY_URL=http://<server-ip>:<server-port> npm run dev
 ```
 
 where `<server-ip>` and `<server-port>` should be replaced with the ones your
 backend proxy server is running on.
 
-A QR code should be displayed in your terminal, e.g.:
-
-```
-root@1bb0fa9d64ed:/home/client# BASE_PROXY_URL=http:192.168.1.57:5000 npm start
-
-> weather-app@1.0.0 start
-> expo start
-
-Starting project at /home/client
-Starting Metro Bundler
-▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-█ ▄▄▄▄▄ █   █▄▀▀▄▀█ ▄▄▄▄▄ █
-█ █   █ █ ▀▄ █▀▄ ▄█ █   █ █
-█ █▄▄▄█ █▀██▀▀ ▀▄██ █▄▄▄█ █
-█▄▄▄▄▄▄▄█▄▀▄█ █▄█ █▄▄▄▄▄▄▄█
-█  ██▄▄▄██▀▀▄▀▀▄ ▄██ ▀▄▄ ▄█
-██ ▄ █ ▄ ██▀ ▄██ ▀▀  ▄  ▀██
-█▀ ▄  ▄▄ ▄▀▄█▄▀▄▀▄▀▄▀▀▄ ▀██
-███▀▀▀▄▄▄▀ ▀█▀██▄▄ ██▄ ▀███
-█▄▄▄▄██▄▄ ▄ ▄▀▄ ▄ ▄▄▄ ▀ ▄▄█
-█ ▄▄▄▄▄ █▀▄▀ ▄ ▄▀ █▄█ ▀▀███
-█ █   █ █▄ ▄█▄ ▀█▄▄ ▄▄▀   █
-█ █▄▄▄█ █▀███▀█▀▄▄▄ ▀█▀▀ ██
-█▄▄▄▄▄▄▄█▄█▄▄█▄▄████▄▄▄▄▄▄█
-
-› Metro waiting on exp://127.0.0.1:19000
-› Scan the QR code above with Expo Go (Android) or the Camera app (iOS)
-
-› Press a │ open Android
-› Press w │ open web
-
-› Press j │ open debugger
-› Press r │ reload app
-› Press m │ toggle menu
-
-› Press ? │ show all commands
-```
-
-#### Launching application on a mobile device
-
-Install [Expo Go](https://expo.dev/client) on your mobile device. Scan the QR
-code provided by output of the `npm start` command in the previous step, using
-the method corresponding to your device as described in the output above.
-
-The application should now load on your mobile device and be ready for use.
 
 ### How to use the app:
 When first using the app you are prompted to enter your desired weather

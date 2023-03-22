@@ -1,8 +1,10 @@
-import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import React, { FC } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
-import { MainStackParamList } from "../../types/navigationParams";
+import { FC } from "react";
+import { Link } from "react-router-dom";
+
+import SettingsIcon from "../../assets/icons/settings.png";
+import ArrowIcon from "../../assets/icons/arrback.png";
+
+import "./navbar.scss";
 
 enum NavbarStyle {
   "Default" = 1,
@@ -13,79 +15,26 @@ interface NavbarProps {
   type: NavbarStyle;
 }
 
+/** Document */
 const Navbar: FC<NavbarProps> = ({ type }) => {
-  const navigator = useNavigation<StackNavigationProp<MainStackParamList>>();
   return (
-    <View style={styles.wrapper}>
+    <nav className="navbar">
       {type === NavbarStyle.Default ? (
-        <View style={styles.mainContent}>
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => navigator.navigate("Settings")}
-          >
-            <Image
-              style={styles.img}
-              source={require("../../../assets/icons/settings.png")}
-            />
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => console.log("Navigating to notifications")}
-          >
-            <Image
-              style={styles.img}
-              source={require("../../../assets/icons/notif.png")}
-            />
-          </TouchableOpacity>
-        </View>
+        <div className="mainContent">
+          <Link to="/settings">
+            <img className="img" src={SettingsIcon} />
+          </Link>
+        </div>
       ) : (
-        <View style={styles.secondaryContent}>
-          <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={() => navigator.goBack()}
-          >
-            <Image
-              style={styles.img}
-              source={require("../../../assets/icons/arrback.png")}
-            />
-          </TouchableOpacity>
-          <Text style={styles.label}>Settings</Text>
-        </View>
+        <div className="secondaryContent">
+          <Link to="/">
+            <img className="img" src={ArrowIcon} />
+          </Link>
+          <p className="label">Settings</p>
+        </div>
       )}
-    </View>
+    </nav>
   );
 };
 
 export default Navbar;
-
-const styles = StyleSheet.create({
-  wrapper: {
-    backgroundColor: "#007DB8",
-    height: 90,
-    paddingTop: 10,
-    paddingHorizontal: 16,
-    width: "100%",
-  },
-  mainContent: {
-    height: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  secondaryContent: {
-    height: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
-  },
-  label: {
-    fontSize: 20,
-    color: "#fff",
-    marginLeft: 12,
-  },
-  img: {
-    height: 24,
-    width: 24,
-  },
-});

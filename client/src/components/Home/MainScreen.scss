@@ -1,0 +1,24 @@
+.main-screen {
+  flex: 1;
+  background-color: #189ede;
+
+  .wrapper {
+    background-color: #189ede;
+    padding-top: 12px;
+    padding-left: 16px;
+    padding-right: 16px;
+    flex: 1;
+    min-height: calc(100vh - 90px);
+  }
+
+  .location {
+    font-size: 32px;
+    color: #fff;
+    font-weight: bold;
+  }
+
+  .date {
+    font-size: 20px;
+    color: #fff;
+  }
+}

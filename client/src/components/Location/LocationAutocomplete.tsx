@@ -1,16 +1,14 @@
-import React, { FC, useEffect, useRef } from "react";
-import { StyleSheet, View } from "react-native";
-import {
-  GooglePlacesAutocomplete,
-  GooglePlacesAutocompleteRef,
-} from "react-native-google-places-autocomplete";
+import { FC } from "react";
+import Autocomplete from "react-google-autocomplete";
+
 import { getCoordinates } from "../../api/location";
-import { baseUrl } from "../../env/variables";
+import { gmapsApiKey } from "../../env/variables";
 import { Location } from "../../types/location";
+
+import "./LocationAutocomplete.scss";
 
 interface LocationAutocompleteProps {
   handleLocationSelect: (location: Location) => void;
-  clearId: number;
 }
 
 /**
@@ -23,40 +21,22 @@ interface LocationAutocompleteProps {
  */
 const LocationAutocomplete: FC<LocationAutocompleteProps> = ({
   handleLocationSelect: setSelectedLocation,
-  clearId,
 }) => {
-  const ref = useRef<GooglePlacesAutocompleteRef>(null);
-
-  useEffect(() => ref.current?.clear(), [clearId]);
-
   return (
-    <View style={styles.wrapper}>
-      <GooglePlacesAutocomplete
-        ref={ref}
-        placeholder="Search"
-        onPress={async data => {
-          setSelectedLocation({
-            name: data.description,
-            coords: await getCoordinates(data.place_id),
-          });
+    <div className="location-autocomplete">
+      <Autocomplete
+        onPlaceSelected={async data => {
+          if (data.formatted_address && data.place_id) {
+            setSelectedLocation({
+              name: data.formatted_address,
+              coords: await getCoordinates(data.place_id),
+            });
+          }
         }}
-        query={{
-          language: "en",
-        }}
-        requestUrl={{
-          url: `${baseUrl}/maps/api`,
-          useOnPlatform: "all",
-        }}
+        apiKey={gmapsApiKey}
       />
-    </View>
+    </div>
   );
 };
-
-const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-    marginVertical: 12,
-  },
-});
 
 export default LocationAutocomplete;
