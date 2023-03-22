@@ -3,7 +3,7 @@ import { Coordinates } from "../../types/location";
 import { Forecast } from "../../types/forecast";
 import { FC, useEffect, useState } from "react";
 
-import "./CurrentDayForecast.css";
+import "./CurrentDayForecast.scss";
 
 interface CurrentDayForecastProps {
   coordinates: Coordinates;
@@ -38,7 +38,7 @@ const CurrentDayForecast: FC<CurrentDayForecastProps> = ({ coordinates }) => {
   }, [coordinates]);
 
   return (
-    <div className="wrapper">
+    <div className="current-day-forecast">
       <p className="title">Todays Forecast: </p>
       {isLoading ? (
         <div className="loadingWrapper">{/* TODO spinner */}</div>

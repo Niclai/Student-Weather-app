@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import SettingsIcon from "../../assets/icons/settings.png";
 import ArrowIcon from "../../assets/icons/arrback.png";
 
-import "./navbar.css";
+import "./navbar.scss";
 
 enum NavbarStyle {
   "Default" = 1,
@@ -17,7 +17,7 @@ interface NavbarProps {
 
 const Navbar: FC<NavbarProps> = ({ type }) => {
   return (
-    <nav className="wrapper">
+    <nav className="navbar">
       {type === NavbarStyle.Default ? (
         <div className="mainContent">
           <Link to="/settings">

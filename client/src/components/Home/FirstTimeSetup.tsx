@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import UserPreferenceForm from "../Preferences/UserPreferenceForm";
 
-import "./FirstTimeSetup.css";
+import "./FirstTimeSetup.scss";
 
 /**
  * Component to be displayed for the user to perform the initial configuration
@@ -12,7 +12,7 @@ const FirstTimeSetup: FC = () => {
   const [state, setState] = useState(0);
 
   return (
-    <div className="wrapper">
+    <div className="first-time-setup">
       {state === 0 ? (
         <div className="introCon">
           <p className="introTxt">

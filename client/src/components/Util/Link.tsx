@@ -13,22 +13,10 @@ interface LinkProps {
  */
 const Link: FC<LinkProps> = ({ children, href }) => {
   return (
-    <a
-      href={href}
-      style={styles.link}
-      target="_blank"
-      rel="noreferrer noopener"
-    >
+    <a href={href} target="_blank" rel="noreferrer noopener" className="link">
       {children}
     </a>
   );
-};
-
-const styles = {
-  link: {
-    color: "#1a0dab",
-    textDecorationLine: "underline",
-  },
 };
 
 export default Link;

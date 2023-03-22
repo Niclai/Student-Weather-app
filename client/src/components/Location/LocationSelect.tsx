@@ -8,7 +8,7 @@ interface LocationSelectProps {
   setLocation: (location: Location) => void;
 }
 
-import "./LocationSelect.css";
+import "./LocationSelect.scss";
 
 /**
  * Component for selecting a location using either Google Maps autocomplete
@@ -29,7 +29,7 @@ const LocationSelect: FC<LocationSelectProps> = ({ location, setLocation }) => {
   };
 
   return (
-    <div className="container">
+    <div className="location-select">
       <LocationAutocomplete handleLocationSelect={setLocation} />
       <button onClick={setGPSLocation}>Use current GPS location</button>
       {isLoadingGPS &&

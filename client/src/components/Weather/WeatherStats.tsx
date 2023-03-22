@@ -1,8 +1,9 @@
 import { FC } from "react";
 import { Weather, WeatherConditions } from "../../types/weather";
 import * as Icons from "./WeatherIcons";
+import A from "../Util/Link";
 
-import "./WeatherStats.css";
+import "./WeatherStats.scss";
 
 interface WeatherStatsProps {
   // locationName: string;
@@ -108,7 +109,7 @@ const WeatherStats: FC<WeatherStatsProps> = ({ weather, isDay }) => {
   const weatherIcon = getWeatherIcon(weather.conditions, isDay);
 
   return (
-    <div>
+    <div className="weather-stats">
       <div className="iconCon">
         <img src={weatherIcon} width={100} height={100} />
       </div>
@@ -117,23 +118,6 @@ const WeatherStats: FC<WeatherStatsProps> = ({ weather, isDay }) => {
         <p className="temp">{weather.temperature}°C</p>
         <p className="wind">{weather.windSpeed}km/h</p>
       </div>
-
-      {/* <div>
-      <Text>{weather.temperature}°C</Text>
-      <Text>{weather.windSpeed}km/h</Text>
-      <WeatherIcon width={100} height={100} />
-      <Text>
-        <A href="https://www.figma.com/community/file/1102960831369614781">
-          Weather Icons created by Roman Davydko
-        </A>
-        , licensed under&nbsp;
-        <A href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</A>
-      </Text>
-      <Text>
-        <A href="https://open-meteo.com/">Weather data by Open-Meteo.com</A>,
-        licensed under&nbsp;
-        <A href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</A>
-      </Text> */}
     </div>
   );
 };

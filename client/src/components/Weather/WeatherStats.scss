@@ -1,0 +1,27 @@
+.weather-stats {
+  .iconCon {
+    align-items: center;
+    margin-top: -6px;
+  }
+
+  .data {
+    align-items: center;
+  }
+
+  .temp {
+    color: #fff;
+    font-size: 64px;
+    margin-top: -15px;
+  }
+
+  .wind {
+    color: #fff;
+    font-size: 24px;
+    margin-top: -12px;
+  }
+
+  .link {
+    color: #1a0dab;
+    text-decoration-line: underline;
+  }
+}

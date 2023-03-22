@@ -9,7 +9,7 @@ import { Coordinates } from "../../types/location";
 import { UserPreferences } from "../../types/userPreferences";
 import { getDateAndTimeInFormat } from "../../utils/getCurrentDateInFormat";
 
-import "./NextStudySession.css";
+import "./NextStudySession.scss";
 
 interface NextStudySessionProps {
   coordinates: Coordinates;
@@ -75,14 +75,14 @@ const NextStudySession: FC<NextStudySessionProps> = ({
   }, [coordinates, userPreferences]);
 
   return (
-    <div className="wrapper">
+    <div className="next-study-session">
       {scheduling == null ? (
         <p className="txt">Scheduling study sessions...</p>
       ) : scheduling.length == 0 ? (
         <p className="txt">No study sessions scheduled for the upcoming week</p>
       ) : (
         <>
-          <p className="txt">Next study session scheduled for</p>
+          <p className="txt">Next study session scheduled for&nbsp;</p>
           <p className="time">{getDateAndTimeInFormat(scheduling[0])}</p>
         </>
       )}

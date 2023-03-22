@@ -1,0 +1,66 @@
+.user-preferences-form {
+  padding-left: 16px;
+  padding-right: 16px;
+
+  .title {
+    font-size: 18px;
+    margin-bottom: 6px;
+  }
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .label {
+    font-size: 16px;
+  }
+
+  .txtInput {
+    border-width: 1px;
+    border-radius: 8px;
+    border-color: #93cce7;
+    margin-top: 4px;
+    margin-bottom: 12px;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
+  .errLabel {
+    color: red;
+  }
+
+  .popupWrapper {
+    background-color: #000000aa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+  }
+
+  .popupContent {
+    background-color: #fff;
+    padding: 16px;
+    padding-top: 24px;
+    padding-bottom: 24px;
+    border-radius: 8px;
+    width: 90%;
+    display: flex;
+    align-items: center;
+  }
+
+  .savedLabel {
+    font-size: 24px;
+    margin-bottom: 32px;
+    color: black;
+  }
+
+  .redBorder {
+    border-color: red;
+  }
+}

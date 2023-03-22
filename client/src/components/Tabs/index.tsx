@@ -3,7 +3,7 @@ import NextStudySession from "../Scheduling/NextStudySession";
 import CurrentDayForecast from "../Forecasts/CurrentDayForecast";
 import { UserPreferencesContext } from "../../providers/UserPreferences";
 
-import "./tabs.css";
+import "./tabs.scss";
 
 interface TabProps {
   isActive: boolean;

@@ -5,7 +5,7 @@ import { Location } from "../../types/location";
 import LocationSelect from "../Location/LocationSelect";
 import Modal from "react-modal";
 
-import "./UserPreferencesForm.css";
+import "./UserPreferencesForm.scss";
 
 export default function UserPreferenceForm() {
   const { userPreferences, updateUserPreferences } = useContext(
@@ -213,7 +213,7 @@ export default function UserPreferenceForm() {
   };
 
   return (
-    <>
+    <div className="user-preferences-form">
       <Modal
         isOpen={modalVisible}
         onRequestClose={() => {
@@ -369,6 +369,6 @@ export default function UserPreferenceForm() {
           <button onClick={handleSubmit}>Save changes</button>
         </div>
       </div>
-    </>
+    </div>
   );
 }

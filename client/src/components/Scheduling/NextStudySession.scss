@@ -1,0 +1,15 @@
+.next-study-session {
+  display: flex;
+  align-items: center;
+
+  .txt {
+    margin-top: 20px;
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .time {
+    font-size: 20px;
+    font-weight: bold;
+  }
+}
