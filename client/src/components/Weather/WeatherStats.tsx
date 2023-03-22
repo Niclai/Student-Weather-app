@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { Weather, WeatherConditions } from "../../types/weather";
 import * as Icons from "./WeatherIcons";
-import A from "../Util/Link";
 
 import "./WeatherStats.scss";
 
