@@ -1,5 +1,3 @@
-import { FC } from "react";
-
 import ClearDayIcon from "../../assets/weather-icons/clear-day.svg";
 import ClearNightIcon from "../../assets/weather-icons/clear-night.svg";
 import PartlyCloudyDayIcon from "../../assets/weather-icons/partly-cloudy-day.svg";

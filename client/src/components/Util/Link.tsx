@@ -13,7 +13,12 @@ interface LinkProps {
  */
 const Link: FC<LinkProps> = ({ children, href }) => {
   return (
-    <a href={href} style={styles.link} target="_blank" rel="noopener">
+    <a
+      href={href}
+      style={styles.link}
+      target="_blank"
+      rel="noreferrer noopener"
+    >
       {children}
     </a>
   );
