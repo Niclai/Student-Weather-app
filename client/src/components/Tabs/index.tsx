@@ -3,7 +3,7 @@ import NextStudySession from "../Scheduling/NextStudySession";
 import CurrentDayForecast from "../Forecasts/CurrentDayForecast";
 import { UserPreferencesContext } from "../../providers/UserPreferences";
 
-import "./tabs.scss";
+import styles from "./Tabs.module.scss";
 
 interface TabProps {
   isActive: boolean;
@@ -15,9 +15,9 @@ const Tab: React.FC<TabProps> = ({ isActive, txt, onClick }) => {
   return (
     <button
       onClick={onClick}
-      className={isActive ? "tabActiveItem" : "tabItem"}
+      className={isActive ? styles.tabActiveItem : styles.tabItem}
     >
-      <p className={isActive ? "tabActiveTxt" : "tabTxt"}>{txt}</p>
+      <p className={isActive ? styles.tabActiveTxt : styles.tabTxt}>{txt}</p>
     </button>
   );
 };
@@ -29,9 +29,9 @@ const Tabs = () => {
   const [activeTab, setActiveTab] = React.useState(0);
 
   return (
-    <div className="card">
+    <div className={styles.card}>
       {/* Tabs */}
-      <div className="tabCon">
+      <div className={styles.tabCon}>
         {tabs.map((tab: string, index: number) => (
           <Tab
             onClick={() => setActiveTab(index)}

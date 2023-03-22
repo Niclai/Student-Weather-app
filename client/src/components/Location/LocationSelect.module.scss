@@ -1,0 +1,31 @@
+.locationSelect {
+  flex: 1;
+  justify-content: center;
+
+  .activityIndicator {
+    position: absolute;
+    align-self: center;
+  }
+
+  .loadingWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+  }
+
+  .currentLocation {
+    margin-top: 12px;
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+
+  .btn {
+    width: 100%;
+    transition: all 0.15s ease-in-out;
+
+    &:hover {
+      box-shadow: 5px 5px 6px rgba(0, 0, 0, 0.252);
+    }
+  }
+}

@@ -5,7 +5,7 @@ import { Location } from "../../types/location";
 import LocationSelect from "../Location/LocationSelect";
 import Modal from "react-modal";
 
-import "./UserPreferencesForm.scss";
+import styles from "./UserPreferencesForm.module.scss";
 
 export default function UserPreferenceForm() {
   const { userPreferences, updateUserPreferences } = useContext(
@@ -218,36 +218,57 @@ export default function UserPreferenceForm() {
     }
   };
 
+  const customStyles = {
+    overlay: {
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(0, 0, 0, 0.667)",
+    },
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+    },
+  };
+
   return (
-    <div className="user-preferences-form">
+    <div className={styles.userPreferencesForm}>
       <Modal
+        style={customStyles}
         isOpen={modalVisible}
         onRequestClose={() => {
           setModalVisible(!modalVisible);
         }}
       >
-        <div className="popupWrapper">
-          <div className="popupContent">
-            <p className="savedLabel">Preferences Changed</p>
-            <div style={{ width: "70%" }}>
-              <button onClick={() => setModalVisible(false)}>Close</button>
-            </div>
-          </div>
+        <p className={styles.savedLabel}>Preferences Changed</p>
+        <div style={{ width: "100%" }}>
+          <button
+            style={{ width: "100%" }}
+            onClick={() => setModalVisible(false)}
+          >
+            Close
+          </button>
         </div>
       </Modal>
       <div>
         <div>
           {locationError.length > 0 && (
-            <p className="errLabel">{locationError}</p>
+            <p className={styles.errLabel}>{locationError}</p>
           )}
           <LocationSelect
             location={location}
             setLocation={location => setLocation(location)}
           />
         </div>
+        <hr />
         {/* Fever */}
-        <div className="row">
-          <p className="label">Do you have hay fever?</p>
+        <div className={styles.row}>
+          <p className={styles.label}>Do you have hay fever?</p>
           <input
             type="checkbox"
             onChange={showMaxPollenLevels}
@@ -259,12 +280,13 @@ export default function UserPreferenceForm() {
           <div>
             <p>Maximum pollen levels for outdoor study session (%)</p>
             {maxPollenLevelsERROR.length > 0 && (
-              <p className="errLabel">{maxPollenLevelsERROR}</p>
+              <p className={styles.errLabel}>{maxPollenLevelsERROR}</p>
             )}
             <input
-              className={`txtInput${
-                maxPollenLevelsERROR.length > 0 ? " redBorder" : ""
-              }`}
+              className={styles.txtInput}
+              style={
+                maxPollenLevelsERROR.length > 0 ? { borderColor: "red" } : {}
+              }
               type="numeric"
               autoFocus={false}
               onChange={e => setmaxPollenLevels(e.target.value)}
@@ -278,12 +300,11 @@ export default function UserPreferenceForm() {
           {/* TODO change to use labels */}
           <p>How Many times per week would you like to study outdoors?</p>
           {timesPerWeekERROR.length > 0 && (
-            <p className="errLabel">{timesPerWeekERROR}</p>
+            <p className={styles.errLabel}>{timesPerWeekERROR}</p>
           )}
           <input
-            className={`txtInput${
-              timesPerWeekERROR.length > 0 ? " redBorder" : ""
-            }`}
+            className={styles.txtInput}
+            style={timesPerWeekERROR.length > 0 ? { borderColor: "red" } : {}}
             type="numeric"
             onChange={e => settimesPerWeek(e.target.value)}
             value={timesPerWeek}
@@ -297,12 +318,13 @@ export default function UserPreferenceForm() {
             notified (hours)?{" "}
           </p>
           {timeBeforeNotifERROR.length > 0 && (
-            <p className="errLabel">{timeBeforeNotifERROR}</p>
+            <p className={styles.errLabel}>{timeBeforeNotifERROR}</p>
           )}
           <input
-            className={`txtInput${
-              timeBeforeNotifERROR.length > 0 ? " redBorder" : ""
-            }`}
+            className={styles.txtInput}
+            style={
+              timeBeforeNotifERROR.length > 0 ? { borderColor: "red" } : {}
+            }
             type="numeric"
             onChange={e => settimeBeforeNotif(e.target.value)}
             value={timeBeforeNotif}
@@ -314,12 +336,13 @@ export default function UserPreferenceForm() {
         <div>
           <p>Preferred study session duration? (hours) </p>
           {sessionDurationERROR.length > 0 && (
-            <p className="errLabel">{sessionDurationERROR}</p>
+            <p className={styles.errLabel}>{sessionDurationERROR}</p>
           )}
           <input
-            className={`txtInput${
-              sessionDurationERROR.length > 0 ? " redBorder" : ""
-            }`}
+            className={styles.txtInput}
+            style={
+              sessionDurationERROR.length > 0 ? { borderColor: "red" } : {}
+            }
             type="numeric"
             onChange={e => setsessionDuration(e.target.value)}
             value={sessionDuration}
@@ -330,12 +353,13 @@ export default function UserPreferenceForm() {
         <div>
           <p>Prefered minimum Temperature for outdoor study sessions (°c)</p>
           {preferredMinTempERROR.length > 0 && (
-            <p className="errLabel">{preferredMinTempERROR}</p>
+            <p className={styles.errLabel}>{preferredMinTempERROR}</p>
           )}
           <input
-            className={`txtInput${
-              preferredMinTempERROR.length > 0 ? " redBorder" : ""
-            }`}
+            className={styles.txtInput}
+            style={
+              preferredMinTempERROR.length > 0 ? { borderColor: "red" } : {}
+            }
             type="numeric"
             onChange={e => setpreferredMinTemp(e.target.value)}
             value={preferredMinTemp}
@@ -346,12 +370,13 @@ export default function UserPreferenceForm() {
         <div>
           <p>Prefered maximum Temperature for outdoor study sessions (°c)</p>
           {preferredMaxTempERROR.length > 0 && (
-            <p className="errLabel">{preferredMaxTempERROR}</p>
+            <p className={styles.errLabel}>{preferredMaxTempERROR}</p>
           )}
           <input
-            className={`txtInput${
-              preferredMaxTempERROR.length > 0 ? " redBorder" : ""
-            }`}
+            className={styles.txtInput}
+            style={
+              preferredMaxTempERROR.length > 0 ? { borderColor: "red" } : {}
+            }
             type="numeric"
             onChange={e => setpreferredMaxTemp(e.target.value)}
             value={preferredMaxTemp}
@@ -362,12 +387,11 @@ export default function UserPreferenceForm() {
         <div>
           <p>Max wind speed? km/h</p>
           {maxWindSpeedERROR.length > 0 && (
-            <p className="errLabel">{maxWindSpeedERROR}</p>
+            <p className={styles.errLabel}>{maxWindSpeedERROR}</p>
           )}
           <input
-            className={`txtInput${
-              maxWindSpeedERROR.length > 0 ? " redBorder" : ""
-            }`}
+            className={styles.txtInput}
+            style={maxWindSpeedERROR.length > 0 ? { borderColor: "red" } : {}}
             type="numeric"
             onChange={e => setmaxWindSpeed(e.target.value)}
             value={maxWindSpeed}
@@ -375,7 +399,9 @@ export default function UserPreferenceForm() {
         </div>
 
         <div style={{ marginBottom: 16 }}>
-          <button onClick={handleSubmit}>Save changes</button>
+          <button className={styles.mainButton} onClick={handleSubmit}>
+            Save changes
+          </button>
         </div>
       </div>
     </div>

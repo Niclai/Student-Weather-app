@@ -7,7 +7,8 @@ import Tabs from "../Tabs";
 import CurrentWeatherStats from "../Weather/CurrentWeatherStats";
 import A from "../Util/Link";
 
-import "./MainScreen.scss";
+// import "./MainScreen.scss";
+import styles from "./MainScreen.module.scss";
 
 /**
  * Main screen component that is to be displayed upon startup of the application
@@ -18,13 +19,13 @@ const MainScreen: FC = () => {
   const { userPreferences } = useContext(UserPreferencesContext);
   const location = userPreferences?.location;
   return (
-    <div className="main-screen">
+    <div className={styles.mainScreen}>
       <Navbar type={1} />
       <div style={{ flex: 1 }}>
-        <div className="wrapper">
-          <p className="location">{location?.name}</p>
+        <div className={styles.wrapper}>
+          <p className={styles.location}>{location?.name}</p>
 
-          <p className="date">{getCurrentDateInFormat()}</p>
+          <p className={styles.date}>{getCurrentDateInFormat()}</p>
 
           {location && (
             <>

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import SettingsIcon from "../../assets/icons/settings.png";
 import ArrowIcon from "../../assets/icons/arrback.png";
 
-import "./navbar.scss";
+import styles from "./Navbar.module.scss";
 
 enum NavbarStyle {
   "Default" = 1,
@@ -15,22 +15,26 @@ interface NavbarProps {
   type: NavbarStyle;
 }
 
-/** Document */
+/**
+ * The navbar component is a reusable UI component that provides
+ * navigation functionality and can be rendered on multiple pages
+ * in a web application.
+ */
 const Navbar: FC<NavbarProps> = ({ type }) => {
   return (
-    <nav className="navbar">
+    <nav className={styles.navbar}>
       {type === NavbarStyle.Default ? (
-        <div className="mainContent">
+        <div className={styles.mainContent}>
           <Link to="/settings">
-            <img className="img" src={SettingsIcon} />
+            <img className={styles.img} src={SettingsIcon} />
           </Link>
         </div>
       ) : (
-        <div className="secondaryContent">
+        <div className={styles.secondaryContent}>
           <Link to="/">
-            <img className="img" src={ArrowIcon} />
+            <img className={styles.img} src={ArrowIcon} />
           </Link>
-          <p className="label">Settings</p>
+          <p className={styles.label}>Settings</p>
         </div>
       )}
     </nav>

@@ -5,7 +5,7 @@ import { getCoordinates } from "../../api/location";
 import { gmapsApiKey } from "../../env/variables";
 import { Location } from "../../types/location";
 
-import "./LocationAutocomplete.scss";
+import styles from "./LocationAutocomplete.module.scss";
 
 interface LocationAutocompleteProps {
   handleLocationSelect: (location: Location) => void;
@@ -23,8 +23,9 @@ const LocationAutocomplete: FC<LocationAutocompleteProps> = ({
   handleLocationSelect: setSelectedLocation,
 }) => {
   return (
-    <div className="location-autocomplete">
+    <div className={styles.locationAutocomplete}>
       <Autocomplete
+        className={styles.input}
         onPlaceSelected={async data => {
           if (data.formatted_address && data.place_id) {
             setSelectedLocation({

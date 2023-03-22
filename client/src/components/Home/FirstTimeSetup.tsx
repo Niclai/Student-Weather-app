@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import UserPreferenceForm from "../Preferences/UserPreferenceForm";
 
-import "./FirstTimeSetup.scss";
+import styles from "./FirstTimeSetup.module.scss";
 
 /**
  * Component to be displayed for the user to perform the initial configuration
@@ -12,10 +12,10 @@ const FirstTimeSetup: FC = () => {
   const [state, setState] = useState(0);
 
   return (
-    <div className="first-time-setup">
+    <div className={styles.firstTimeSetup}>
       {state === 0 ? (
-        <div className="introCon">
-          <p className="introTxt">
+        <div className={styles.introCon}>
+          <p className={styles.introTxt}>
             Welcome! Complete the startup configuration so we can tailor the
             application to your needs
           </p>

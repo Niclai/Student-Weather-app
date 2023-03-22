@@ -9,21 +9,22 @@
   margin-bottom: 20px;
 
   .tabCon {
+    width: 100%;
     padding: 4px;
     border-color: #35ade6;
     border-width: 3px;
     border-radius: 12px;
+    display: flex;
+    gap: 10px;
     flex-direction: row;
   }
-
   .tabItem {
     flex: 1;
     border-radius: 4px;
     align-items: center;
     justify-content: center;
     padding: 3px;
-    margin-left: 2px;
-    margin-right: 2px;
+
     background-color: #eee;
   }
 
@@ -34,8 +35,6 @@
     align-items: center;
     justify-content: center;
     padding: 3px;
-    margin-left: 2px;
-    margin-right: 2px;
   }
 
   .tabActiveTxt {
