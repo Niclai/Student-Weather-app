@@ -1,8 +1,8 @@
 .navbar {
   background-color: #007db8;
-  padding-top: 10px;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding: 10px 16px;
+  padding-top: 20px;
+  height: 80px;
 
   .mainContent {
     height: 100%;
@@ -24,8 +24,8 @@
     font-size: 20px;
     color: #fff;
     margin-left: 12px;
+    margin-top: -6px;
   }
-
   .img {
     height: 24px;
     width: 24px;

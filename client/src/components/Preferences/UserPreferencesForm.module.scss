@@ -1,6 +1,7 @@
-.user-preferences-form {
-  padding-left: 16px;
-  padding-right: 16px;
+.userPreferencesForm {
+  padding: 20px 16px;
+  background-color: #fff;
+  color: #000;
 
   .title {
     font-size: 18px;
@@ -20,7 +21,9 @@
   }
 
   .txtInput {
-    border-width: 1px;
+    border-width: 3px;
+    width: 100%;
+    outline: none;
     border-radius: 8px;
     border-color: #93cce7;
     margin-top: 4px;
@@ -34,24 +37,13 @@
   .errLabel {
     color: red;
   }
-
-  .popupWrapper {
-    background-color: #000000aa;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
-  }
-
-  .popupContent {
-    background-color: #fff;
-    padding: 16px;
-    padding-top: 24px;
-    padding-bottom: 24px;
-    border-radius: 8px;
-    width: 90%;
-    display: flex;
-    align-items: center;
+  .mainButton {
+    margin-top: 20px;
+    width: 100%;
+    transition: all 0.15s ease-in-out;
+    &:hover {
+      box-shadow: 5px 5px 6px rgba(0, 0, 0, 0.252);
+    }
   }
 }
 

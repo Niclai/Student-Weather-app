@@ -3,7 +3,8 @@ import { Coordinates } from "../../types/location";
 import { Forecast } from "../../types/forecast";
 import { FC, useEffect, useState } from "react";
 
-import "./CurrentDayForecast.scss";
+// import "./CurrentDayForecast.scss";
+import styles from "./CurrentDayForecast.module.scss";
 
 interface CurrentDayForecastProps {
   coordinates: Coordinates;
@@ -38,24 +39,24 @@ const CurrentDayForecast: FC<CurrentDayForecastProps> = ({ coordinates }) => {
   }, [coordinates]);
 
   return (
-    <div className="current-day-forecast">
-      <p className="title">Todays Forecast: </p>
+    <div className={styles.currentDayForecast}>
+      <p className={styles.title}>Todays Forecast: </p>
       {isLoading ? (
-        <div className="loadingWrapper">{/* TODO spinner */}</div>
+        <div className={styles.loadingWrapper}>{/* TODO: spinner */}</div>
       ) : (
         <>
-          <div className="helperWrapper">
+          <div className={styles.helperWrapper}>
             <div></div>
-            <div className="helperCon">
-              <div className="tempCon">
-                <p className="helperTxt">🌡️</p>
+            <div className={styles.helperCon}>
+              <div className={styles.tempCon}>
+                <p className={styles.helperTxt}>🌡️</p>
                 <p style={{ fontSize: 12 }}>(℃)</p>
               </div>
-              <div className="windCon">
-                <p className="helperTxt">💨</p>
+              <div className={styles.windCon}>
+                <p className={styles.helperTxt}>💨</p>
                 <p style={{ fontSize: 12 }}>(Km/h)</p>
               </div>
-              <div className="precipCon">
+              <div className={styles.precipCon}>
                 <p className="helperTxt">❄️</p>
                 <p style={{ fontSize: 12 }}>(%)</p>
               </div>
@@ -63,19 +64,20 @@ const CurrentDayForecast: FC<CurrentDayForecastProps> = ({ coordinates }) => {
           </div>
           {currentForecast?.map(forecast => {
             return (
-              <div key={forecast.time.toLocaleTimeString()} className="card">
-                <p className="time">
-                  {forecast.time.toLocaleTimeString().slice(0, 5)}
-                </p>
-                <div className="data">
-                  <div className="tempCon">
-                    <p className="datap">{forecast.temperature} ℃</p>
+              <div
+                key={forecast.time.toLocaleTimeString()}
+                className={styles.card}
+              >
+                <p className={styles.time}>{forecast.time.getHours()}:00</p>
+                <div className={styles.data}>
+                  <div className={styles.tempCon}>
+                    <p className={styles.datap}>{forecast.temperature} ℃</p>
                   </div>
-                  <div className="windCon">
-                    <p className="datap">{forecast.windSpeed}</p>
+                  <div className={styles.windCon}>
+                    <p className={styles.datap}>{forecast.windSpeed}</p>
                   </div>
-                  <div className="precipCon">
-                    <p className="datap">
+                  <div className={styles.precipCon}>
+                    <p className={styles.datap}>
                       {forecast.precipitationProbability}%
                     </p>
                   </div>

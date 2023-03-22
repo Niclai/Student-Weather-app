@@ -2,7 +2,8 @@ import { FC } from "react";
 import { Weather, WeatherConditions } from "../../types/weather";
 import * as Icons from "./WeatherIcons";
 
-import "./WeatherStats.scss";
+// import "./WeatherStats.scss";
+import styles from "./WeatherStats.module.scss";
 
 interface WeatherStatsProps {
   // locationName: string;
@@ -108,14 +109,14 @@ const WeatherStats: FC<WeatherStatsProps> = ({ weather, isDay }) => {
   const weatherIcon = getWeatherIcon(weather.conditions, isDay);
 
   return (
-    <div className="weather-stats">
-      <div className="iconCon">
+    <div className={styles.weatherStats}>
+      <div className={styles.iconCon}>
         <img src={weatherIcon} width={100} height={100} />
       </div>
 
-      <div className="data">
-        <p className="temp">{weather.temperature}°C</p>
-        <p className="wind">{weather.windSpeed}km/h</p>
+      <div className={styles.data}>
+        <p className={styles.temp}>{weather.temperature}°C</p>
+        <p className={styles.wind}>{weather.windSpeed}km/h</p>
       </div>
     </div>
   );
