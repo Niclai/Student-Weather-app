@@ -53,14 +53,14 @@
     display: flex;
     align-items: center;
   }
+}
 
-  .savedLabel {
-    font-size: 24px;
-    margin-bottom: 32px;
-    color: black;
-  }
+.savedLabel {
+  font-size: 24px;
+  margin-bottom: 32px;
+  color: black !important;
+}
 
-  .redBorder {
-    border-color: red;
-  }
+.redBorder {
+  border-color: red;
 }

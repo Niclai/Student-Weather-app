@@ -30,6 +30,7 @@ const LocationSelect: FC<LocationSelectProps> = ({ location, setLocation }) => {
 
   return (
     <div className="location-select">
+      <h2>Select your location:</h2>
       <LocationAutocomplete handleLocationSelect={setLocation} />
       <button onClick={setGPSLocation}>Use current GPS location</button>
       {isLoadingGPS &&

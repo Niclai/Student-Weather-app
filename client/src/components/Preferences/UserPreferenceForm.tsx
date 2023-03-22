@@ -57,6 +57,8 @@ export default function UserPreferenceForm() {
   );
   const [maxPollenLevelsERROR, setmaxPollenLevelsERROR] = useState("");
 
+  const [locationError, setLocationError] = useState("");
+
   const showMaxPollenLevels = () => {
     sethayfever(previousState => !previousState);
   };
@@ -76,6 +78,8 @@ export default function UserPreferenceForm() {
 
     const maxPollenLevelsValid = isMaxPollenLevelsValid();
 
+    const locationValid = isLocationValid();
+
     if (
       timesPerWeekValid &&
       timeBeforeNotifValid &&
@@ -83,7 +87,8 @@ export default function UserPreferenceForm() {
       preferredMinTempValid &&
       preferredMaxTempValid &&
       maxWindSpeedValid &&
-      maxPollenLevelsValid
+      maxPollenLevelsValid &&
+      locationValid
     ) {
       updateUserPreferences({
         hayFever: hayfever,
@@ -100,15 +105,6 @@ export default function UserPreferenceForm() {
       console.log("SAVED");
       setModalVisible(true);
     } else {
-      console.log(
-        timesPerWeekValid,
-        timeBeforeNotifValid,
-        sessionDurationValid,
-        preferredMinTempValid,
-        preferredMaxTempValid,
-        maxWindSpeedValid,
-        maxPollenLevelsValid
-      );
       setModalVisible(false);
     }
   };
@@ -212,6 +208,16 @@ export default function UserPreferenceForm() {
     }
   };
 
+  const isLocationValid = () => {
+    if (location == null) {
+      setLocationError("Location must be selected");
+      return false;
+    } else {
+      setLocationError("");
+      return true;
+    }
+  };
+
   return (
     <div className="user-preferences-form">
       <Modal
@@ -231,6 +237,9 @@ export default function UserPreferenceForm() {
       </Modal>
       <div>
         <div>
+          {locationError.length > 0 && (
+            <p className="errLabel">{locationError}</p>
+          )}
           <LocationSelect
             location={location}
             setLocation={location => setLocation(location)}

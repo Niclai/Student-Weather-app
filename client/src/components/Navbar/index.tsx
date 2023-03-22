@@ -15,6 +15,7 @@ interface NavbarProps {
   type: NavbarStyle;
 }
 
+/** Document */
 const Navbar: FC<NavbarProps> = ({ type }) => {
   return (
     <nav className="navbar">
