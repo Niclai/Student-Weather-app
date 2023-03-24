@@ -59,6 +59,17 @@ VITE_GMAPS_API_KEY=<your-google-maps-api-key> VITE_BASE_PROXY_URL=http://<server
 where `<server-ip>` and `<server-port>` should be replaced with the ones your
 backend proxy server is running on.
 
+You should see output similar to the following:
+
+```
+  VITE v4.2.1  ready in 419 ms
+
+  ➜  Local:   http://127.0.0.1:5173/
+  ➜  Network: use --host to expose
+  ➜  press h to show help
+```
+
+In you browser, navigate to the URL seen in the output and start using the application.
 
 ### How to use the app
 When first using the app you are prompted to enter your desired weather
