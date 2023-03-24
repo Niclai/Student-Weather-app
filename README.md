@@ -1,30 +1,34 @@
 # ECS522-weather-app
 
-### What is the project?
+## What is the project?
 This project is a basic weather app with additional unique functions such as calculating the perfect time of day to study outside it
 based of user preferences. This project is targeted towards helping students in their day-to-day life.
 
+## Screenshots
 
-### Why is the project useful?
+<div style="display: flex">
+  <img src="docs/screenshots/settings.png" width="33%" />
+  <img src="docs/screenshots/forecast.png" width="33%" />
+  <img src="docs/screenshots/scheduling.png" width="33%" />
+</div>
+
+## Why is the project useful?
 Developing this project brings huge benefits towards the large student community. Allowing them to gain more knowledge and insight to plan ahead for
 their daily activities. It also provides notifications to when the best time of day to study outside is. 
 Most students refrain from studying outside due to the uncertainty of the weather, but by providing real time updates and accurate notifications
 this app should provide students with more confidence to do so. 
 
-### How to download the app: 
-....
-
-### Running the application locally
+## Running the application locally
 
 **Note**: The following commands have been tested on Linux and MacOS. Windows
 users may need to use different commands.
 
-#### Prerequisites
+### Prerequisites
 
 Make sure [node.js](https://nodejs.org/en/download) and
 [npm](https://www.npmjs.com/package/npm) is installed on your system.
 
-#### Installing frontend dependencies
+### Installing frontend dependencies
 
 Inside the `client` directory, run the following command:
 
@@ -32,7 +36,7 @@ Inside the `client` directory, run the following command:
 npm install
 ```
 
-#### Running unit tests
+### Running unit tests
 
 To run the unit tests, run the following command:
 
@@ -40,7 +44,7 @@ To run the unit tests, run the following command:
 npm test
 ```
 
-#### Running application using Expo CLI
+### Running application using Vite dev server
 
 First, ensure the backend proxy server is running by following the steps in the
 [server README](server/README.md).
@@ -56,7 +60,7 @@ where `<server-ip>` and `<server-port>` should be replaced with the ones your
 backend proxy server is running on.
 
 
-### How to use the app:
+### How to use the app
 When first using the app you are prompted to enter your desired weather
 conditions for outdoor studying. This can be altered later on if needed. After
 inputting conditions, the app will display the time of day when you can study
