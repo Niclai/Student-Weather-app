@@ -81,13 +81,6 @@ allow for self-explanatory usage of all the different functions provided.
 
 ## Requirements
 
-- [x] Your code MUST be properly commented – marks will be deducted if your code
-  is not self-explanatory.
-- [x] You MUST include a readme file with instructions of how to run your code
-      (including how to install any dependencies or additional libraries) – if this is
-      not provided, we will be unable to run your code and you will therefore receive
-      ZERO marks for the implementation and any extensions.
-
 
 |Id|Requirement|
 |-|-|
